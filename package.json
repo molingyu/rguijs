@@ -1,0 +1,32 @@
+{
+  "name": "rgui",
+  "version": "1.0.0",
+  "description": "RPG Maker MV GUI framework.",
+  "main": "index.js",
+  "scripts": {
+    "build":"babel src -d lib",
+    "test": "make test",
+    "doc": "jsdoc src/svent/ src -d doc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/molingyu/rguijs.git"
+  },
+  "keywords": [
+    "GUI"
+  ],
+  "author": "shitake",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/molingyu/rguijs/issues"
+  },
+  "homepage": "https://github.com/molingyu/rguijs#readme",
+  "dependencies": {
+    "svent": "0.0.7",
+    "pixi.js": "4.0.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.0.0",
+    "colors": "1.1.2"
+  }
+}
