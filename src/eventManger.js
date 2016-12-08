@@ -3,6 +3,11 @@
  */
 import Svent from 'svent'
 
+/**
+ * Class EventManger.
+ * @author shitake <z1522716486@hotmail.com>
+ * @license MIT <https://mit-license.org/>
+ */
 class EventManger extends Svent.EventManger {
   constructor(obj) {
     super();

@@ -2,13 +2,15 @@
  * Created by shitake on 16-12-8.
  */
 
-var gp = require('gulp');
-var babel = require('gulp-babel');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
+let gp = require('gulp');
+let babel = require('gulp-babel');
+let concat = require('gulp-concat');
+let uglify = require('gulp-uglify');
+
+let files = ['./src/*.js', './src/box/*.js', './src/controls/*.js'];
 
 gp.task("mini", function () {
-  gp.src('./src/*')
+  gp.src(files)
     .pipe(babel({
       "presets": ["es2015"]
     }))
@@ -18,11 +20,11 @@ gp.task("mini", function () {
 });
 
 gp.task("build",function(){
-  gp.src(['./src/*.js', './src/controls/*.js'])
+  gp.src(files)
     .pipe(babel({
       "presets": ["es2015"]
     }))
-    .pipe(concat('rgui.js'))
+    .pipe(concat('index.js'))
     .pipe(gp.dest('./lib/'));
   gp.run('mini')
 });

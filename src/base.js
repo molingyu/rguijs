@@ -1,11 +1,16 @@
 /**
  * Created by shitake on 16-12-7.
  */
-import RGUI from 'rgui'
-import Rect from 'rect'
+
+import Box from 'box'
 import PIXI from 'pixi.js'
 import EventManger from 'eventManger'
 
+/**
+ * Class Base.
+ * @author shitake <z1522716486@hotmail.com>
+ * @license MIT <https://mit-license.org/>
+ */
 class Base extends PIXI.Container {
   constructor(obj = {}) {
     super();
@@ -14,7 +19,7 @@ class Base extends PIXI.Container {
     this.y = obj.y || 0;
     this.width = obj.width || 0;
     this.height = obj.height || 0;
-    this.box = obj.box ||new Rect(this.x, this.y, this.width, this.height);
+    this.box = obj.box ||new Box.Rect(this.x, this.y, this.width, this.height);
     this.focus = obj.focus || false;
     this.visible = obj.visible || true;
     this.status = obj.status || true;
@@ -80,6 +85,10 @@ class Base extends PIXI.Container {
   }
 
   changeSize(width, height) {
+
+  }
+
+  defEventCallback() {
 
   }
 }

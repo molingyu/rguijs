@@ -4,9 +4,11 @@
 
 /**
  * @module Input
+ * @author shitake <z1522716486@hotmail.com>
+ * @license MIT <https://mit-license.org/>
  */
 const Input = {
-  init: function (canvas) {
+  init: function () {
     this._mouseScroll = 0;
     this.keyStauts = {};
     this._mouseKey = [
@@ -85,7 +87,7 @@ const Input = {
     return this.keyStauts[keyName] == 0
   },
 
-  mousePos : function (event) {
+  mousePos : function () {
     return {'x': this.x,'y': this.y}
   }
 
