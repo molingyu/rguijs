@@ -7,8 +7,8 @@ class Rect {
   constructor(x = 0, y = 0, width = 0, height = 0) {
     this.x = x;
     this.y = y;
-    this._width = width;
-    this._height = height
+    this.width = width;
+    this.height = height
   }
 
   move(x = 0, y = 0) {
@@ -22,12 +22,12 @@ class Rect {
   }
 
   setSize(width = 0, height = 0) {
-    this._width = width;
-    this._height = height
+    this.width = width;
+    this.height = height
   }
 
   hit(x, y) {
-    return this.x <= x && (this.x + this._width) >= x && this.y <= y && (this.y + this._height) >= y
+    return this.x <= x && (this.x + this.width) >= x && this.y <= y && (this.y + this.height) >= y
   }
 }
 
