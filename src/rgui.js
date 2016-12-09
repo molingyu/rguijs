@@ -1,7 +1,3 @@
-/**
- * Created by shitake on 16-12-7.
- */
-
 import Input from 'input'
 import EventManger from 'eventManger'
 import Box from 'box'

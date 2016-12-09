@@ -1,7 +1,3 @@
-/**
- * Created by shitake on 16-12-7.
- */
-
 import Box from 'box'
 import PIXI from 'pixi.js'
 import EventManger from 'eventManger'
@@ -12,19 +8,23 @@ import EventManger from 'eventManger'
  * @license MIT <https://mit-license.org/>
  */
 class Base extends PIXI.Container {
+  /**
+   *
+   * @param {Object} obj
+   */
   constructor(obj = {}) {
     super();
-    this.uID = RGUI.getID();
-    this.x = obj.x || 0;
-    this.y = obj.y || 0;
-    this.width = obj.width || 0;
-    this.height = obj.height || 0;
-    this.box = obj.box ||new Box.Rect(this.x, this.y, this.width, this.height);
-    this.focus = obj.focus || false;
-    this.visible = obj.visible || true;
-    this.status = obj.status || true;
-    this.parent = obj.parent;
-    this.em = new EventManger(this);
+    this._uID = RGUI.getID();
+    this._x = obj.x || 0;
+    this._y = obj.y || 0;
+    this._width = obj.width || 0;
+    this._height = obj.height || 0;
+    this._box = obj.box ||new Box.Rect(this.x, this.y, this._width, this._height);
+    this._focus = obj.focus || false;
+    this._visible = obj.visible || true;
+    this._status = obj.status || true;
+    this._parent = obj.parent;
+    this._em = new EventManger(this);
     this.defEventCallback()
   }
 

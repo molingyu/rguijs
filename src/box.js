@@ -1,8 +1,4 @@
 /**
- * Created by shitake on 16-12-7.
- */
-
-/**
  * Class Rect.
  * @author shitake <z1522716486@hotmail.com>
  * @license MIT <https://mit-license.org/>
@@ -11,8 +7,8 @@ class Rect {
   constructor(x = 0, y = 0, width = 0, height = 0) {
     this.x = x;
     this.y = y;
-    this.width = width;
-    this.height = height
+    this._width = width;
+    this._height = height
   }
 
   move(x = 0, y = 0) {
@@ -26,12 +22,12 @@ class Rect {
   }
 
   setSize(width = 0, height = 0) {
-    this.width = width;
-    this.height = height
+    this._width = width;
+    this._height = height
   }
 
   hit(x, y) {
-    return this.x <= x && (this.x + this.width) >= x && this.y <= y && (this.y + this.height) >= y
+    return this.x <= x && (this.x + this._width) >= x && this.y <= y && (this.y + this._height) >= y
   }
 }
 

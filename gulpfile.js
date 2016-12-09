@@ -2,12 +2,12 @@
  * Created by shitake on 16-12-8.
  */
 
-let gp = require('gulp');
-let babel = require('gulp-babel');
-let concat = require('gulp-concat');
-let uglify = require('gulp-uglify');
+var gp = require('gulp');
+var babel = require('gulp-babel');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
 
-let files = ['./src/*.js', './src/box/*.js', './src/controls/*.js'];
+var files = ['./src/*.js', './src/box/*.js', './src/controls/*.js'];
 
 gp.task("mini", function () {
   gp.src(files)
@@ -24,7 +24,7 @@ gp.task("build",function(){
     .pipe(babel({
       "presets": ["es2015"]
     }))
-    .pipe(concat('index.js'))
+    .pipe(concat('rgui.js'))
     .pipe(gp.dest('./lib/'));
   gp.run('mini')
 });
