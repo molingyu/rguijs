@@ -9,6 +9,8 @@ import Box from './box'
  */
 const RGUI = {
   VERSION: '0.1.0',
+  MOUSE: true,
+  KEYBOARD: true,
   Controls: 0,
   Input: Input,
   EventManger: EventManger,
@@ -21,6 +23,10 @@ const RGUI = {
 
   getID: function () {
     return this._ID++
+  },
+
+  boundary: function (num, min, max) {
+    return num > min ? num < max ? num : max : min
   },
 
   seyHello: function () {
@@ -40,7 +46,7 @@ const RGUI = {
   },
 
   loadControls: function () {
-    this.ImageBox = require('./controls/imageBox');
+    this.SpriteButton = require('./controls/imageBox');
   }
 };
 

@@ -104,10 +104,10 @@ class EventManger extends Svent.EventManger {
   /**
    *
    * @param {String} name
-   * @param {Number} index
+   * @param {Object} conf
    * @param {Function} callback
    */
-  on(name, index = null, callback = new Function()) {
+  on(name, conf, callback) {
     if(name == 'click') name = 'down:mouseLeft';
     let type = 0;
     if(EventManger.isMouseEvent(name)) type = 1;
@@ -115,16 +115,17 @@ class EventManger extends Svent.EventManger {
       type = 2;
       this.keyboardEvent.push(name)
     }
-    super.on(name, {type: type, index: index}, callback)
+    conf.type = type;
+    super.on(name, conf, callback)
   }
 
   /**
    *
    * @param {String} name
-   * @param {Number} index
+   * @param {Object} conf
    * @param {Function} callback
    */
-  onAsync(name, index = null, callback = new Function()) {
+  onAsync(name, conf, callback) {
     if(name == 'click') name = 'down:mouseLeft';
     let type = 0;
     if(EventManger.isMouseEvent(name)) type = 1;
@@ -132,7 +133,8 @@ class EventManger extends Svent.EventManger {
       type = 2;
       this.keyboardEvent.push(name)
     }
-    super.onAsync(name, {type: type, index: index}, callback)
+    conf.type = type;
+    super.onAsync(name, conf, callback)
   }
 
 }

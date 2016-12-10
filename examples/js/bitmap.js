@@ -15,7 +15,7 @@ function Bitmap(width, height) {
   this._baseTexture = new PIXI.BaseTexture(this._canvas);
   this._baseTexture.mipmap = false;
   this._baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-  this._image = null;
+  this._images = null;
   this._url = '';
   this._paintOpacity = 255;
   this._smooth = false;
@@ -83,13 +83,13 @@ Bitmap.prototype.constructor = Bitmap;
  */
 Bitmap.load = function(url) {
   var bitmap = new Bitmap();
-  bitmap._image = new Image();
+  bitmap._images = new Image();
   bitmap._url = url;
   bitmap._isLoading = true;
 
-  bitmap._image.src = url;
-  bitmap._image.onload = Bitmap.prototype._onLoad.bind(bitmap);
-  bitmap._image.onerror = Bitmap.prototype._onError.bind(bitmap);
+  bitmap._images.src = url;
+  bitmap._images.onload = Bitmap.prototype._onLoad.bind(bitmap);
+  bitmap._images.onerror = Bitmap.prototype._onError.bind(bitmap);
 
   return bitmap;
 };
@@ -308,7 +308,7 @@ Bitmap.prototype.bltImage = function(source, sx, sy, sw, sh, dx, dy, dw, dh) {
   if (sx >= 0 && sy >= 0 && sw > 0 && sh > 0 && dw > 0 && dh > 0 &&
     sx + sw <= source.width && sy + sh <= source.height) {
     this._context.globalCompositeOperation = 'source-over';
-    this._context.drawImage(source._image, sx, sy, sw, sh, dx, dy, dw, dh);
+    this._context.drawImage(source._images, sx, sy, sw, sh, dx, dy, dw, dh);
     this._setDirty();
   }
 };
@@ -687,8 +687,8 @@ Bitmap.prototype._drawTextBody = function(text, tx, ty, maxWidth) {
  */
 Bitmap.prototype._onLoad = function() {
   this._isLoading = false;
-  this.resize(this._image.width, this._image.height);
-  this._context.drawImage(this._image, 0, 0);
+  this.resize(this._images.width, this._images.height);
+  this._context.drawImage(this._images, 0, 0);
   this._setDirty();
   this._callLoadListeners();
 };

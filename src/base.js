@@ -62,14 +62,14 @@ class Base extends PIXI.Container {
     this._em.trigger('changeFocus', {old: old, new: this._focus})
   }
 
-  get openness() { return this._openness }
-  set openness(value) {
-    value = Boolean(value);
-    if(this._openness == value) return false;
-    let old = this._openness;
-    this._openness = value;
-    this._em.trigger('changeOpenness', {old: old, new: this._openness})
-  }
+  // get openness() { return this._openness }
+  // set openness(value) {
+  //   value = Boolean(value);
+  //   if(this._openness == value) return false;
+  //   let old = this._openness;
+  //   this._openness = value;
+  //   this._em.trigger('changeOpenness', {old: old, new: this._openness})
+  // }
 
   get status() { return this._status }
   set status(value) {
@@ -105,7 +105,7 @@ class Base extends PIXI.Container {
     this._height = obj.height || 0;
     this._box = obj.box ||new Box.Rect(this.x, this.y, this._width, this._height);
     this._focus = obj.focus || false;
-    this._openness = obj.openness || true;
+    // this._openness = obj.openness || true;
     this._status = obj.status || true;
     this._opacity = obj.opacity || 255;
   }

@@ -3,10 +3,10 @@ import RGUI from '../rgui'
 
 RGUI.Controls = RGUI.Controls + 1;
 
-class ImageBox extends Base {
+class SpriteButton extends Base {
 
-  get image() { return this._images }
-  set image(value) {
+  get images() { return this._images }
+  set images(value) {
     if(this._images == value && value.class != Bitmap) return false;
     this._images = value;
     this.eventManger.trigger('changeImage')
@@ -22,7 +22,7 @@ class ImageBox extends Base {
 
   constructor(obj) {
     super(obj);
-    this._images = obj.image || new Bitmap(0, 0, 0, 0);
+    this._images = obj.images || [new Bitmap(0, 0, 0, 0), new Bitmap(0, 0, 0, 0), new Bitmap(0, 0, 0, 0), new Bitmap(0, 0, 0, 0)];
     this._type = obj.type || 0;
     this._xWheel = 0;
     this._yWheel = 0;
@@ -93,4 +93,4 @@ class ImageBox extends Base {
 
 }
 
-module.exports = ImageBox;
+module.exports = SpriteButton;
