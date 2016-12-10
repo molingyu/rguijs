@@ -25,7 +25,6 @@ const Input = {
     });
     document.addEventListener('mousewheel', (event)=>{
       self.mouseScroll = event.wheelDelta > 0 ? 1 : -1;
-      console.log(self)
     });
     document.addEventListener('mousedown', (event)=>{
       let key = this._mouseKey[event.button];

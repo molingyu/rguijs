@@ -1,6 +1,6 @@
 {
   "name": "rgui",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "RPG Maker MV GUI framework.",
   "main": "bin/rgui.js",
   "scripts": {
@@ -22,8 +22,9 @@
   },
   "homepage": "https://github.com/molingyu/rguijs#readme",
   "dependencies": {
-    "svent": "0.0.7",
-    "pixi.js": "4.0.3"
+    "electron": "^1.4.12",
+    "pixi.js": "4.0.3",
+    "svent": "0.0.8"
   },
   "devDependencies": {
     "babel-cli": "^6.0.0",

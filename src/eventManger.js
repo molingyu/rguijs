@@ -1,6 +1,6 @@
 import Svent from 'svent'
-import Base from 'base'
-import Input from 'input'
+import Base from './base'
+import Input from './input'
 
 /**
  * Class EventManger.
@@ -107,7 +107,7 @@ class EventManger extends Svent.EventManger {
    * @param {Number} index
    * @param {Function} callback
    */
-  on(name, index = null, callback) {
+  on(name, index = null, callback = new Function()) {
     if(name == 'click') name = 'down:mouseLeft';
     let type = 0;
     if(EventManger.isMouseEvent(name)) type = 1;
@@ -116,6 +116,23 @@ class EventManger extends Svent.EventManger {
       this.keyboardEvent.push(name)
     }
     super.on(name, {type: type, index: index}, callback)
+  }
+
+  /**
+   *
+   * @param {String} name
+   * @param {Number} index
+   * @param {Function} callback
+   */
+  onAsync(name, index = null, callback = new Function()) {
+    if(name == 'click') name = 'down:mouseLeft';
+    let type = 0;
+    if(EventManger.isMouseEvent(name)) type = 1;
+    if(EventManger.isKeyboardEvent(name)){
+      type = 2;
+      this.keyboardEvent.push(name)
+    }
+    super.onAsync(name, {type: type, index: index}, callback)
   }
 
 }

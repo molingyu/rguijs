@@ -1,6 +1,6 @@
-import Input from 'input'
-import EventManger from 'eventManger'
-import Box from 'box'
+import Input from './input'
+import EventManger from './eventManger'
+import Box from './box'
 
 /**
  * @module Svent
@@ -8,15 +8,39 @@ import Box from 'box'
  * @license MIT <https://mit-license.org/>
  */
 const RGUI = {
+  VERSION: '0.1.0',
+  Controls: 0,
   Input: Input,
   EventManger: EventManger,
   Box: Box,
   init: function () {
     this._ID = 0;
+    this.loadControls();
+    this.seyHello()
   },
 
   getID: function () {
     return this._ID++
+  },
+
+  seyHello: function () {
+    let args = [
+      '\n %c %c %c RGUI ' + this.VERSION +' - ✰ Controls:' + this.Controls +  ' ✰  %c ' + ' %c ' + ' http://github.com/molingyu/rguijs/  %c %c ♥%c♥%c♥ \n\n',
+      'background: #ff66a5; padding:5px 0;',
+      'background: #ff66a5; padding:5px 0;',
+      'color: #ff66a5; background: #030307; padding:5px 0;',
+      'background: #ff66a5; padding:5px 0;',
+      'background: #ffc3dc; padding:5px 0;',
+      'background: #ff66a5; padding:5px 0;',
+      'color: #ff2424; background: #fff; padding:5px 0;',
+      'color: #ff2424; background: #fff; padding:5px 0;',
+      'color: #ff2424; background: #fff; padding:5px 0;'
+    ];
+    console.log.apply(console, args);
+  },
+
+  loadControls: function () {
+    this.ImageBox = require('./controls/imageBox');
   }
 };
 

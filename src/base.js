@@ -1,6 +1,6 @@
-import Box from 'box'
+import Box from './box'
 import PIXI from 'pixi.js'
-import EventManger from 'eventManger'
+import EventManger from './eventManger'
 
 /**
  * Class Base.
@@ -62,13 +62,13 @@ class Base extends PIXI.Container {
     this._em.trigger('changeFocus', {old: old, new: this._focus})
   }
 
-  get visible() { return this._visible }
-  set visible(value) {
+  get openness() { return this._openness }
+  set openness(value) {
     value = Boolean(value);
-    if(this._visible == value) return false;
-    let old = this._visible;
-    this._visible = value;
-    this._em.trigger('changeVisible', {old: old, new: this._visible})
+    if(this._openness == value) return false;
+    let old = this._openness;
+    this._openness = value;
+    this._em.trigger('changeVisible', {old: old, new: this._openness})
   }
 
   get status() { return this._status }
@@ -97,6 +97,7 @@ class Base extends PIXI.Container {
    */
   constructor(obj = {}) {
     super();
+    this._em = new EventManger(this);
     this._uID = RGUI.getID();
     this._x = obj.x || 0;
     this._y = obj.y || 0;
@@ -104,10 +105,9 @@ class Base extends PIXI.Container {
     this._height = obj.height || 0;
     this._box = obj.box ||new Box.Rect(this.x, this.y, this._width, this._height);
     this._focus = obj.focus || false;
-    this._visible = obj.visible || true;
+    this._openness = obj.openness || true;
     this._status = obj.status || true;
     this._opacity = obj.opacity || 255;
-    this._em = new EventManger(this);
   }
 
   defEventCallback() { }
