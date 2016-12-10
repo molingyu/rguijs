@@ -10,6 +10,8 @@
           ipcRenderer.send('show-dev');
 
           require('pixi.js');
+          const Bitmap = require('./js/bitmap');
+          const Sprite = require('./js/sprite');
           const RGUI = require('../lib/rgui');
           const Input = RGUI.Input;
 
@@ -20,13 +22,11 @@
           RGUI.init();
           Input.init();
 
-          let basicText = new PIXI.Text('Basic text in pixi');
+          let basicText = new PIXI.Text('');
           basicText.x = 10;
           basicText.y = 10;
-          let bitmap = PIXI.Texture.fromImage('test.png');
-//          let sprite = new PIXI.Sprite(bitmap);
-//          sprite.x = 100;
-//          sprite.y = 100;
+          console.log(Bitmap);
+          let bitmap = Bitmap.load('./res/test.png');
           let ImageBox = new RGUI.ImageBox({
             x: 50,
             y: 50,

@@ -1,28 +1,28 @@
 import Base from '../base'
 import RGUI from '../rgui'
-import PIXI from 'pixi.js'
 
 RGUI.Controls = RGUI.Controls + 1;
-
-const Texture = PIXI.Texture;
-const Sprite = PIXI.Sprite;
-const Rect = PIXI. Rectangle;
 
 class ImageBox extends Base {
 
   get image() { return this._image }
   set image(value) {
-
+    if(this._image == value && value.class != Bitmap) return false;
+    this._image = value;
+    this.eventManger.trigger('changeImage')
   }
 
   get type() { return this._type }
   set type(value) {
-
+    value = Number(value);
+    if(this._type == value) return false;
+    this._type = value;
+    this.eventManger.trigger('changeType')
   }
 
   constructor(obj) {
     super(obj);
-    this._image = obj.image || new Texture(new PIXI.BaseTexture(), new Rect(0, 0, this.width, this.height));
+    this._image = obj.image || new Bitmap(0, 0, 0, 0);
     this._type = obj.type || 0;
     this._xWheel = 0;
     this._yWheel = 0;
@@ -30,56 +30,62 @@ class ImageBox extends Base {
   }
 
   setImage() {
-    this._sprite.texture = this._image;
+    this._sprite.bitmap = this._image;
   }
 
   setType() {
-    let frame = this._image._frame;
     switch (this._type) {
       case 0:
-        this._sprite.scale = 1;
-        this._image.setFrame(new PIXI.Rectangle(0, 0, this.width, this.height));
         break;
       case 1:
-        this._sprite.setTransform(this.x, this.y, this.width / this._sprite.texture.width, 1);
+
         break;
       case 2:
-        this._sprite.setTransform(this.x, this.y, this.width / this._sprite.width, 1);
+
         break;
       case 3:
-        this._sprite.setTransform(this.x, this.y, 1, this.height / this._sprite.height);
         break
     }
   }
 
   create() {
     this._sprite = new Sprite();
-    this.addChild(this._sprite);
     this._sprite.x = this.x;
     this._sprite.y = this.y;
+    this._sprite.width = this.width;
+    this._sprite.height = this.height;
+    this.addChild(this._sprite);
     this.setImage();
     super.create()
   }
 
   xScroll(value) {
 
+    this.eventManger.trigger('xScroll')
   }
 
   yScroll(value) {
 
+    this.eventManger.trigger('yScroll')
   }
 
   defEventCallback() {
+    let self = this;
     this.eventManger.on('changeX', function () {
-
+      self._sprite.x = self.x;
     });
     this.eventManger.on('changeY', function () {
-
+      self._sprite.y = self.y;
     });
     this.eventManger.on('changeWidth', function () {
-
+      self._sprite.width = self.width;
+      self.setType()
     });
     this.eventManger.on('changeHeight', function () {
+      self._sprite.height = self.height;
+      self.setType()
+    });
+    this.eventManger.on('changeOpenness', function () {
 
     })
   }

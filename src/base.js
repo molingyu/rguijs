@@ -68,7 +68,7 @@ class Base extends PIXI.Container {
     if(this._openness == value) return false;
     let old = this._openness;
     this._openness = value;
-    this._em.trigger('changeVisible', {old: old, new: this._openness})
+    this._em.trigger('changeOpenness', {old: old, new: this._openness})
   }
 
   get status() { return this._status }
