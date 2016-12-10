@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Base</title>
+    </head>
+    <body>
+        <script>
+          let ipcRenderer = require('electron').ipcRenderer;
+          ipcRenderer.send('show-dev');
+
+          require('pixi.js');
+          const RGUI = require('../lib/rgui');
+          const Input = RGUI.Input;
+
+          let renderer = PIXI.autoDetectRenderer(800, 600,{backgroundColor : 0x1099bb});
+          document.body.appendChild(renderer.view);
+          let stage = new PIXI.Container();
+
+          RGUI.init();
+          Input.init();
+
+          let basicText = new PIXI.Text('Basic text in pixi');
+          basicText.x = 10;
+          basicText.y = 10;
+          let bitmap = PIXI.Texture.fromImage('test.png');
+//          let sprite = new PIXI.Sprite(bitmap);
+//          sprite.x = 100;
+//          sprite.y = 100;
+          let ImageBox = new RGUI.ImageBox({
+            x: 50,
+            y: 50,
+            width: 100,
+            height: 100,
+            type: 1,
+            image: bitmap
+          });
+
+          stage.addChild(basicText);
+          stage.addChild(ImageBox);
+
+          animate();
+
+          function animate() {
+            basicText.text = "x:" + Input.x + ' y:' + Input.y;
+            requestAnimationFrame(animate);
+            renderer.render(stage);
+            Input.update();
+          }
+
+
+
+        </script>
+    </body>
+</html>

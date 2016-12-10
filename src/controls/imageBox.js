@@ -31,8 +31,6 @@ class ImageBox extends Base {
 
   setImage() {
     this._sprite.texture = this._image;
-    let self = this;
-    // this._image.onload(()=>{ self.setType() })
   }
 
   setType() {
