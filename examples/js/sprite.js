@@ -33,7 +33,7 @@ function Sprite(bitmap) {
 
   /**
    * use heavy renderer that will reduce border artifacts and apply advanced blendModes
-   * @type {boolean}
+   * @state {boolean}
    * @private
    */
   this._isPicture = false;
@@ -56,7 +56,7 @@ Sprite._counter = 0;
  * The image for the sprite.
  *
  * @property bitmap
- * @type Bitmap
+ * @state Bitmap
  */
 Object.defineProperty(Sprite.prototype, 'bitmap', {
     get: function() {
@@ -80,7 +80,7 @@ Object.defineProperty(Sprite.prototype, 'bitmap', {
  * The width of the sprite without the scale.
  *
  * @property width
- * @type Number
+ * @state Number
  */
 Object.defineProperty(Sprite.prototype, 'width', {
     get: function() {
@@ -97,7 +97,7 @@ Object.defineProperty(Sprite.prototype, 'width', {
  * The height of the sprite without the scale.
  *
  * @property height
- * @type Number
+ * @state Number
  */
 Object.defineProperty(Sprite.prototype, 'height', {
     get: function() {
@@ -114,7 +114,7 @@ Object.defineProperty(Sprite.prototype, 'height', {
  * The opacity of the sprite (0 to 255).
  *
  * @property opacity
- * @type Number
+ * @state Number
  */
 Object.defineProperty(Sprite.prototype, 'opacity', {
     get: function() {
@@ -403,70 +403,70 @@ Sprite.prototype._renderWebGL = function(renderer) {
  * The visibility of the sprite.
  *
  * @property visible
- * @type Boolean
+ * @state Boolean
  */
 
 /**
  * The x coordinate of the sprite.
  *
  * @property x
- * @type Number
+ * @state Number
  */
 
 /**
  * The y coordinate of the sprite.
  *
  * @property y
- * @type Number
+ * @state Number
  */
 
 /**
  * The origin point of the sprite. (0,0) to (1,1).
  *
  * @property anchor
- * @type Point
+ * @state Point
  */
 
 /**
  * The scale factor of the sprite.
  *
  * @property scale
- * @type Point
+ * @state Point
  */
 
 /**
  * The rotation of the sprite in radians.
  *
  * @property rotation
- * @type Number
+ * @state Number
  */
 
 /**
  * The blend mode to be applied to the sprite.
  *
  * @property blendMode
- * @type Number
+ * @state Number
  */
 
 /**
  * Sets the filters for the sprite.
  *
  * @property filters
- * @type Array
+ * @state Array
  */
 
 /**
  * [read-only] The array of children of the sprite.
  *
  * @property children
- * @type Array
+ * @state Array
  */
 
 /**
  * [read-only] The object that contains the sprite.
  *
  * @property parent
- * @type Object
+ * @state Object
  */
 
 /**

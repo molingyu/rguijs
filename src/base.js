@@ -62,6 +62,7 @@ class Base extends PIXI.Container {
     this._em.trigger('changeFocus', {old: old, new: this._focus})
   }
 
+  //TODO:
   // get openness() { return this._openness }
   // set openness(value) {
   //   value = Boolean(value);

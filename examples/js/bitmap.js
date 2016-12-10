@@ -27,7 +27,7 @@ function Bitmap(width, height) {
    * The face name of the font.
    *
    * @property fontFace
-   * @type String
+   * @state String
    */
   this.fontFace = 'GameFont';
 
@@ -35,7 +35,7 @@ function Bitmap(width, height) {
    * The size of the font in pixels.
    *
    * @property fontSize
-   * @type Number
+   * @state Number
    */
   this.fontSize = 28;
 
@@ -43,7 +43,7 @@ function Bitmap(width, height) {
    * Whether the font is italic.
    *
    * @property fontItalic
-   * @type Boolean
+   * @state Boolean
    */
   this.fontItalic = false;
 
@@ -51,7 +51,7 @@ function Bitmap(width, height) {
    * The color of the text in CSS format.
    *
    * @property textColor
-   * @type String
+   * @state String
    */
   this.textColor = '#ffffff';
 
@@ -59,7 +59,7 @@ function Bitmap(width, height) {
    * The color of the outline of the text in CSS format.
    *
    * @property outlineColor
-   * @type String
+   * @state String
    */
   this.outlineColor = 'rgba(0, 0, 0, 0.5)';
 
@@ -67,7 +67,7 @@ function Bitmap(width, height) {
    * The width of the outline of the text.
    *
    * @property outlineWidth
-   * @type Number
+   * @state Number
    */
   this.outlineWidth = 4;
 }
@@ -118,7 +118,7 @@ Bitmap.prototype.isError = function() {
  * [read-only] The url of the image file.
  *
  * @property url
- * @type String
+ * @state String
  */
 Object.defineProperty(Bitmap.prototype, 'url', {
   get: function() {
@@ -131,7 +131,7 @@ Object.defineProperty(Bitmap.prototype, 'url', {
  * [read-only] The base texture that holds the image.
  *
  * @property baseTexture
- * @type PIXI.BaseTexture
+ * @state PIXI.BaseTexture
  */
 Object.defineProperty(Bitmap.prototype, 'baseTexture', {
   get: function() {
@@ -144,7 +144,7 @@ Object.defineProperty(Bitmap.prototype, 'baseTexture', {
  * [read-only] The bitmap canvas.
  *
  * @property canvas
- * @type HTMLCanvasElement
+ * @state HTMLCanvasElement
  */
 Object.defineProperty(Bitmap.prototype, 'canvas', {
   get: function() {
@@ -157,7 +157,7 @@ Object.defineProperty(Bitmap.prototype, 'canvas', {
  * [read-only] The 2d context of the bitmap canvas.
  *
  * @property context
- * @type CanvasRenderingContext2D
+ * @state CanvasRenderingContext2D
  */
 Object.defineProperty(Bitmap.prototype, 'context', {
   get: function() {
@@ -170,7 +170,7 @@ Object.defineProperty(Bitmap.prototype, 'context', {
  * [read-only] The width of the bitmap.
  *
  * @property width
- * @type Number
+ * @state Number
  */
 Object.defineProperty(Bitmap.prototype, 'width', {
   get: function() {
@@ -183,7 +183,7 @@ Object.defineProperty(Bitmap.prototype, 'width', {
  * [read-only] The height of the bitmap.
  *
  * @property height
- * @type Number
+ * @state Number
  */
 Object.defineProperty(Bitmap.prototype, 'height', {
   get: function() {
@@ -196,7 +196,7 @@ Object.defineProperty(Bitmap.prototype, 'height', {
  * [read-only] The rectangle of the bitmap.
  *
  * @property rect
- * @type Rectangle
+ * @state Rectangle
  */
 Object.defineProperty(Bitmap.prototype, 'rect', {
   get: function() {
@@ -209,7 +209,7 @@ Object.defineProperty(Bitmap.prototype, 'rect', {
  * Whether the smooth scaling is applied.
  *
  * @property smooth
- * @type Boolean
+ * @state Boolean
  */
 Object.defineProperty(Bitmap.prototype, 'smooth', {
   get: function() {
@@ -232,7 +232,7 @@ Object.defineProperty(Bitmap.prototype, 'smooth', {
  * The opacity of the drawing object in the range (0, 255).
  *
  * @property paintOpacity
- * @type Number
+ * @state Number
  */
 Object.defineProperty(Bitmap.prototype, 'paintOpacity', {
   get: function() {

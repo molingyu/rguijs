@@ -9,21 +9,23 @@ class ImageBox extends Base {
   set image(value) {
     if(this._images == value && value.class != Bitmap) return false;
     this._images = value;
+    this.setImage();
     this.eventManger.trigger('changeImage')
   }
 
-  get type() { return this._type }
+  get type() { return this._state }
   set type(value) {
     value = Number(value);
-    if(this._type == value) return false;
-    this._type = value;
+    if(this._state == value) return false;
+    this._state = value;
+    this.setImage();
     this.eventManger.trigger('changeType')
   }
 
   constructor(obj) {
     super(obj);
     this._images = obj.image || new Bitmap(0, 0, 0, 0);
-    this._type = obj.type || 0;
+    this._state = obj.state || 0;
     this._xWheel = 0;
     this._yWheel = 0;
     this.create()
@@ -33,11 +35,11 @@ class ImageBox extends Base {
     if(this._sprite.bitmap != this._images) this._sprite.bitmap = this._images;
     let width = this._sprite.bitmap.width;
     let height = this._sprite.bitmap.height;
-    if (this._type == 0) {
+    if (this._state == 0) {
       this._sprite.setTransform(this.x, this.y, 1, 1);
       width = this.width  < this._sprite.bitmap.width ? this.width : this._sprite.bitmap.width;
       height = this.height < this._sprite.bitmap.height ? this.height : this._sprite.bitmap.height;
-    } else if (this._type == 1) {
+    } else if (this._state == 1) {
       let zoomX = this.width / this._sprite.bitmap.width;
       let zoomY = this.height / this._sprite.bitmap.height;
       this._sprite.setTransform(this.x, this.y, zoomX, zoomY);
@@ -66,7 +68,6 @@ class ImageBox extends Base {
 
   yScroll(value) {
     if(0 == value || this.type != 0) return false;
-    console.log(this.type, this._images.height);
     this._yWheel = RGUI.boundary(this._yWheel + value, 0, this._images.height - this.height);
     this.setImage();
     this.eventManger.trigger('yScroll')
@@ -86,8 +87,8 @@ class ImageBox extends Base {
     this.eventManger.on('changeHeight', {}, function () {
       self.setImage()
     });
-    this.eventManger.on('changeType', {}, function () {
-      self.setImage()
+    this.eventManger.on('changeOpacity', {}, function (info) {
+      self._sprite.opacity = info.new
     })
   }
 

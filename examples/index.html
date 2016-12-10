@@ -25,25 +25,52 @@
           let basicText = new PIXI.Text('');
           basicText.x = 10;
           basicText.y = 10;
-          console.log(Bitmap);
           let bitmap = Bitmap.load('./res/test.png');
-          let ImageBox = new RGUI.ImageBox({
+          let image = new RGUI.ImageBox({
             x: 50,
             y: 50,
-            width: 100,
-            height: 100,
-            type: 1,
+            width: 500,
+            height: 500,
+            type: 0,
+            focus: true,
             image: bitmap
           });
 
+          let button = new RGUI.SpriteButton({
+            x: 600,
+            y: 100,
+            images: [Bitmap.load('./res/0.png'), Bitmap.load('./res/1.png'), Bitmap.load('./res/2.png')]
+          });
+
+          button.eventManger.on('run', {}, function () {
+            console.log(23333);
+            image.type = image.type == 1 ? 0 : 1;
+          });
+
+          image.eventManger.on('a', {}, function () {
+            image.xScroll(-5)
+          });
+          image.eventManger.on('d', {}, function () {
+            image.xScroll(5)
+          });
+          image.eventManger.on('w', {}, function () {
+            image.yScroll(-5)
+          });
+          image.eventManger.on('s', {}, function () {
+            image.yScroll(5)
+          });
+
           stage.addChild(basicText);
-          stage.addChild(ImageBox);
+          stage.addChild(image);
+          stage.addChild(button);
 
           animate();
 
           function animate() {
-            basicText.text = "x:" + Input.x + ' y:' + Input.y;
+            basicText.text = "x:" + Input.x + ' y:' + Input.y + 'w s a d移动图片';
             requestAnimationFrame(animate);
+            button.update();
+            image.update();
             renderer.render(stage);
             Input.update();
           }

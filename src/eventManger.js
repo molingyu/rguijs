@@ -48,7 +48,7 @@ class EventManger extends Svent.EventManger {
   keyboardUpdate(event) {
     let codes = event.name.split(':');
     let name, type;
-    if (codes.length() == 2) {
+    if (codes.length == 2) {
       type = codes[0];
       name = codes[1]
     } else {
@@ -61,7 +61,7 @@ class EventManger extends Svent.EventManger {
     } else if(type == 'up') {
       if(Input.keyUp(name)) this.trigger((event.name))
     } else {
-      Error('Error: error event type.')
+      Error('Error: error event state.')
     }
   }
 

@@ -46,7 +46,8 @@ const RGUI = {
   },
 
   loadControls: function () {
-    this.SpriteButton = require('./controls/imageBox');
+    this.ImageBox = require('./controls/imageBox');
+    this.SpriteButton = require('./controls/spriteButton');
   }
 };
 
