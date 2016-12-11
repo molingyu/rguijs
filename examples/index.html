@@ -60,9 +60,17 @@
             image.yScroll(5)
           });
 
+          let bar = new RGUI.ProgressBar({
+            x: 0,
+            y: 0,
+            width: 100,
+            height: 30
+          });
+
           stage.addChild(basicText);
           stage.addChild(image);
           stage.addChild(button);
+          stage.addChild(bar);
 
           animate();
 
@@ -71,6 +79,7 @@
             requestAnimationFrame(animate);
             button.update();
             image.update();
+            bar.update();
             renderer.render(stage);
             Input.update();
           }

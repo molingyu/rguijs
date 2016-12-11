@@ -1,9 +1,13 @@
 import Base from '../base'
 import RGUI from '../rgui'
-
+//TODO fix bugs
 RGUI.Controls = RGUI.Controls + 1;
 
 class SpriteButton extends Base {
+
+  set width(value) {}
+
+  set height(value) {}
 
   get defaultImage() { return this._images[0] }
   set defaultImage(value) {
@@ -37,8 +41,9 @@ class SpriteButton extends Base {
   set state(value) {
     value = Number(value);
     if(this._state == value) return false;
+    let old = this._state;
     this._state = value;
-    this.eventManger.trigger('changeType')
+    this.eventManger.trigger('changeType', {old: old, new: this._state})
   }
 
   constructor(obj) {

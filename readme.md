@@ -1,5 +1,7 @@
 # RGUI
 
+[![Join the chat](https://badges.gitter.im/rguijs/RMMV.svg)](https://gitter.im/rguijs/RMMV)
+
 RGUI is RPG Maker MV GUI framework.
 
 ## Installation
