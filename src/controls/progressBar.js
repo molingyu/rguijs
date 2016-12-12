@@ -22,7 +22,7 @@ class ProgressBar extends Base {
 
   get value() { return this._value }
   set value(value) {
-    value = RGUI.boundary(value, 0, 1);
+    value = RGUI.boundary(value, 0, 100);
     if(this._value == value) return false;
     let old = this._value;
     this._value = value;
@@ -41,12 +41,12 @@ class ProgressBar extends Base {
   constructor(obj) {
     super(obj);
     this._image = obj.image;
-    this._style = obj.style || {color: '#ff2424'};
+    this._style = obj.style || {radius: 5, fillColor: '#ff4925', strokeColor: '#1F70FF'};
     if(this._image == void 0) {
       this._image = new Bitmap(this.width, this.height);
-      this._image.fillAll(this._style.color);
+      this._image.fillRoundedAll(this._style.radius, this._style.fillColor, this._style.stopColor);
     }
-    this._value = RGUI.boundary(obj.value, 0, 1) || 1;
+    this._value = RGUI.boundary(obj.value, 0, 100) || 100;
     this._type = obj.type || 0;
     this.create()
   }
@@ -54,9 +54,9 @@ class ProgressBar extends Base {
   setImage() {
     if(this._sprite.bitmap != this._image) this._sprite.bitmap = this._image;
     if (this._type == 0) {
-      this._sprite.setFrame(0, 0, this._value * this.width, this.height)
+      this._sprite.setFrame(0, 0, this._value / 100 * this.width, this.height)
     } else {
-      this._sprite.setFrame(0, 0, this.width, this._value * this.height)
+      this._sprite.setFrame(0, 0, this.width, this._value / 100 * this.height)
     }
   }
 
