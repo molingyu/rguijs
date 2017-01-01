@@ -2,7 +2,7 @@
   "name": "rgui",
   "version": "0.1.0",
   "description": "RPG Maker MV GUI framework.",
-  "main": "bin/rgui.js",
+  "main": "src/rgui.js",
   "scripts": {
     "build": "gulp build",
     "test": "make test",
@@ -23,13 +23,11 @@
   "homepage": "https://github.com/molingyu/rguijs#readme",
   "dependencies": {
     "electron": "^1.4.12",
-    "pixi.js": "4.0.3",
-    "svent": "0.0.8"
+    "pixi.js": "4.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.0.0",
     "babel-preset-es2015": "^6.18.0",
-    "colors": "1.1.2",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.1",

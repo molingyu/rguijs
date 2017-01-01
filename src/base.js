@@ -1,6 +1,8 @@
-import Box from './box'
-import PIXI from 'pixi.js'
-import EventManger from './eventManger'
+
+const RGUI = require('./rgui');
+const Box = require('./box');
+const PIXI = require('pixi.js');
+const EventManger = require('./eventManger');
 
 /**
  * Class Base.
@@ -190,4 +192,4 @@ class Base extends PIXI.Container {
   }
 }
 
-export default Base
+module.exports = Base;

@@ -1,5 +1,6 @@
-import Base from '../base'
-import RGUI from '../rgui'
+const Base = require('../base');
+const RGUI = require('../rgui');
+
 //TODO fix bugs
 RGUI.Controls = RGUI.Controls + 1;
 

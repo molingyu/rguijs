@@ -72,4 +72,4 @@ const Box = {
   Round: Round,
 };
 
-export default Box
+module.exports = Box;

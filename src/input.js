@@ -74,4 +74,4 @@ const Input = {
 
 };
 
-export default Input
+module.exports = Input;

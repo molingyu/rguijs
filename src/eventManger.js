@@ -1,6 +1,5 @@
-import Svent from 'svent'
-import Base from './base'
-import Input from './input'
+const Svent = require('../lib/svent');
+const Input = require('./input');
 
 /**
  * Class EventManger.
@@ -47,13 +46,14 @@ class EventManger extends Svent.EventManger {
 
   keyboardUpdate(event) {
     if (event.type == 1 && !this.mouseFocus) return false;
-    if(type == 'down') {
-      if(Input.keyDown(name)) this.trigger(event.name)
-    } else if(type == 'up') {
-      if(Input.keyUp(name)) this.trigger((event.name))
-    } else {
-      Error('Error: error event state.')
-    }
+    //TODO error
+    // if(type == 'down') {
+    //   if(Input.keyDown(name)) this.trigger(event.name)
+    // } else if(type == 'up') {
+    //   if(Input.keyUp(name)) this.trigger((event.name))
+    // } else {
+    //   Error('Error: error event state.')
+    // }
   }
 
 
@@ -89,7 +89,7 @@ class EventManger extends Svent.EventManger {
       'ArrowDown'
     ];
     if(keyName.indexOf(name) >= 0) return true;
-    if(name.match(/F[0-9]+/) == name) return ture;
+    if(name.match(/F[0-9]+/) == name) return true;
     return name.match(/[a-zA-Z0-9`~!@#$%^&*?:;'"><,.()_+-=\\\/\|\{\}\[\]]/) == name
   }
 
@@ -132,4 +132,4 @@ class EventManger extends Svent.EventManger {
 
 }
 
-export default EventManger
+module.exports = EventManger;

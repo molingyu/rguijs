@@ -43,7 +43,6 @@
   let basicText = new PIXI.Text('');
   basicText.x = 10;
   basicText.y = 10;
-  let bitmap = Bitmap.load('./res/test.png');
   let image = new RGUI.ImageBox({
     x: 50,
     y: 50,
@@ -51,7 +50,7 @@
     height: 500,
     type: 0,
     focus: true,
-    image: bitmap
+    image: Bitmap.load('./res/test.png')
   });
 
   let button = new RGUI.SpriteButton({

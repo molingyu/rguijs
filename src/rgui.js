@@ -1,6 +1,6 @@
-import Input from './input'
-import EventManger from './eventManger'
-import Box from './box'
+const Input = require('./input');
+const EventManger = require('./eventManger');
+const Box = require('./box');
 
 /**
  * @module Svent
