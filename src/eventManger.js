@@ -2,9 +2,9 @@ const Svent = require('../lib/svent');
 const Input = require('./input');
 
 /**
- * Class EventManger.
- * @author shitake <z1522716486@hotmail.com>
- * @license MIT <https://mit-license.org/>
+ * 事件管理器类。
+ *
+ * @memberof RGUI
  */
 class EventManger extends Svent.EventManger {
   /**
@@ -39,8 +39,8 @@ class EventManger extends Svent.EventManger {
       this.trigger('mouseOut', {x: x, y: y});
       this.mouseFocus = false
     }
-    if(Input.mouseScroll != 0) {
-      this.trigger('mouseScroll', {scrollValue: Input.mouseScroll})
+    if(Input._mouseScroll != 0) {
+      this.trigger('_mouseScroll', {scrollValue: Input._mouseScroll})
     }
   }
 
@@ -62,7 +62,7 @@ class EventManger extends Svent.EventManger {
       if(name.split(':').length == 1) name = 'down:' + name;
       return true;
     }
-    return ['mouseOut', 'mouseIn', 'mouseScroll'].indexOf(name) >= 0
+    return ['mouseOut', 'mouseIn', '_mouseScroll'].indexOf(name) >= 0
   }
 
   static isKeyboardEvent(name) {

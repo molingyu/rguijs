@@ -3,6 +3,11 @@ const RGUI = require('../rgui');
 
 RGUI.Controls = RGUI.Controls + 1;
 
+/**
+ * 图片框控件。
+ * @memberof RGUI
+ * @extends RGUI.Base
+ */
 class ImageBox extends Base {
 
   get image() { return this._images }

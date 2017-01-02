@@ -3,6 +3,11 @@ const RGUI = require('../rgui');
 
 RGUI.Controls = RGUI.Controls + 1;
 
+/**
+ * 进度条控件。
+ * @memberof RGUI
+ * @extends RGUI.Base
+ */
 class ProgressBar extends Base {
 
   get image() { return this._image }

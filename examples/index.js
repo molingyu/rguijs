@@ -27,7 +27,7 @@ function createWindow() {
     win = null;
   });
 
-  ipcMain.on('show-dev', function (event, arg) {
+  ipcMain.on('show-dev', function () {
     if (win.webContents.isDevToolsOpened()) {
       win.webContents.closeDevTools();
     } else {
@@ -35,7 +35,7 @@ function createWindow() {
     }
   });
 
-  ipcMain.on('FullScreen', function (event, arg) {
+  ipcMain.on('FullScreen', function () {
     if (win.isFullScreen()) {
       win.restore();
     } else {

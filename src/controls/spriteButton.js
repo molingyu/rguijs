@@ -4,6 +4,11 @@ const RGUI = require('../rgui');
 //TODO fix bugs
 RGUI.Controls = RGUI.Controls + 1;
 
+/**
+ * 图片按钮控件。
+ * @memberof RGUI
+ * @extends RGUI.Base
+ */
 class SpriteButton extends Base {
 
   set width(value) {}

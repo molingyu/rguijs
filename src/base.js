@@ -1,13 +1,12 @@
-
 const RGUI = require('./rgui');
 const Box = require('./box');
 const PIXI = require('pixi.js');
 const EventManger = require('./eventManger');
 
 /**
- * Class Base.
- * @author shitake <z1522716486@hotmail.com>
- * @license MIT <https://mit-license.org/>
+ * 控件基类。
+ *
+ * @memberof RGUI
  */
 class Base extends PIXI.Container {
 
@@ -97,6 +96,14 @@ class Base extends PIXI.Container {
   /**
    *
    * @param {Object} obj
+   * @param {Number} obj.x - 控件的 X 坐标。
+   * @param {Number} obj.y - 控件的 X 坐标。
+   * @param {Number} obj.width - 控件的宽度值。
+   * @param {Number} obj.height - 控件的高度值。
+   * @param {RGUI.Box.Rect|RGUI.Box.Round} obj.box - 控件的包围盒。
+   * @param {Boolean} obj.focus - 控件的焦点。
+   * @param {Boolean} obj.status - 控件的状态。
+   * @param {Number} obj.opacity - 控件的透明度。
    */
   constructor(obj = {}) {
     super();
@@ -113,21 +120,37 @@ class Base extends PIXI.Container {
     this._opacity = obj.opacity || 255;
   }
 
+  /**
+   * 定义事件回调函数。
+   */
   defEventCallback() { }
 
+  /**
+   * 控件初始化。
+   */
   create() {
     this.defEventCallback();
     this._em.trigger('create')
   }
 
+  /**
+   * 更新函数。原则上每帧调用一次。
+   */
   update() {
     this._em.update()
   }
 
+  /**
+   * 关闭控件。
+   */
   close() {
     this._em.trigger('close')
   }
 
+  /**
+   * 获得焦点
+   * @returns {boolean}
+   */
   getFocus() {
     if(this.focus) return true;
     this.focus = true;
@@ -135,6 +158,10 @@ class Base extends PIXI.Container {
     return true
   }
 
+  /**
+   * 失去焦点
+   * @returns {boolean}
+   */
   lostFocus() {
     if(!this.focus) return true;
     this.focus = false;
@@ -142,6 +169,10 @@ class Base extends PIXI.Container {
     return true
   }
 
+  /**
+   * 显示控件。
+   * @returns {boolean}
+   */
   show() {
     if(this.visible) return true;
     this.visible = true;
@@ -149,6 +180,10 @@ class Base extends PIXI.Container {
     return true
   }
 
+  /**
+   * 隐藏控件。
+   * @returns {boolean}
+   */
   hide() {
     if(!this.visible) return true;
     this.visible = false;
@@ -156,18 +191,32 @@ class Base extends PIXI.Container {
     return true
   }
 
+  /**
+   * 禁用控件。
+   * @returns {boolean}
+   */
   enable() {
     if(this.status) return true;
     this.status = true;
     this._em.trigger('enable')
   }
 
+  /**
+   * 解除控件禁用。
+   * @returns {boolean}
+   */
   disable() {
     if(!this.status) return true;
     this.status = false;
     this._em.trigger('disable')
   }
 
+  /**
+   * 移动控件指定值。
+   * @param {Number} dx
+   * @param {Number} dy
+   * @returns {boolean}
+   */
   move(dx, dy) {
     if(dx == 0 && dy == 0) return false;
     this.x = this.x + dx;
@@ -175,6 +224,12 @@ class Base extends PIXI.Container {
     this._em.trigger('move', {dx: dx, dy: dy})
   }
 
+  /**
+   * 将控件移动到指定位置。
+   * @param {Number} x
+   * @param {Number} y
+   * @returns {boolean}
+   */
   moveTo(x, y) {
     if(x == this._x && y == this._y) return false;
     let old = {x: this._x, y: this._y};
@@ -183,6 +238,12 @@ class Base extends PIXI.Container {
     this._em.trigger('moveTo', {old: old, new: {x: this._x, y: this._y}})
   }
 
+  /**
+   * 改变控件大小。
+   * @param {Number} width
+   * @param {Number} height
+   * @returns {boolean}
+   */
   changeSize(width, height) {
     if(this._width == width && this._height == height) return false;
     let old = {width: this._width, height: this._height};
