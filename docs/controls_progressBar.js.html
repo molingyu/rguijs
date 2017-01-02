@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Source: controls/progressBar.js</title>
+    
+    
+    
+    
+    
+    <meta property="og:title" content=""/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content=""/>
+    
+    <meta property="og:url" content=""/>
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jaguar.css">
+    
+    
+    <script>
+    var config = {"monospaceLinks":false,"cleverLinks":false,"default":{"outputSourceFiles":true},"applicationName":"RGUI","footer":"Made with ♥ by Goodboy Digital (goodboydigital.com)","copyright":"RGUI Copyright © 2013-2016 Mat Groves.","disqus":"","googleAnalytics":"","openGraph":{"title":"","type":"website","image":"","site_name":"","url":""},"meta":{"title":"","description":"","keyword":""},"linenums":true};
+    </script>
+    
+
+    
+</head>
+<body>
+<div id="wrap" class="clearfix">
+    
+<div class="navigation">
+    <h3 class="applicationName"><a href="index.html">RGUI</a></h3>
+
+    <div class="search">
+        <input id="search" type="text" class="form-control input-sm" placeholder="Search Documentations">
+    </div>
+    <ul class="list">
+    
+        <li class="item" data-name="RGUI">
+            <span class="title">
+                <a href="RGUI.html">RGUI</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="RGUI.Controls"><a href="RGUI.html#.Controls">Controls</a></li>
+            
+                <li data-name="RGUI.KEYBOARD"><a href="RGUI.html#.KEYBOARD">KEYBOARD</a></li>
+            
+                <li data-name="RGUI.MOUSE"><a href="RGUI.html#.MOUSE">MOUSE</a></li>
+            
+                <li data-name="RGUI.VERSION"><a href="RGUI.html#.VERSION">VERSION</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="RGUI.getID"><a href="RGUI.html#.getID">getID</a></li>
+            
+                <li data-name="RGUI.init"><a href="RGUI.html#.init">init</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="RGUI.Box">
+            <span class="title">
+                <a href="RGUI.Box.html">RGUI.Box</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="RGUI.Input">
+            <span class="title">
+                <a href="RGUI.Input.html">RGUI.Input</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="RGUI.Input.mouseScroll"><a href="RGUI.Input.html#.mouseScroll">mouseScroll</a></li>
+            
+                <li data-name="RGUI.Input.x"><a href="RGUI.Input.html#.x">x</a></li>
+            
+                <li data-name="RGUI.Input.y"><a href="RGUI.Input.html#.y">y</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="RGUI.Input.clear"><a href="RGUI.Input.html#.clear">clear</a></li>
+            
+                <li data-name="RGUI.Input.init"><a href="RGUI.Input.html#.init">init</a></li>
+            
+                <li data-name="RGUI.Input.keyDown"><a href="RGUI.Input.html#.keyDown">keyDown</a></li>
+            
+                <li data-name="RGUI.Input.keyPress"><a href="RGUI.Input.html#.keyPress">keyPress</a></li>
+            
+                <li data-name="RGUI.Input.keyUp"><a href="RGUI.Input.html#.keyUp">keyUp</a></li>
+            
+                <li data-name="RGUI.Input.mousePos"><a href="RGUI.Input.html#.mousePos">mousePos</a></li>
+            
+                <li data-name="RGUI.Input.update"><a href="RGUI.Input.html#.update">update</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="RGUI.Base">
+            <span class="title">
+                <a href="RGUI.Base.html">RGUI.Base</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="RGUI.Base#changeSize"><a href="RGUI.Base.html#changeSize">changeSize</a></li>
+            
+                <li data-name="RGUI.Base#close"><a href="RGUI.Base.html#close">close</a></li>
+            
+                <li data-name="RGUI.Base#create"><a href="RGUI.Base.html#create">create</a></li>
+            
+                <li data-name="RGUI.Base#defEventCallback"><a href="RGUI.Base.html#defEventCallback">defEventCallback</a></li>
+            
+                <li data-name="RGUI.Base#disable"><a href="RGUI.Base.html#disable">disable</a></li>
+            
+                <li data-name="RGUI.Base#enable"><a href="RGUI.Base.html#enable">enable</a></li>
+            
+                <li data-name="RGUI.Base#getFocus"><a href="RGUI.Base.html#getFocus">getFocus</a></li>
+            
+                <li data-name="RGUI.Base#hide"><a href="RGUI.Base.html#hide">hide</a></li>
+            
+                <li data-name="RGUI.Base#lostFocus"><a href="RGUI.Base.html#lostFocus">lostFocus</a></li>
+            
+                <li data-name="RGUI.Base#move"><a href="RGUI.Base.html#move">move</a></li>
+            
+                <li data-name="RGUI.Base#moveTo"><a href="RGUI.Base.html#moveTo">moveTo</a></li>
+            
+                <li data-name="RGUI.Base#show"><a href="RGUI.Base.html#show">show</a></li>
+            
+                <li data-name="RGUI.Base#update"><a href="RGUI.Base.html#update">update</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="RGUI.Box.Rect">
+            <span class="title">
+                <a href="RGUI.Box.Rect.html">RGUI.Box.Rect</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="RGUI.Box.Rect#hit"><a href="RGUI.Box.Rect.html#hit">hit</a></li>
+            
+                <li data-name="RGUI.Box.Rect#move"><a href="RGUI.Box.Rect.html#move">move</a></li>
+            
+                <li data-name="RGUI.Box.Rect#moveTo"><a href="RGUI.Box.Rect.html#moveTo">moveTo</a></li>
+            
+                <li data-name="RGUI.Box.Rect#setSize"><a href="RGUI.Box.Rect.html#setSize">setSize</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="RGUI.Box.Round">
+            <span class="title">
+                <a href="RGUI.Box.Round.html">RGUI.Box.Round</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="RGUI.Box.Round#hit"><a href="RGUI.Box.Round.html#hit">hit</a></li>
+            
+                <li data-name="RGUI.Box.Round#move"><a href="RGUI.Box.Round.html#move">move</a></li>
+            
+                <li data-name="RGUI.Box.Round#moveTo"><a href="RGUI.Box.Round.html#moveTo">moveTo</a></li>
+            
+                <li data-name="RGUI.Box.Round#setSize"><a href="RGUI.Box.Round.html#setSize">setSize</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="RGUI.EventManger">
+            <span class="title">
+                <a href="RGUI.EventManger.html">RGUI.EventManger</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="RGUI.EventManger#on"><a href="RGUI.EventManger.html#on">on</a></li>
+            
+                <li data-name="RGUI.EventManger#onAsync"><a href="RGUI.EventManger.html#onAsync">onAsync</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="RGUI.ImageBox">
+            <span class="title">
+                <a href="RGUI.ImageBox.html">RGUI.ImageBox</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="RGUI.ImageBox#changeSize"><a href="RGUI.ImageBox.html#changeSize">changeSize</a></li>
+            
+                <li data-name="RGUI.ImageBox#close"><a href="RGUI.ImageBox.html#close">close</a></li>
+            
+                <li data-name="RGUI.ImageBox#create"><a href="RGUI.ImageBox.html#create">create</a></li>
+            
+                <li data-name="RGUI.ImageBox#defEventCallback"><a href="RGUI.ImageBox.html#defEventCallback">defEventCallback</a></li>
+            
+                <li data-name="RGUI.ImageBox#disable"><a href="RGUI.ImageBox.html#disable">disable</a></li>
+            
+                <li data-name="RGUI.ImageBox#enable"><a href="RGUI.ImageBox.html#enable">enable</a></li>
+            
+                <li data-name="RGUI.ImageBox#getFocus"><a href="RGUI.ImageBox.html#getFocus">getFocus</a></li>
+            
+                <li data-name="RGUI.ImageBox#hide"><a href="RGUI.ImageBox.html#hide">hide</a></li>
+            
+                <li data-name="RGUI.ImageBox#lostFocus"><a href="RGUI.ImageBox.html#lostFocus">lostFocus</a></li>
+            
+                <li data-name="RGUI.ImageBox#move"><a href="RGUI.ImageBox.html#move">move</a></li>
+            
+                <li data-name="RGUI.ImageBox#moveTo"><a href="RGUI.ImageBox.html#moveTo">moveTo</a></li>
+            
+                <li data-name="RGUI.ImageBox#show"><a href="RGUI.ImageBox.html#show">show</a></li>
+            
+                <li data-name="RGUI.ImageBox#update"><a href="RGUI.ImageBox.html#update">update</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="RGUI.ProgressBar">
+            <span class="title">
+                <a href="RGUI.ProgressBar.html">RGUI.ProgressBar</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="RGUI.ProgressBar#changeSize"><a href="RGUI.ProgressBar.html#changeSize">changeSize</a></li>
+            
+                <li data-name="RGUI.ProgressBar#close"><a href="RGUI.ProgressBar.html#close">close</a></li>
+            
+                <li data-name="RGUI.ProgressBar#create"><a href="RGUI.ProgressBar.html#create">create</a></li>
+            
+                <li data-name="RGUI.ProgressBar#defEventCallback"><a href="RGUI.ProgressBar.html#defEventCallback">defEventCallback</a></li>
+            
+                <li data-name="RGUI.ProgressBar#disable"><a href="RGUI.ProgressBar.html#disable">disable</a></li>
+            
+                <li data-name="RGUI.ProgressBar#enable"><a href="RGUI.ProgressBar.html#enable">enable</a></li>
+            
+                <li data-name="RGUI.ProgressBar#getFocus"><a href="RGUI.ProgressBar.html#getFocus">getFocus</a></li>
+            
+                <li data-name="RGUI.ProgressBar#hide"><a href="RGUI.ProgressBar.html#hide">hide</a></li>
+            
+                <li data-name="RGUI.ProgressBar#lostFocus"><a href="RGUI.ProgressBar.html#lostFocus">lostFocus</a></li>
+            
+                <li data-name="RGUI.ProgressBar#move"><a href="RGUI.ProgressBar.html#move">move</a></li>
+            
+                <li data-name="RGUI.ProgressBar#moveTo"><a href="RGUI.ProgressBar.html#moveTo">moveTo</a></li>
+            
+                <li data-name="RGUI.ProgressBar#show"><a href="RGUI.ProgressBar.html#show">show</a></li>
+            
+                <li data-name="RGUI.ProgressBar#update"><a href="RGUI.ProgressBar.html#update">update</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="RGUI.SpriteButton">
+            <span class="title">
+                <a href="RGUI.SpriteButton.html">RGUI.SpriteButton</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="RGUI.SpriteButton#changeSize"><a href="RGUI.SpriteButton.html#changeSize">changeSize</a></li>
+            
+                <li data-name="RGUI.SpriteButton#close"><a href="RGUI.SpriteButton.html#close">close</a></li>
+            
+                <li data-name="RGUI.SpriteButton#create"><a href="RGUI.SpriteButton.html#create">create</a></li>
+            
+                <li data-name="RGUI.SpriteButton#defEventCallback"><a href="RGUI.SpriteButton.html#defEventCallback">defEventCallback</a></li>
+            
+                <li data-name="RGUI.SpriteButton#disable"><a href="RGUI.SpriteButton.html#disable">disable</a></li>
+            
+                <li data-name="RGUI.SpriteButton#enable"><a href="RGUI.SpriteButton.html#enable">enable</a></li>
+            
+                <li data-name="RGUI.SpriteButton#getFocus"><a href="RGUI.SpriteButton.html#getFocus">getFocus</a></li>
+            
+                <li data-name="RGUI.SpriteButton#hide"><a href="RGUI.SpriteButton.html#hide">hide</a></li>
+            
+                <li data-name="RGUI.SpriteButton#lostFocus"><a href="RGUI.SpriteButton.html#lostFocus">lostFocus</a></li>
+            
+                <li data-name="RGUI.SpriteButton#move"><a href="RGUI.SpriteButton.html#move">move</a></li>
+            
+                <li data-name="RGUI.SpriteButton#moveTo"><a href="RGUI.SpriteButton.html#moveTo">moveTo</a></li>
+            
+                <li data-name="RGUI.SpriteButton#show"><a href="RGUI.SpriteButton.html#show">show</a></li>
+            
+                <li data-name="RGUI.SpriteButton#update"><a href="RGUI.SpriteButton.html#update">update</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+    </ul>
+</div>
+    <div class="main">
+        <h1 class="page-title" data-filename="controls_progressBar.js.html">Source: controls/progressBar.js</h1>
+        
+
+
+    
+    <section>
+        <article>
+            <pre id="source-code" class="prettyprint source linenums"><code>const Base = require('../base');
+const RGUI = require('../rgui');
+
+RGUI.Controls = RGUI.Controls + 1;
+
+/**
+ * 进度条控件。
+ * @memberof RGUI
+ * @extends RGUI.Base
+ */
+class ProgressBar extends Base {
+
+  get image() { return this._image }
+  set image(value) {
+    if(this._image == value) return false;
+    this._image = value;
+    this.eventManger.trigger('changeImage')
+  }
+
+  get style() { return this._style }
+  set style(value) {
+    if(this._style == value) return false;
+    let old = this._style;
+    this._style = value;
+    this.eventManger.trigger('changeStyle', {old: old, new: this._style})
+  }
+
+  get value() { return this._value }
+  set value(value) {
+    value = RGUI.boundary(value, 0, 100);
+    if(this._value == value) return false;
+    let old = this._value;
+    this._value = value;
+    this.eventManger.trigger('changeValue', {old : old, new: this._value})
+  }
+
+  get type() { return this._type }
+  set type(value) {
+    value = RGUI.boundary(value, 0, 1);
+    if(this._value == value) return false;
+    let old = this._value;
+    this._type = value;
+    this.eventManger.trigger('changeType', {old: old, new: this._type})
+  }
+
+  constructor(obj) {
+    super(obj);
+    this._image = obj.image;
+    this._style = obj.style || {radius: 5, fillColor: '#ff4925', strokeColor: '#1F70FF'};
+    if(this._image == void 0) {
+      this._image = new Bitmap(this.width, this.height);
+      this._image.fillRoundedAll(this._style.radius, this._style.fillColor, this._style.stopColor);
+    }
+    this._value = RGUI.boundary(obj.value, 0, 100) || 100;
+    this._type = obj.type || 0;
+    this.create()
+  }
+
+  setImage() {
+    if(this._sprite.bitmap != this._image) this._sprite.bitmap = this._image;
+    if (this._type == 0) {
+      this._sprite.setFrame(0, 0, this._value / 100 * this.width, this.height)
+    } else {
+      this._sprite.setFrame(0, 0, this.width, this._value / 100 * this.height)
+    }
+  }
+
+  create() {
+    this._sprite = new Sprite();
+    this._sprite.x = this.x;
+    this._sprite.y = this.y;
+    this._sprite.width = this.width;
+    this._sprite.height = this.height;
+    this.addChild(this._sprite);
+    let self = this;
+    this._image.addLoadListener(function(){ self.setImage() });
+    super.create()
+  }
+
+  defEventCallback() {
+    let self = this;
+    this.eventManger.on('changeX', {}, function () {
+      self._sprite.x = self.x;
+    });
+    this.eventManger.on('changeY', {}, function () {
+      self._sprite.y = self.y;
+    });
+    //TODO
+    this.eventManger.on('changeWidth', {}, function () {
+      self.setImage()
+    });
+    //TODO
+    this.eventManger.on('changeHeight', {}, function () {
+      self.setImage()
+    });
+    this.eventManger.on('changeImage', {}, function () {
+      self.setImage()
+    });
+    this.eventManger.on('changeStyle', {}, function () {
+      self._image.fillAll(self._style.color)
+    });
+    this.eventManger.on('changeValue', {}, function () {
+      self.setImage();
+    });
+    this.eventManger.on('changeType', {}, function () {
+      self.setImage();
+    })
+  }
+}
+
+module.exports = ProgressBar;</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+
+        
+
+        <footer>
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Jan 02 2017 19:48:01 GMT+0800 (CST)
+        </footer>
+    </div>
+</div>
+<script>prettyPrint();</script>
+<script src="scripts/jaguar.js"></script>
+</body>
+</html>
