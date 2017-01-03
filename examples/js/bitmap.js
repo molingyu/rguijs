@@ -374,25 +374,76 @@ Bitmap.prototype.clear = function() {
  * @param {Number} y The y coordinate for the upper-left corner
  * @param {Number} width The width of the rectangle to clear
  * @param {Number} height The height of the rectangle to clear
- * @param {String} color The color of the rectangle in CSS format
+ * @param {String} fillColor The fill color of the rectangle in CSS format
+ * @param {String} [strokeColor=fillColor] The stroke color of the rectangle in CSS format
  */
-Bitmap.prototype.fillRect = function(x, y, width, height, color) {
+Bitmap.prototype.fillRect = function(x, y, width, height, fillColor, strokeColor) {
   var context = this._context;
   context.save();
-  context.fillStyle = color;
   context.fillRect(x, y, width, height);
+  context.strokeStyle = strokeColor;
+  context.fillStyle = fillColor;
   context.restore();
   this._setDirty();
+};
+
+/**
+ * Fills the specified rectangle.
+ *
+ * @method fillRect
+ * @param {Number} x The x coordinate for the upper-left corner
+ * @param {Number} y The y coordinate for the upper-left corner
+ * @param {Number} width The width of the rectangle to clear
+ * @param {Number} height The height of the rectangle to clear
+ * @param {String} radius The radius of the rectangle
+ * @param {String} fillColor The fill color of the rectangle in CSS format
+ * @param {String} [strokeColor=fillColor] The stroke color of the rectangle in CSS format
+ */
+Bitmap.prototype.fillRoundedRect = function (x, y, width, height, radius, fillColor, strokeColor) {
+  strokeColor = strokeColor || fillColor;
+  var context = this._context;
+  context.save();
+  context.beginPath();
+  if (width> 0) context.moveTo(x + radius, y);
+  else  context.moveTo(x - radius, y);
+  context.arcTo(x+width, y, x + width, y+height, radius);
+  context.arcTo(x+width, y + height,x,y+height, radius);
+  context.arcTo(x, y+height, x, y, radius);
+  if(width> 0) {
+    context.arcTo(x, y, x+radius, y, radius);
+  }
+  else{
+    context.arcTo(x, y, x-radius, y, radius);
+  }
+  context.strokeStyle = strokeColor;
+  context.fillStyle = fillColor;
+  context.stroke();
+  context.fill();
+  context.restore();
+  this._setDirty();
+};
+
+/**
+ * Fills the rounded rect bitmap.
+ *
+ * @method fillRoundedAll
+ * @param {String} radius The radius of the rectangle
+ * @param {String} fillColor The fill color of the rectangle in CSS format
+ * @param {String} [strokeColor=fillColor] The stroke color of the rectangle in CSS format
+ */
+Bitmap.prototype.fillRoundedAll = function(radius, fillColor, strokeColor) {
+  this.fillRoundedRect(0, 0, this.width, this.height, radius, fillColor, strokeColor);
 };
 
 /**
  * Fills the entire bitmap.
  *
  * @method fillAll
- * @param {String} color The color of the rectangle in CSS format
+ * @param {String} fillColor The fill color of the rectangle in CSS format
+ * @param {String} [strokeColor=fillColor] The stroke color of the rectangle in CSS format
  */
-Bitmap.prototype.fillAll = function(color) {
-  this.fillRect(0, 0, this.width, this.height, color);
+Bitmap.prototype.fillAll = function(fillColor, strokeColor) {
+  this.fillRect(0, 0, this.width, this.height, fillColor, strokeColor);
 };
 
 /**

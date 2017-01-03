@@ -1,26 +1,64 @@
-import Input from './input'
-import EventManger from './eventManger'
-import Box from './box'
-
 /**
- * @module Svent
+ * RPGMaker MV GUI 框架。
+ *
+ * @module RGUI
+ * @namespace RGUI
  * @author shitake <z1522716486@hotmail.com>
  * @license MIT <https://mit-license.org/>
  */
 const RGUI = {
+  Input: require('./input'),
+  EventManger: require('./eventManger'),
+  Box: require('./box'),
+  /**
+   * RGUI 当前版本。
+   *
+   * @static
+   * @constant
+   * @name VERSION
+   * @memberof RGUI
+   * @type {String}
+   */
   VERSION: '0.1.0',
+  /**
+   * 是否支持鼠标。
+   *
+   * @name MOUSE
+   * @memberof RGUI
+   * @type {Boolean}
+   */
   MOUSE: true,
+  /**
+   * 是否支持键盘。
+   *
+   * @name KEYBOARD
+   * @memberof RGUI
+   * @type {Boolean}
+   */
   KEYBOARD: true,
+  /**
+   * 已加载控件数。
+   *
+   * @name Controls
+   * @memberof RGUI
+   * @type {Number}
+   */
   Controls: 0,
-  Input: Input,
-  EventManger: EventManger,
-  Box: Box,
+  /**
+   * 初始化 RGUI 模块。
+   * @memberof RGUI
+   */
   init: function () {
     this._ID = 0;
     this.loadControls();
     this.seyHello()
   },
 
+  /**
+   * 获取控件 ID。
+   * @memberof RGUI
+   * @returns {Number}
+   */
   getID: function () {
     return this._ID++
   },

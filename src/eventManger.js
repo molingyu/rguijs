@@ -1,11 +1,10 @@
-import Svent from 'svent'
-import Base from './base'
-import Input from './input'
+const Svent = require('../lib/svent');
+const Input = require('./input');
 
 /**
- * Class EventManger.
- * @author shitake <z1522716486@hotmail.com>
- * @license MIT <https://mit-license.org/>
+ * 事件管理器类。
+ *
+ * @memberof RGUI
  */
 class EventManger extends Svent.EventManger {
   /**
@@ -40,41 +39,34 @@ class EventManger extends Svent.EventManger {
       this.trigger('mouseOut', {x: x, y: y});
       this.mouseFocus = false
     }
-    if(Input.mouseScroll != 0) {
-      this.trigger('mouseScroll', {scrollValue: Input.mouseScroll})
+    if(Input._mouseScroll != 0) {
+      this.trigger('_mouseScroll', {scrollValue: Input._mouseScroll})
     }
   }
 
   keyboardUpdate(event) {
-    let codes = event.name.split(':');
-    let name, type;
-    if (codes.length == 2) {
-      type = codes[0];
-      name = codes[1]
-    } else {
-      type = 'down';
-      name = codes[0]
-    }
-    if (name.indexOf() >= 0 && !this.mouseFocus) return false;
-    if(type == 'down') {
-      if(Input.keyDown(name)) this.trigger(event.name)
-    } else if(type == 'up') {
-      if(Input.keyUp(name)) this.trigger((event.name))
-    } else {
-      Error('Error: error event state.')
-    }
+    if (event.type == 1 && !this.mouseFocus) return false;
+    //TODO error
+    // if(type == 'down') {
+    //   if(Input.keyDown(name)) this.trigger(event.name)
+    // } else if(type == 'up') {
+    //   if(Input.keyUp(name)) this.trigger((event.name))
+    // } else {
+    //   Error('Error: error event state.')
+    // }
   }
 
 
   static isMouseEvent(name) {
-    return ['mouseOut', 'mouseIn', 'mouseScroll'].indexOf(name) >= 0
+    if(['MouseLeft', 'MouseMiddle', 'MouseRight'].indexOf(name) >= 0) {
+      if(name.split(':').length == 1) name = 'down:' + name;
+      return true;
+    }
+    return ['mouseOut', 'mouseIn', '_mouseScroll'].indexOf(name) >= 0
   }
 
   static isKeyboardEvent(name) {
     let keyName = [
-      'MouseLeft',
-      'MouseMiddle',
-      'MouseRight',
       'Shift',
       'Tab',
       'CapsLock',
@@ -97,7 +89,7 @@ class EventManger extends Svent.EventManger {
       'ArrowDown'
     ];
     if(keyName.indexOf(name) >= 0) return true;
-    if(name.match(/F[0-9]+/) == name) return ture;
+    if(name.match(/F[0-9]+/) == name) return true;
     return name.match(/[a-zA-Z0-9`~!@#$%^&*?:;'"><,.()_+-=\\\/\|\{\}\[\]]/) == name
   }
 
@@ -113,6 +105,7 @@ class EventManger extends Svent.EventManger {
     if(EventManger.isMouseEvent(name)) type = 1;
     if(EventManger.isKeyboardEvent(name)){
       type = 2;
+      if(name.split(':').length == 1) name = 'down:' + name;
       this.keyboardEvent.push(name)
     }
     conf.type = type;
@@ -139,4 +132,4 @@ class EventManger extends Svent.EventManger {
 
 }
 
-export default EventManger
+module.exports = EventManger;

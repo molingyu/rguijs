@@ -1,91 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Base</title>
-    </head>
-    <body>
-        <script>
-          let ipcRenderer = require('electron').ipcRenderer;
-          ipcRenderer.send('show-dev');
+<head>
+    <meta charset="UTF-8">
+    <title>Base</title>
+</head>
+<body>
+<div id="main">
+    <div>
+        x:<label>
+        <input type="number" id="x">
+    </label>
+        y:<label>
+        <input type="number" id="y">
+    </label>
+        w:<label>
+        <input type="number" id="width">
+    </label>
+        h:<label>
+        <input type="number" id="height">
+    </label>
+    </div>
+</div>
 
-          require('pixi.js');
-          const Bitmap = require('./js/bitmap');
-          const Sprite = require('./js/sprite');
-          const RGUI = require('../lib/rgui');
-          const Input = RGUI.Input;
+<script>
+  let ipcRenderer = require('electron').ipcRenderer;
+  ipcRenderer.send('show-dev');
 
-          let renderer = PIXI.autoDetectRenderer(800, 600,{backgroundColor : 0x1099bb});
-          document.body.appendChild(renderer.view);
-          let stage = new PIXI.Container();
+  require('pixi.js');
+  const Bitmap = require('./js/bitmap');
+  const Sprite = require('./js/sprite');
+  const RGUI = require('../src/rgui');
+  const Input = RGUI.Input;
 
-          RGUI.init();
-          Input.init();
+  let renderer = PIXI.autoDetectRenderer(800, 600,{backgroundColor : 0x1099bb});
+  document.getElementById('main').appendChild(renderer.view);
+  let stage = new PIXI.Container();
 
-          let basicText = new PIXI.Text('');
-          basicText.x = 10;
-          basicText.y = 10;
-          let bitmap = Bitmap.load('./res/test.png');
-          let image = new RGUI.ImageBox({
-            x: 50,
-            y: 50,
-            width: 500,
-            height: 500,
-            type: 0,
-            focus: true,
-            image: bitmap
-          });
+  RGUI.init();
+  Input.init();
+  let self;
 
-          let button = new RGUI.SpriteButton({
-            x: 600,
-            y: 100,
-            images: [Bitmap.load('./res/0.png'), Bitmap.load('./res/1.png'), Bitmap.load('./res/2.png')]
-          });
+  let basicText = new PIXI.Text('');
+  basicText.x = 10;
+  basicText.y = 10;
+  let image = new RGUI.ImageBox({
+    x: 50,
+    y: 50,
+    width: 500,
+    height: 500,
+    type: 0,
+    focus: true,
+    image: Bitmap.load('./res/test.png')
+  });
 
-          button.eventManger.on('run', {}, function () {
-            console.log(23333);
-            image.type = image.type == 1 ? 0 : 1;
-          });
+  let button = new RGUI.SpriteButton({
+    x: 600,
+    y: 100,
+    images: [Bitmap.load('./res/0.png'), Bitmap.load('./res/1.png'), Bitmap.load('./res/2.png')]
+  });
 
-          image.eventManger.on('a', {}, function () {
-            image.xScroll(-5)
-          });
-          image.eventManger.on('d', {}, function () {
-            image.xScroll(5)
-          });
-          image.eventManger.on('w', {}, function () {
-            image.yScroll(-5)
-          });
-          image.eventManger.on('s', {}, function () {
-            image.yScroll(5)
-          });
+  button.eventManger.on('run', {}, function () {
+    console.log(23333);
+    image.type = image.type == 1 ? 0 : 1;
+  });
 
-          let bar = new RGUI.ProgressBar({
-            x: 0,
-            y: 0,
-            width: 100,
-            height: 30
-          });
+  image.eventManger.on('a', {}, function () {
+    image.xScroll(-5)
+  });
+  image.eventManger.on('d', {}, function () {
+    image.xScroll(5)
+  });
+  image.eventManger.on('w', {}, function () {
+    image.yScroll(-5)
+  });
+  image.eventManger.on('s', {}, function () {
+    image.yScroll(5)
+  });
 
-          stage.addChild(basicText);
-          stage.addChild(image);
-          stage.addChild(button);
-          stage.addChild(bar);
+  let bar = new RGUI.ProgressBar({
+    x: 0,
+    y: 0,
+    width: 200,
+    height: 10
+  });
 
-          animate();
+  image.eventManger.on('click', {}, function () {
+    setObject(image)
+  });
 
-          function animate() {
-            basicText.text = "x:" + Input.x + ' y:' + Input.y + 'w s a d移动图片';
-            requestAnimationFrame(animate);
-            button.update();
-            image.update();
-            bar.update();
-            renderer.render(stage);
-            Input.update();
-          }
+  stage.addChild(basicText);
+  stage.addChild(image);
+  stage.addChild(button);
+  stage.addChild(bar);
 
+  animate();
 
+  function animate() {
+    basicText.text = "x:" + Input.x + ' y:' + Input.y + 'w s a d移动图片';
+    requestAnimationFrame(animate);
+    button.update();
+    image.update();
+    bar.update();
+    renderer.render(stage);
+    update();
+    Input.update();
+  }
 
-        </script>
-    </body>
+  function update () {
+    if(self == void 0) return false;
+    self.x = document.getElementById('x').value;
+    self.y = document.getElementById('y').value;
+    self.width =  document.getElementById('width').value;
+    self.height = document.getElementById('height').value;
+  }
+
+  function setObject(object) {
+    self = object;
+    document.getElementById('x').value = self.x;
+    document.getElementById('y').value = self.y;
+    document.getElementById('width').value = self.width;
+    document.getElementById('height').value = self.height;
+  }
+
+</script>
+
+</body>
 </html>
