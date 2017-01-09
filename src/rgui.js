@@ -63,10 +63,24 @@ const RGUI = {
     return this._ID++
   },
 
+  /**
+   * 将指定值转化到特定区间。
+   *
+   * @memberof RGUI
+   * @param {Number} num 欲判断的值。
+   * @param {Number} min 区间的下界。
+   * @param {Number} max 区间的上界。
+   * @returns {Number}
+   */
   boundary: function (num, min, max) {
     return num > min ? num < max ? num : max : min
   },
 
+  /**
+   * 输出当前运行的 RGUI 的版本和控件数。
+   *
+   * @memberof RGUI
+   */
   seyHello: function () {
     let args = [
       '\n %c %c %c RGUI ' + this.VERSION +' - ✰ Controls:' + this.Controls +  ' ✰  %c ' + ' %c ' + ' http://github.com/molingyu/rguijs/  %c %c ♥%c♥%c♥ \n\n',
@@ -84,6 +98,7 @@ const RGUI = {
   },
 
   loadControls: function () {
+    this.Button = require('./controls/Button');
     this.ImageBox = require('./controls/imageBox');
     this.SpriteButton = require('./controls/spriteButton');
     this.ProgressBar = require('./controls/progressBar');

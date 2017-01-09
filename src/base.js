@@ -10,8 +10,18 @@ const EventManger = require('./eventManger');
  */
 class Base extends PIXI.Container {
 
+  /**
+   * 控件 ID ，每个控件实例该值唯一。
+   * @static
+   * @returns {Number}
+   */
   get uID() { return this._uID }
 
+  /**
+   * Y 坐标。
+   *
+   * @returns {Number}
+   */
   get x() { return this._x }
   set x(value) {
     value = Number(value);
@@ -22,6 +32,11 @@ class Base extends PIXI.Container {
     this._em.trigger('changeX', {old: old, new: this._x})
   }
 
+  /**
+   * X 坐标。
+   *
+   * @returns {Number}
+   */
   get y() { return this._y }
   set y(value) {
     value = Number(value);
@@ -32,6 +47,11 @@ class Base extends PIXI.Container {
     this._em.trigger('changeY', {old: old, new: this._y})
   }
 
+  /**
+   * 宽度。
+   *
+   * @returns {Number}
+   */
   get width() { return this._width }
   set width(value) {
     value = Number(value);
@@ -42,6 +62,11 @@ class Base extends PIXI.Container {
     this._em.trigger('changeWidth', {old: old, new: this._width})
   }
 
+  /**
+   * 高度。
+   *
+   * @returns {Number}
+   */
   get height() { return this._height }
   set height(value) {
     value = Number(value);
@@ -52,8 +77,18 @@ class Base extends PIXI.Container {
     this._em.trigger('changeHeight', {old: old, new: this._height})
   }
 
+  /**
+   * 包围盒。
+   * @static
+   * @returns {RGUI.Box.Rect|RGUI.Box.Round}
+   */
   get box() { return this._box }
 
+  /**
+   * 焦点。
+   *
+   * @returns {Number}
+   */
   get focus() { return this._focus }
   set focus(value) {
     value = Boolean(value);
@@ -63,16 +98,25 @@ class Base extends PIXI.Container {
     this._em.trigger('changeFocus', {old: old, new: this._focus})
   }
 
-  //TODO:
-  // get openness() { return this._openness }
-  // set openness(value) {
-  //   value = Boolean(value);
-  //   if(this._openness == value) return false;
-  //   let old = this._openness;
-  //   this._openness = value;
-  //   this._em.trigger('changeOpenness', {old: old, new: this._openness})
-  // }
+  /**
+   * 可见性。
+   *
+   * @returns {Boolean}
+   */
+  get visible() { return this._visible }
+  set visible(value) {
+    value = Boolean(value);
+    if(this._visible == value || !this._em) return false;
+    let old = this._visible;
+    this._visible = value;
+    this._em.trigger('changeVisible', {old: old, new: this._visible})
+  }
 
+  /**
+   * 状态，是否禁用。
+   *
+   * @returns {Boolean}
+   */
   get status() { return this._status }
   set status(value) {
     value = Boolean(value);
@@ -82,6 +126,11 @@ class Base extends PIXI.Container {
     this._em.trigger('changeStatus', {old: old, new: this._status})
   }
 
+  /**
+   * 透明度。
+   *
+   * @returns {Number}
+   */
   get opacity() { return this._opacity }
   set opacity(value) {
     value = Number(value);
@@ -91,6 +140,12 @@ class Base extends PIXI.Container {
     this._em.trigger('changeOpacity', {old: old, new: this._opacity})
   }
 
+  /**
+   * 事件管理器。
+   *
+   * @static
+   * @returns {EventManger}
+   */
   get eventManger() { return this._em }
 
   /**
@@ -102,6 +157,7 @@ class Base extends PIXI.Container {
    * @param {Number} obj.height - 控件的高度值。
    * @param {RGUI.Box.Rect|RGUI.Box.Round} obj.box - 控件的包围盒。
    * @param {Boolean} obj.focus - 控件的焦点。
+   * @param {Boolean} obj.visible - 控件的可见性。
    * @param {Boolean} obj.status - 控件的状态。
    * @param {Number} obj.opacity - 控件的透明度。
    */
@@ -115,13 +171,15 @@ class Base extends PIXI.Container {
     this._height = obj.height || 0;
     this._box = obj.box ||new Box.Rect(this.x, this.y, this._width, this._height);
     this._focus = obj.focus || false;
-    // this._openness = obj.openness || true;
+    this._visible = obj.visible || true;
     this._status = obj.status || true;
     this._opacity = obj.opacity || 255;
   }
 
   /**
    * 定义事件回调函数。
+   *
+   * @interface
    */
   defEventCallback() { }
 

@@ -10,6 +10,11 @@ RGUI.Controls = RGUI.Controls + 1;
  */
 class ImageBox extends Base {
 
+  /**
+   * 图片框里的图片。
+   *
+   * @returns { Bitmap }
+   */
   get image() { return this._images }
   set image(value) {
     if(this._images == value && value.class != Bitmap) return false;

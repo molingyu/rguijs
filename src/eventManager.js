@@ -2,8 +2,9 @@ const Svent = require('../lib/svent');
 const Input = require('./input');
 
 /**
- * 事件管理器类。
+ * 事件管理器类，继承自 [Svent.EventManger](https://github.com/molingyu/sventjs)。
  *
+ * @extends Svent.EventManger
  * @memberof RGUI
  */
 class EventManger extends Svent.EventManger {
@@ -13,6 +14,7 @@ class EventManger extends Svent.EventManger {
    */
   constructor(obj) {
     super();
+    this._class = EventManger;
     this.obj = obj;
     this.mouseFocus = false;
     this.keyboardEvent = []
