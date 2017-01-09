@@ -8,7 +8,7 @@
  */
 const RGUI = {
   Input: require('./input'),
-  EventManger: require('./eventManger'),
+  EventManager: require('./eventManager'),
   Box: require('./box'),
   /**
    * RGUI 当前版本。
@@ -51,6 +51,7 @@ const RGUI = {
   init: function () {
     this._ID = 0;
     this.loadControls();
+    Input.init();
     this.seyHello()
   },
 

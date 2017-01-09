@@ -18,6 +18,7 @@ class Rect {
    * @param {Number} height - 矩形的高度。
    */
   constructor(x = 0, y = 0, width = 0, height = 0) {
+    this._class = Rect;
     this.x = x;
     this.y = y;
     this.width = width;

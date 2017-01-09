@@ -14,7 +14,7 @@ class ProgressBar extends Base {
   set image(value) {
     if(this._image == value) return false;
     this._image = value;
-    this.eventManger.trigger('changeImage')
+    this.eventManager.trigger('changeImage')
   }
 
   get style() { return this._style }
@@ -22,7 +22,7 @@ class ProgressBar extends Base {
     if(this._style == value) return false;
     let old = this._style;
     this._style = value;
-    this.eventManger.trigger('changeStyle', {old: old, new: this._style})
+    this.eventManager.trigger('changeStyle', {old: old, new: this._style})
   }
 
   get value() { return this._value }
@@ -31,7 +31,7 @@ class ProgressBar extends Base {
     if(this._value == value) return false;
     let old = this._value;
     this._value = value;
-    this.eventManger.trigger('changeValue', {old : old, new: this._value})
+    this.eventManager.trigger('changeValue', {old : old, new: this._value})
   }
 
   get type() { return this._type }
@@ -40,7 +40,7 @@ class ProgressBar extends Base {
     if(this._value == value) return false;
     let old = this._value;
     this._type = value;
-    this.eventManger.trigger('changeType', {old: old, new: this._type})
+    this.eventManager.trigger('changeType', {old: old, new: this._type})
   }
 
   constructor(obj) {
@@ -79,30 +79,30 @@ class ProgressBar extends Base {
 
   defEventCallback() {
     let self = this;
-    this.eventManger.on('changeX', {}, function () {
+    this.eventManager.on('changeX', {}, function () {
       self._sprite.x = self.x;
     });
-    this.eventManger.on('changeY', {}, function () {
+    this.eventManager.on('changeY', {}, function () {
       self._sprite.y = self.y;
     });
     //TODO
-    this.eventManger.on('changeWidth', {}, function () {
+    this.eventManager.on('changeWidth', {}, function () {
       self.setImage()
     });
     //TODO
-    this.eventManger.on('changeHeight', {}, function () {
+    this.eventManager.on('changeHeight', {}, function () {
       self.setImage()
     });
-    this.eventManger.on('changeImage', {}, function () {
+    this.eventManager.on('changeImage', {}, function () {
       self.setImage()
     });
-    this.eventManger.on('changeStyle', {}, function () {
+    this.eventManager.on('changeStyle', {}, function () {
       self._image.fillAll(self._style.color)
     });
-    this.eventManger.on('changeValue', {}, function () {
+    this.eventManager.on('changeValue', {}, function () {
       self.setImage();
     });
-    this.eventManger.on('changeType', {}, function () {
+    this.eventManager.on('changeType', {}, function () {
       self.setImage();
     })
   }

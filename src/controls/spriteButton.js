@@ -19,28 +19,28 @@ class SpriteButton extends Base {
   set defaultImage(value) {
     if(this._images[0] == value && value.class != Bitmap) return false;
     this._images[0] = value;
-    this.eventManger.trigger('changeDefaultImage')
+    this.eventManager.trigger('changeDefaultImage')
   }
 
   get focusImage() { return this._images[1] }
   set focusImage(value) {
     if(this._images[1] == value && value.class != Bitmap) return false;
     this._images[1] = value;
-    this.eventManger.trigger('changeFocusImage')
+    this.eventManager.trigger('changeFocusImage')
   }
 
   get downImage() { return this._images[2] }
   set downImage(value) {
     if(this._images[2] == value && value.class != Bitmap) return false;
     this._images[2] = value;
-    this.eventManger.trigger('changeDownImage')
+    this.eventManager.trigger('changeDownImage')
   }
 
   get enfeebleImage() { return this._images[3] }
   set enfeebleImage(value) {
     if(this._images[3] == value && value.class != Bitmap) return false;
     this._images[3] = value;
-    this.eventManger.trigger('changeEnfeebleImage')
+    this.eventManager.trigger('changeEnfeebleImage')
   }
 
   get state() { return this._state }
@@ -49,7 +49,7 @@ class SpriteButton extends Base {
     if(this._state == value) return false;
     let old = this._state;
     this._state = value;
-    this.eventManger.trigger('changeType', {old: old, new: this._state})
+    this.eventManager.trigger('changeType', {old: old, new: this._state})
   }
 
   constructor(obj) {
@@ -81,39 +81,39 @@ class SpriteButton extends Base {
 
   defEventCallback() {
     let self = this;
-    this.eventManger.on('changeX', {}, function () {
+    this.eventManager.on('changeX', {}, function () {
       self._sprite.x = self.x;
     });
-    this.eventManger.on('changeY', {}, function () {
+    this.eventManager.on('changeY', {}, function () {
       self._sprite.y = self.y;
     });
-    this.eventManger.on('changeFocus', {}, function (info) {
+    this.eventManager.on('changeFocus', {}, function (info) {
       self.state = info.new ? 1 : 0;
       self.setImage()
     });
-    this.eventManger.on('changeOpacity', {}, function (info) {
+    this.eventManager.on('changeOpacity', {}, function (info) {
       self._sprite.opacity = info.new
     });
-    this.eventManger.on('mouseIn', {}, function () {
+    this.eventManager.on('mouseIn', {}, function () {
       self.state = 1;
       self.setImage()
     });
-    this.eventManger.on('mouseOut', {}, function () {
+    this.eventManager.on('mouseOut', {}, function () {
       self.state = 0;
       self.setImage()
     });
-    this.eventManger.on('enable', {}, function () {
+    this.eventManager.on('enable', {}, function () {
       self.state = 3;
       self.setImage()
     });
-    this.eventManger.on('disable', {}, function () {
+    this.eventManager.on('disable', {}, function () {
       self.state = 0;
       self.setImage()
     });
-    this.eventManger.on('click', {}, function () {
+    this.eventManager.on('click', {}, function () {
       self.state = 2;
       self.setImage();
-      self.eventManger.trigger('run')
+      self.eventManager.trigger('run')
     });
   }
 

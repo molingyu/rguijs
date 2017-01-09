@@ -1,7 +1,7 @@
 const RGUI = require('./rgui');
 const Box = require('./box');
-const PIXI = require('pixi.js');
-const EventManger = require('./eventManger');
+const PIXI = require('../lib/pixi');
+const EventManager = require('./eventManager');
 
 /**
  * 控件基类。
@@ -144,9 +144,9 @@ class Base extends PIXI.Container {
    * 事件管理器。
    *
    * @static
-   * @returns {EventManger}
+   * @returns {EventManager}
    */
-  get eventManger() { return this._em }
+  get eventManager() { return this._em }
 
   /**
    *
@@ -163,7 +163,8 @@ class Base extends PIXI.Container {
    */
   constructor(obj = {}) {
     super();
-    this._em = new EventManger(this);
+    this._class = Base;
+    this._em = new EventManager(this);
     this._uID = RGUI.getID();
     this._x = obj.x || 0;
     this._y = obj.y || 0;

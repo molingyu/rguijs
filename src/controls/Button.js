@@ -12,6 +12,7 @@ class Button extends Base {
 
   constructor(obj) {
     super(obj);
+    this._class = Button;
     this._text = obj.text || 'Button ' + this._uID;
     this.defaultStyle = {
       font : {

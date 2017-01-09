@@ -2,19 +2,19 @@ const Svent = require('../lib/svent');
 const Input = require('./input');
 
 /**
- * 事件管理器类，继承自 [Svent.EventManger](https://github.com/molingyu/sventjs)。
+ * 事件管理器类，继承自 [Svent.EventManager](https://github.com/molingyu/sventjs)。
  *
- * @extends Svent.EventManger
+ * @extends Svent.EventManager
  * @memberof RGUI
  */
-class EventManger extends Svent.EventManger {
+class EventManager extends Svent.EventManager {
   /**
    *
    * @param {Base} obj
    */
   constructor(obj) {
     super();
-    this._class = EventManger;
+    this._class = EventManager;
     this.obj = obj;
     this.mouseFocus = false;
     this.keyboardEvent = []
@@ -104,8 +104,8 @@ class EventManger extends Svent.EventManger {
   on(name, conf, callback) {
     if(name == 'click') name = 'down:mouseLeft';
     let type = 0;
-    if(EventManger.isMouseEvent(name)) type = 1;
-    if(EventManger.isKeyboardEvent(name)){
+    if(EventManager.isMouseEvent(name)) type = 1;
+    if(EventManager.isKeyboardEvent(name)){
       type = 2;
       if(name.split(':').length == 1) name = 'down:' + name;
       this.keyboardEvent.push(name)
@@ -123,8 +123,8 @@ class EventManger extends Svent.EventManger {
   onAsync(name, conf, callback) {
     if(name == 'click') name = 'down:mouseLeft';
     let type = 0;
-    if(EventManger.isMouseEvent(name)) type = 1;
-    if(EventManger.isKeyboardEvent(name)){
+    if(EventManager.isMouseEvent(name)) type = 1;
+    if(EventManager.isKeyboardEvent(name)){
       type = 2;
       this.keyboardEvent.push(name)
     }
@@ -134,4 +134,4 @@ class EventManger extends Svent.EventManger {
 
 }
 
-module.exports = EventManger;
+module.exports = EventManager;

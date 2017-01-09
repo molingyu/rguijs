@@ -9,7 +9,7 @@
 function Bitmap(width, height) {
   this.class = Bitmap;
   this._canvas = document.createElement('canvas');
-  this._context = this._canvas.getContext('2d');
+  this._ctx = this._canvas.getContext('2d');
   this._canvas.width = Math.max(width || 0, 1);
   this._canvas.height = Math.max(height || 0, 1);
   this._baseTexture = new PIXI.BaseTexture(this._canvas);
@@ -161,7 +161,7 @@ Object.defineProperty(Bitmap.prototype, 'canvas', {
  */
 Object.defineProperty(Bitmap.prototype, 'context', {
   get: function() {
-    return this._context;
+    return this._ctx;
   },
   configurable: true
 });
@@ -241,7 +241,7 @@ Object.defineProperty(Bitmap.prototype, 'paintOpacity', {
   set: function(value) {
     if (this._paintOpacity !== value) {
       this._paintOpacity = value;
-      this._context.globalAlpha = this._paintOpacity / 255;
+      this._ctx.globalAlpha = this._paintOpacity / 255;
     }
   },
   configurable: true
@@ -282,8 +282,8 @@ Bitmap.prototype.blt = function(source, sx, sy, sw, sh, dx, dy, dw, dh) {
   dh = dh || sh;
   if (sx >= 0 && sy >= 0 && sw > 0 && sh > 0 && dw > 0 && dh > 0 &&
     sx + sw <= source.width && sy + sh <= source.height) {
-    this._context.globalCompositeOperation = 'source-over';
-    this._context.drawImage(source._canvas, sx, sy, sw, sh, dx, dy, dw, dh);
+    this._ctx.globalCompositeOperation = 'source-over';
+    this._ctx.drawImage(source._canvas, sx, sy, sw, sh, dx, dy, dw, dh);
     this._setDirty();
   }
 };
@@ -307,8 +307,8 @@ Bitmap.prototype.bltImage = function(source, sx, sy, sw, sh, dx, dy, dw, dh) {
   dh = dh || sh;
   if (sx >= 0 && sy >= 0 && sw > 0 && sh > 0 && dw > 0 && dh > 0 &&
     sx + sw <= source.width && sy + sh <= source.height) {
-    this._context.globalCompositeOperation = 'source-over';
-    this._context.drawImage(source._images, sx, sy, sw, sh, dx, dy, dw, dh);
+    this._ctx.globalCompositeOperation = 'source-over';
+    this._ctx.drawImage(source._images, sx, sy, sw, sh, dx, dy, dw, dh);
     this._setDirty();
   }
 };
@@ -322,7 +322,7 @@ Bitmap.prototype.bltImage = function(source, sx, sy, sw, sh, dx, dy, dw, dh) {
  * @return {String} The pixel color (hex format)
  */
 Bitmap.prototype.getPixel = function(x, y) {
-  var data = this._context.getImageData(x, y, 1, 1).data;
+  var data = this._ctx.getImageData(x, y, 1, 1).data;
   var result = '#';
   for (var i = 0; i < 3; i++) {
     result += data[i].toString(16).padZero(2);
@@ -339,7 +339,7 @@ Bitmap.prototype.getPixel = function(x, y) {
  * @return {String} The alpha value
  */
 Bitmap.prototype.getAlphaPixel = function(x, y) {
-  var data = this._context.getImageData(x, y, 1, 1).data;
+  var data = this._ctx.getImageData(x, y, 1, 1).data;
   return data[3];
 };
 
@@ -353,7 +353,7 @@ Bitmap.prototype.getAlphaPixel = function(x, y) {
  * @param {Number} height The height of the rectangle to clear
  */
 Bitmap.prototype.clearRect = function(x, y, width, height) {
-  this._context.clearRect(x, y, width, height);
+  this._ctx.clearRect(x, y, width, height);
   this._setDirty();
 };
 
@@ -378,7 +378,7 @@ Bitmap.prototype.clear = function() {
  * @param {String} [strokeColor=fillColor] The stroke color of the rectangle in CSS format
  */
 Bitmap.prototype.fillRect = function(x, y, width, height, fillColor, strokeColor) {
-  var context = this._context;
+  var context = this._ctx;
   context.save();
   context.fillRect(x, y, width, height);
   context.strokeStyle = strokeColor;
@@ -395,13 +395,13 @@ Bitmap.prototype.fillRect = function(x, y, width, height, fillColor, strokeColor
  * @param {Number} y The y coordinate for the upper-left corner
  * @param {Number} width The width of the rectangle to clear
  * @param {Number} height The height of the rectangle to clear
- * @param {String} radius The radius of the rectangle
+ * @param {Number} radius The radius of the rectangle
  * @param {String} fillColor The fill color of the rectangle in CSS format
  * @param {String} [strokeColor=fillColor] The stroke color of the rectangle in CSS format
  */
 Bitmap.prototype.fillRoundedRect = function (x, y, width, height, radius, fillColor, strokeColor) {
   strokeColor = strokeColor || fillColor;
-  var context = this._context;
+  var context = this._ctx;
   context.save();
   context.beginPath();
   if (width> 0) context.moveTo(x + radius, y);
@@ -427,7 +427,7 @@ Bitmap.prototype.fillRoundedRect = function (x, y, width, height, radius, fillCo
  * Fills the rounded rect bitmap.
  *
  * @method fillRoundedAll
- * @param {String} radius The radius of the rectangle
+ * @param {Number} radius The radius of the rectangle
  * @param {String} fillColor The fill color of the rectangle in CSS format
  * @param {String} [strokeColor=fillColor] The stroke color of the rectangle in CSS format
  */
@@ -460,7 +460,7 @@ Bitmap.prototype.fillAll = function(fillColor, strokeColor) {
  */
 Bitmap.prototype.gradientFillRect = function(x, y, width, height, color1,
                                              color2, vertical) {
-  var context = this._context;
+  var context = this._ctx;
   var grad;
   if (vertical) {
     grad = context.createLinearGradient(x, y, x, y + height);
@@ -486,7 +486,7 @@ Bitmap.prototype.gradientFillRect = function(x, y, width, height, color1,
  * @param {String} color The color of the circle in CSS format
  */
 Bitmap.prototype.drawCircle = function(x, y, radius, color) {
-  var context = this._context;
+  var context = this._ctx;
   context.save();
   context.fillStyle = color;
   context.beginPath();
@@ -513,7 +513,7 @@ Bitmap.prototype.drawText = function(text, x, y, maxWidth, lineHeight, align) {
   if (text !== undefined) {
     var tx = x;
     var ty = y + lineHeight - (lineHeight - this.fontSize * 0.7) / 2;
-    var context = this._context;
+    var context = this._ctx;
     var alpha = context.globalAlpha;
     maxWidth = maxWidth || 0xffffffff;
     if (align === 'center') {
@@ -527,7 +527,7 @@ Bitmap.prototype.drawText = function(text, x, y, maxWidth, lineHeight, align) {
     context.textAlign = align;
     context.textBaseline = 'alphabetic';
     context.globalAlpha = 1;
-    this._drawTextOutline(text, tx, ty, maxWidth);
+    // this._drawTextOutline(text, tx, ty, maxWidth);
     context.globalAlpha = alpha;
     this._drawTextBody(text, tx, ty, maxWidth);
     context.restore();
@@ -543,7 +543,7 @@ Bitmap.prototype.drawText = function(text, x, y, maxWidth, lineHeight, align) {
  * @return {Number} The width of the text in pixels
  */
 Bitmap.prototype.measureTextWidth = function(text) {
-  var context = this._context;
+  var context = this._ctx;
   context.save();
   context.font = this._makeFontNameText();
   var width = context.measureText(text).width;
@@ -561,7 +561,7 @@ Bitmap.prototype.measureTextWidth = function(text) {
  */
 Bitmap.prototype.adjustTone = function(r, g, b) {
   if ((r || g || b) && this.width > 0 && this.height > 0) {
-    var context = this._context;
+    var context = this._ctx;
     var imageData = context.getImageData(0, 0, this.width, this.height);
     var pixels = imageData.data;
     for (var i = 0; i < pixels.length; i += 4) {
@@ -626,7 +626,7 @@ Bitmap.prototype.rotateHue = function(offset) {
 
   if (offset && this.width > 0 && this.height > 0) {
     offset = ((offset % 360) + 360) % 360;
-    var context = this._context;
+    var context = this._ctx;
     var imageData = context.getImageData(0, 0, this.width, this.height);
     var pixels = imageData.data;
     for (var i = 0; i < pixels.length; i += 4) {
@@ -654,7 +654,7 @@ Bitmap.prototype.blur = function() {
     var w = this.width;
     var h = this.height;
     var canvas = this._canvas;
-    var context = this._context;
+    var context = this._ctx;
     var tempCanvas = document.createElement('canvas');
     var tempContext = tempCanvas.getContext('2d');
     tempCanvas.width = w + 2;
@@ -711,7 +711,7 @@ Bitmap.prototype._makeFontNameText = function() {
  * @private
  */
 Bitmap.prototype._drawTextOutline = function(text, tx, ty, maxWidth) {
-  var context = this._context;
+  var context = this._ctx;
   context.strokeStyle = this.outlineColor;
   context.lineWidth = this.outlineWidth;
   context.lineJoin = 'round';
@@ -727,7 +727,7 @@ Bitmap.prototype._drawTextOutline = function(text, tx, ty, maxWidth) {
  * @private
  */
 Bitmap.prototype._drawTextBody = function(text, tx, ty, maxWidth) {
-  var context = this._context;
+  var context = this._ctx;
   context.fillStyle = this.textColor;
   context.fillText(text, tx, ty, maxWidth);
 };
@@ -739,7 +739,7 @@ Bitmap.prototype._drawTextBody = function(text, tx, ty, maxWidth) {
 Bitmap.prototype._onLoad = function() {
   this._isLoading = false;
   this.resize(this._images.width, this._images.height);
-  this._context.drawImage(this._images, 0, 0);
+  this._ctx.drawImage(this._images, 0, 0);
   this._setDirty();
   this._callLoadListeners();
 };

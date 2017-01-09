@@ -28,7 +28,7 @@ function Sprite(bitmap) {
   this._blendColor = [0, 0, 0, 0];
   this._colorTone = [0, 0, 0, 0];
   this._canvas = null;
-  this._context = null;
+  this._ctx = null;
   this._tintTexture = null;
 
   /**
@@ -315,7 +315,7 @@ Sprite.prototype._needsTint = function() {
 Sprite.prototype._createTinter = function(w, h) {
     if (!this._canvas) {
         this._canvas = document.createElement('canvas');
-        this._context = this._canvas.getContext('2d');
+        this._ctx = this._canvas.getContext('2d');
     }
 
     this._canvas.width = w;

@@ -20,7 +20,7 @@ class ImageBox extends Base {
     if(this._images == value && value.class != Bitmap) return false;
     this._images = value;
     this.setImage();
-    this.eventManger.trigger('changeImage')
+    this.eventManager.trigger('changeImage')
   }
 
   get type() { return this._state }
@@ -29,7 +29,7 @@ class ImageBox extends Base {
     if(this._state == value) return false;
     this._state = value;
     this.setImage();
-    this.eventManger.trigger('changeType')
+    this.eventManager.trigger('changeType')
   }
 
   constructor(obj) {
@@ -73,31 +73,31 @@ class ImageBox extends Base {
     if(0 == value || this.type != 0) return false;
     this._xWheel = RGUI.boundary(this._xWheel + value, 0, this._images.width - this.width);
     this.setImage();
-    this.eventManger.trigger('xScroll')
+    this.eventManager.trigger('xScroll')
   }
 
   yScroll(value) {
     if(0 == value || this.type != 0) return false;
     this._yWheel = RGUI.boundary(this._yWheel + value, 0, this._images.height - this.height);
     this.setImage();
-    this.eventManger.trigger('yScroll')
+    this.eventManager.trigger('yScroll')
   }
 
   defEventCallback() {
     let self = this;
-    this.eventManger.on('changeX', {}, function () {
+    this.eventManager.on('changeX', {}, function () {
       self._sprite.x = self.x;
     });
-    this.eventManger.on('changeY', {}, function () {
+    this.eventManager.on('changeY', {}, function () {
       self._sprite.y = self.y;
     });
-    this.eventManger.on('changeWidth', {}, function () {
+    this.eventManager.on('changeWidth', {}, function () {
       self.setImage()
     });
-    this.eventManger.on('changeHeight', {}, function () {
+    this.eventManager.on('changeHeight', {}, function () {
       self.setImage()
     });
-    this.eventManger.on('changeOpacity', {}, function (info) {
+    this.eventManager.on('changeOpacity', {}, function (info) {
       self._sprite.opacity = info.new
     })
   }

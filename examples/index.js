@@ -15,7 +15,7 @@ let win;
 
 function createWindow() {
   // 创建一个新的浏览器窗口
-  win = new BrowserWindow({width: 816, height:624, icon: './icon/icon.png'});
+  win = new BrowserWindow({width: 1366, height:768, icon: './icon/icon.png'});
 
   // 并且装载应用的index.html页面
   win.loadURL(`file://${__dirname}/index.html`);
@@ -35,11 +35,11 @@ function createWindow() {
     }
   });
 
-  ipcMain.on('FullScreen', function () {
+  ipcMain.on('fullScreen', function () {
     if (win.isFullScreen()) {
       win.restore();
     } else {
-      win.FullScreen(true);
+      win.setFullScreen(true);
     }
   })
 }

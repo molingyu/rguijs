@@ -23,8 +23,7 @@
   },
   "homepage": "https://github.com/molingyu/rguijs#readme",
   "dependencies": {
-    "electron": "^1.4.12",
-    "pixi.js": "4.0.3"
+    "electron": "^1.4.12"
   },
   "devDependencies": {
     "jsdoc": "^3.4.2",
