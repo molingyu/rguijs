@@ -12,7 +12,8 @@ const {BrowserWindow} = electron;
 // 指向窗口对象的一个全局引用，如果没有这个引用，那么当该javascript对象被垃圾回收的
 // 时候该窗口将会自动关闭
 let win;
-
+console.log();
+global['dir'] = __dirname;
 function createWindow() {
   // 创建一个新的浏览器窗口
   win = new BrowserWindow({width: 1366, height:768, icon: './icon/icon.png'});

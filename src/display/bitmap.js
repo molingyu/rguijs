@@ -1,5 +1,5 @@
 const PIXI = require('../lib/pixi');
-const Svent = require('./svent');
+const Svent = require('../lib/svent');
 const Color = require('./color');
 
 /**
@@ -26,6 +26,7 @@ class Bitmap {
     this._isLoading = false;
     this._hasError = false;
     this._dirty = false;
+    this._loadCallback = {}
   }
 
   static load (url, onLoad, onError) {
@@ -34,8 +35,8 @@ class Bitmap {
     bitmap._url = url;
     bitmap._isLoading = true;
     bitmap._images.src = url;
-    bitmap._images.onload = this._onLoad;
-    bitmap._images.onerror = this._onError;
+    bitmap._images.onload = bitmap._onLoad.bind(bitmap);
+    bitmap._images.onerror = bitmap._onError.bind(bitmap);
     bitmap._loadCallback = {
       onLoad: onLoad,
       onError: onError
@@ -49,6 +50,10 @@ class Bitmap {
     this._isLoading = false;
     this._dirty = true;
     this._loadCallback.onLoad();
+  }
+
+  addLoadListener(value) {
+    this._loadCallback.onLoad = value
   }
 
   _onError () {

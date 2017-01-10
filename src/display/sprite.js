@@ -5,9 +5,14 @@ const PIXI = require('../lib/pixi');
  * @memberof RGUI.Display
  */
 class Sprite extends PIXI.Sprite {
-
+  static fromBitmap (bitmap) {
+    let sprite = Sprite.from(bitmap._canvas);
+    sprite._bitmap = bitmap;
+    return sprite
+  }
 }
 
+module.exports = Sprite;
 // /**
 //  * Returns a number whose value is limited to the given range.
 //  *
@@ -512,4 +517,3 @@ class Sprite extends PIXI.Sprite {
 //  * @return {Object} The child that was removed
 //  */
 //
-// module.exports = Sprite;

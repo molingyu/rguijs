@@ -8,7 +8,7 @@ const LoadManager = {
    *
    * @type String
    */
-  pathDir: '',
+  pathDir: require('electron').remote.getGlobal('dir'),
   /**
    * 图片缓存。
    * 

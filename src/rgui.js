@@ -58,7 +58,7 @@ const RGUI = {
     this._defaultLang = 'zh_cn';
     this._lang = 'zh_cn';
     this.loadControls();
-    Input.init();
+    this.Input.init();
     this._eventManager = new Svent.EventManager();
     this.seyHello()
   },

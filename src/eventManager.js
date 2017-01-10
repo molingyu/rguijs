@@ -77,7 +77,7 @@ class EventManager extends Svent.EventManager {
   _keyName(name) {
     if(name == 'click') name = 'mouseLeft';
     let key = {nameStr: name};
-    if(name.match(/^(down|press|up)\:\w*/)) {
+    if(name.match(/^(down|press|up):\w*/)) {
       key.keyType = name.split(':')[0];
       key.keyName = name.split(':')[1]
     } else {

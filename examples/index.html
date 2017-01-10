@@ -8,15 +8,19 @@
 
 <script>
   let ipcRenderer = require('electron').ipcRenderer;
-
-  require('./pixi');
+  ipcRenderer.send('show-dev');
+  const LoadManager = require('../src/loadManager');
+  LoadManager.pathDir += '/res/';
+  require('../src/lib/pixi');
+  const RGUI = require('../src/rgui');
   const Bitmap = require('./js/bitmap');
   const Sprite = require('./js/sprite');
-  const RGUI = require('../src/rgui');
-  const Input = require('../src/input');
+
+  const Input = RGUI.Input;
 
   let renderer = PIXI.autoDetectRenderer(1280, 720, {backgroundColor : 0x000000, resolution: 1});
   document.body.appendChild(renderer.view);
+  RGUI.init();
 
   function scaleToWindow (view) {
     view.style.position = "absolute";
@@ -30,7 +34,6 @@
   window.addEventListener('resize', () => { scaleToWindow(renderer.view) });
 
   let stage = new PIXI.Container();
-  RGUI.init();
 
   ipcRenderer.send('show-dev');
 
@@ -41,7 +44,7 @@
     height: 720,
     type: 0,
     focus: true,
-    image: Bitmap.load('./res/bg.png')
+    image: 'bg'
   });
 
   let image = new RGUI.ImageBox({
@@ -51,13 +54,21 @@
     height: 400,
     type: 0,
     focus: true,
-    image: Bitmap.load('./res/test.png')
+    image: 'test'
   });
 
   image.eventManager.on('A', {}, ()=>{ image.x -= 10 });
   image.eventManager.on('D', {}, ()=>{ image.x += 10 });
   image.eventManager.on('W', {}, ()=>{ image.y -= 10 });
   image.eventManager.on('S', {}, ()=>{ image.y += 10 });
+  image.eventManager.on('changeX', {}, ()=>{
+    if(image.x < 0 ) image.x = 0;
+    if(image.x > 1280 - image.width) image.x = 1280 - image.width
+  });
+  image.eventManager.on('changeY', {}, ()=>{
+    if(image.y < 0 ) image.y = 0;
+    if(image.y > 720 - image.height) image.y = 720 - image.height
+  });
 
   let button = new RGUI.Button({
     x: 30,

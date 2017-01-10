@@ -1,5 +1,7 @@
 const Base = require('../base');
 const RGUI = require('../rgui');
+const Sprite = require('../display/sprite');
+const LoadManager = require('../loadManager');
 
 RGUI.Controls = RGUI.Controls + 1;
 
@@ -34,7 +36,7 @@ class ImageBox extends Base {
 
   constructor(obj) {
     super(obj);
-    this._image = LoadManager.loadImage(obj.image, this.i18nImage);
+    this._image = obj.image || '';
     this._state = obj.state || 0;
     this._xWheel = 0;
     this._yWheel = 0;
@@ -58,14 +60,16 @@ class ImageBox extends Base {
   }
 
   create() {
-    this._sprite = new Sprite();
-    this._sprite.x = this.x;
-    this._sprite.y = this.y;
-    this._sprite.width = this.width;
-    this._sprite.height = this.height;
-    this.addChild(this._sprite);
     let self = this;
-    this._images.addLoadListener(function(){ self.setImage() });
+    this._images = LoadManager.loadImage(this._image, false, true, (()=>{
+      self._sprite = Sprite.fromBitmap(self._images);
+      self._sprite.x = self.x;
+      self._sprite.y = self.y;
+      self._sprite.width = self.width;
+      self._sprite.height = self.height;
+      self.addChild(self._sprite);
+    }));
+    // this._images.addLoadListener(function(){ self.setImage() });
     super.create()
   }
 
