@@ -8,10 +8,8 @@ const Input = {
     'MouseLeft': 0x01,
     'MouseRight': 0x02,
     'MouseCenter': 0x04,
-
     'Backspace': 0x08,
     'Tab': 0x09,
-
     'Enter': 0x0D,
     'Shift': 0x10,
     'Control': 0x11,
@@ -28,7 +26,8 @@ const Input = {
     'ArrowDown': 0x28,
     'Insert': 0x2D,
     'Delete': 0x2E,
-    'HELP': 0x2F,
+    'NumLock': 0x90, //NUMLOCK键
+    'ScrollLock': 0x91, //SCROLL LOCK键
 
     '0': 0x30,
     '1': 0x31,
@@ -67,6 +66,7 @@ const Input = {
     'X': 0x58,
     'Y': 0x59,
     'Z': 0x5A,
+
     'Num0': 0x60,
     'Num1': 0x61,
     'Num2': 0x62,
@@ -95,10 +95,7 @@ const Input = {
     'F9': 0x78,
     'F10': 0x79,
     'F11': 0x7A,
-    'F12': 0x7B,
-
-    'NumLock': 0x90, //NUMLOCK键
-    'ScrollLock': 0x91 //SCROLL LOCK键
+    'F12': 0x7B
   },
   /**
    * 初始化 Input 模块。
@@ -163,7 +160,7 @@ const Input = {
    * 判断键是否按下。
    * @memberof RGUI.Input
    * @param {String} keyName - 欲判断的键名。
-   * @returns {boolean}
+   * @returns {Boolean}
    */
   keyDown: function (keyName) {
     if(!this.keyStauts[this.keyName[keyName]]) return false;
@@ -174,7 +171,7 @@ const Input = {
    * 判断键是否按住。
    * @param {String} keyName - 欲判断的键名。
    * @memberof RGUI.Input
-   * @returns {boolean}
+   * @returns {Boolean}
    */
   keyPress: function (keyName) {
     if(!this.keyStauts[this.keyName[keyName]]) return false;
@@ -185,7 +182,7 @@ const Input = {
    * 判断键是否弹起。
    * @param {String} keyName - 欲判断的键名。
    * @memberof RGUI.Input
-   * @returns {boolean}
+   * @returns {Boolean}
    */
   keyUp: function (keyName) {
     if(!this.keyStauts[this.keyName[keyName]]) return true;
@@ -207,7 +204,7 @@ const Input = {
  * 鼠标当前坐标 X 值。
  *
  * @name RGUI.Input.x
- * @type {number}
+ * @type {Number}
  */
 Object.defineProperty(Input, 'x', {
     get() {
@@ -220,7 +217,7 @@ Object.defineProperty(Input, 'x', {
  * 鼠标当前坐标 Y 值。
  *
  * @name RGUI.Input.y
- * @type {number}
+ * @type {Number}
  */
 Object.defineProperty(Input, 'y', {
     get() {
@@ -233,7 +230,7 @@ Object.defineProperty(Input, 'y', {
  * 鼠标滚轮值。
  *
  * @name RGUI.Input.mouseScroll
- * @type {number}
+ * @type {Number}
  */
 Object.defineProperty(Input, 'mouseScroll', {
   get() {

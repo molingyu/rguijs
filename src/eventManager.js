@@ -1,4 +1,4 @@
-const Svent = require('../lib/svent');
+const Svent = require('./lib/svent');
 const Input = require('./input');
 
 /**

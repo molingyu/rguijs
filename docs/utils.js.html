@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Source: display/bitmap.js</title>
+    <title>Source: utils.js</title>
     
     
     
@@ -664,168 +664,97 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="display_bitmap.js.html">Source: display/bitmap.js</h1>
+        <h1 class="page-title" data-filename="utils.js.html">Source: utils.js</h1>
         
 
 
     
     <section>
         <article>
-            <pre id="source-code" class="prettyprint source linenums"><code>const PIXI = require('../lib/pixi');
-const Svent = require('./svent');
-const Color = require('./color');
-
-/**
- * 位图类，基本的显示对象。
+            <pre id="source-code" class="prettyprint source linenums"><code>/**
  *
- * @memberof RGUI.Display
+ * @namespace RGUI.Utils
  */
-class Bitmap {
-
-  constructor(width, height) {
-    this._class = Bitmap;
-    this._canvas = document.createElement('canvas');
-    this._ctx = this._canvas.getContext('2d');
-    this._canvas.width = Math.max(width || 0, 1);
-    this._canvas.height = Math.max(height || 0, 1);
-    this._baseTexture = new PIXI.BaseTexture(this._canvas);
-    this._baseTexture.mipmap = false;
-    this._baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    this._images = null;
-    this._url = '';
-    this._paintOpacity = 255;
-    this._smooth = false;
-    this._loadListeners = [];
-    this._isLoading = false;
-    this._hasError = false;
-    this._dirty = false;
-  }
-
-  static load (url, onLoad, onError) {
-    let bitmap = new Bitmap();
-    bitmap._images = new Image();
-    bitmap._url = url;
-    bitmap._isLoading = true;
-    bitmap._images.src = url;
-    bitmap._images.onload = this._onLoad;
-    bitmap._images.onerror = this._onError;
-    bitmap._loadCallback = {
-      onLoad: onLoad,
-      onError: onError
-    };
-    return bitmap;
-  }
-
-  _onLoad () {
-    this.resize(this._images.width, this._images.height);
-    this._ctx.drawImage(this._images, 0, 0);
-    this._isLoading = false;
-    this._dirty = true;
-    this._loadCallback.onLoad();
-  }
-
-  _onError () {
-    this._hasError = true;
-    this._loadCallback.onError();
-    Bitmap.eventManager.trigger('load_error', {url: this._url})
-  }
-
-  /**
-   * 重新调整 bitmap 的大小。
-   *
-   * @method resize
-   * @param {Number} width - 新的宽度。
-   * @param {Number} height - 新的高度。
-   */
-  resize(width, height) {
-    width = Math.max(width || 0, 1);
-    height = Math.max(height || 0, 1);
-    this._canvas.width = width;
-    this._canvas.height = height;
-    this._baseTexture.width = width;
-    this._baseTexture.height = height;
-  }
-
-  blt(source, sx, sy, sw, sh, dx, dy, dw, dh) {
-    dw = dw || sw;
-    dh = dh || sh;
-    if (sx >= 0 &amp;&amp; sy >= 0 &amp;&amp; sw > 0 &amp;&amp; sh > 0 &amp;&amp; dw > 0 &amp;&amp; dh > 0 &amp;&amp;
-      sx + sw &lt;= source.width &amp;&amp; sy + sh &lt;= source.height) {
-      this._ctx.globalCompositeOperation = 'source-over';
-      this._ctx.drawImage(source._canvas, sx, sy, sw, sh, dx, dy, dw, dh);
-      this._dirty = true;
+const Utils = {
+  cutBitmap: function (srcBitmap, width, height, type) {
+    let bitmaps = [];
+    switch (type) {
+      case 0:
+        bitmaps = this.cutRow(srcBitmap, width, height);
+        break;
+      case 1:
+        bitmaps = this.cutRank(srcBitmap, width, height);
+        break;
+      case 2:
+        bitmaps = this.cutRowRank(srcBitmap, width, height);
+        break;
+      case 3:
+        bitmaps = this.cutRankRow(srcBitmap, width, height);
+        break;
+      default:
+        throw new Error('Type error')
     }
-  }
+    return bitmaps;
+  },
 
-  getPixel(x, y) {
-    let data = this._ctx.getImageData(x, y, 1, 1).data;
-    return new Color(data[0], data[1], data[2], data[3]);
-  }
-
-  setPixel(x, y, color) {
-    let data = this._ctx.getImageData(x, y, 1, 1).data;
-    data[0] = color.red;
-    data[1] = color.green;
-    data[2] = color.blue;
-    data[3] = color.alpha;
-  }
-
-  isReady () {
-    return !this._isLoading;
-  }
-
-  clearRect(x, y, width, height) {
-    this._ctx.clearRect(x, y, width, height);
-    this._dirty = true
-  }
-
-  clear() {
-    this.clearRect(0, 0, this.width, this.height)
-  }
-
-  fillRect(x, y, width, height, fillColor, strokeColor) {
-
-  }
-
-  fillAll(fillColor, strokeColor) {
-
-  }
-
-  fillRoundedRect(x, y, width, height, fillColor, strokeColor) {
-
-  }
-
-  fillRoundedAll(fillColor, strokeColor) {
-
-  }
-
-  drawCircle (x, y, radius, color) {
-
-  }
-
-  drawText (text, x, y, maxWidth, lineHeight, align) {
-
-  }
-
-  getTextWidth (text) {
-
-  }
-
-  blur () {
-
-  }
-
-  checkDirty () {
-    if (this._dirty) {
-      this._baseTexture.update();
-      this._dirty = false;
+  cutBitmapConfig: function (srcBitmap, config) {
+    let bitmaps = [];
+    let length = config.length;
+    for (var i = 0; i &lt; length; i++) {
+      var bitmap = new Bitmap(config[i][0], config[i][1]);
+      bitmap.blt(0, 0, srcBitmap, config[i][0], config[i][1], config[i][2], config[i][3]);
+      bitmaps.push(bitmap);
     }
+    return bitmaps;
+  },
+
+  cut: function (srcBitmap, dx, dy, number, width, height) {
+    let bitmaps = [];
+    for (var i = 0; i &lt; number; i++) {
+      var x = i * dx;
+      var y = i * dy;
+      var bitmap = new Bitmap(width, height);
+      bitmap.blt(srcBitmap, x, y, width, height, 0, 0);
+      bitmaps.push(bitmap);
+    }
+    return bitmaps;
   }
-}
+};
 
-Bitmap.eventManager = new Svent.EventManager();
+module.exports = Utils;
 
-module.exports = Bitmap;</code></pre>
+//
+// SUtils.cutRow = function(srcBitmap, width, height) {
+//   var number = srcBitmap.width / width;
+//   var dx = width;
+//   var dy = 0;
+//   return this.cut(srcBitmap, dx, dy, number, width, height);
+// };
+//
+// SUtils.cutRank = function(srcBitmap, width, height) {
+//   var number = srcBitmap.height / height;
+//   var dx = 0;
+//   var dy = height;
+//   return this.cut(srcBitmap, dx, dy, number, width, height);
+// };
+//
+// SUtils.cutRowRank = function(srcBitmap, width, height) {
+//   var bitmaps1 = this.cutRow(srcBitmap, width, srcBitmap.height);
+//   var bitmaps2 = [];
+//   for (var i = 0; i &lt; bitmaps1.length; i++) {
+//     bitmaps2 = bitmaps2.concat(this.cutRank(bitmaps1[i], width, height));
+//   }
+//   return bitmaps2;
+// };
+//
+// SUtils.cutRankRow = function(srcBitmap, width, height) {
+//   var bitmaps1 = this.cutRank(srcBitmap, srcBitmap.width, height);
+//   var bitmaps2 = [];
+//   for (var i = 0; i &lt; bitmaps1.length; i++) {
+//     bitmaps2 = bitmaps2.concat(this.cutRow(bitmaps1[i], width, height));
+//   }
+//   return bitmaps2;
+// };</code></pre>
         </article>
     </section>
 

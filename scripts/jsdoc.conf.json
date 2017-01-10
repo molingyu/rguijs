@@ -6,7 +6,8 @@
     "include": [
       "./src/"
     ],
-    "includePattern": ".+\\.js(doc)?$"
+    "includePattern": ".+\\.js(doc)?$",
+    "excludePattern": "lib/"
   },
   "plugins": [
     "./node_modules/jsdoc/plugins/markdown"

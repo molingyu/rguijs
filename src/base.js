@@ -1,6 +1,6 @@
 const RGUI = require('./rgui');
 const Box = require('./box');
-const PIXI = require('../lib/pixi');
+const PIXI = require('./lib/pixi');
 const EventManager = require('./eventManager');
 
 /**

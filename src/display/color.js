@@ -1,4 +1,8 @@
-
+/**
+ * 颜色类。
+ *
+ * @memberof RGUI.Display
+ */
 class Color {
 
   get red(){ return this._red }

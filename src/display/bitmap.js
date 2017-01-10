@@ -1,7 +1,12 @@
-const PIXI = require('../../lib/pixi');
-const Svent = require('../../lib/svent');
+const PIXI = require('../lib/pixi');
+const Svent = require('./svent');
 const Color = require('./color');
 
+/**
+ * 位图类，基本的显示对象。
+ *
+ * @memberof RGUI.Display
+ */
 class Bitmap {
 
   constructor(width, height) {

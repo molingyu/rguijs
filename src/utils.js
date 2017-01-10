@@ -1,4 +1,7 @@
-
+/**
+ *
+ * @namespace RGUI.Utils
+ */
 const Utils = {
   cutBitmap: function (srcBitmap, width, height, type) {
     let bitmaps = [];
@@ -45,35 +48,37 @@ const Utils = {
   }
 };
 
+module.exports = Utils;
 
-SUtils.cutRow = function(srcBitmap, width, height) {
-  var number = srcBitmap.width / width;
-  var dx = width;
-  var dy = 0;
-  return this.cut(srcBitmap, dx, dy, number, width, height);
-};
-
-SUtils.cutRank = function(srcBitmap, width, height) {
-  var number = srcBitmap.height / height;
-  var dx = 0;
-  var dy = height;
-  return this.cut(srcBitmap, dx, dy, number, width, height);
-};
-
-SUtils.cutRowRank = function(srcBitmap, width, height) {
-  var bitmaps1 = this.cutRow(srcBitmap, width, srcBitmap.height);
-  var bitmaps2 = [];
-  for (var i = 0; i < bitmaps1.length; i++) {
-    bitmaps2 = bitmaps2.concat(this.cutRank(bitmaps1[i], width, height));
-  }
-  return bitmaps2;
-};
-
-SUtils.cutRankRow = function(srcBitmap, width, height) {
-  var bitmaps1 = this.cutRank(srcBitmap, srcBitmap.width, height);
-  var bitmaps2 = [];
-  for (var i = 0; i < bitmaps1.length; i++) {
-    bitmaps2 = bitmaps2.concat(this.cutRow(bitmaps1[i], width, height));
-  }
-  return bitmaps2;
-};
+//
+// SUtils.cutRow = function(srcBitmap, width, height) {
+//   var number = srcBitmap.width / width;
+//   var dx = width;
+//   var dy = 0;
+//   return this.cut(srcBitmap, dx, dy, number, width, height);
+// };
+//
+// SUtils.cutRank = function(srcBitmap, width, height) {
+//   var number = srcBitmap.height / height;
+//   var dx = 0;
+//   var dy = height;
+//   return this.cut(srcBitmap, dx, dy, number, width, height);
+// };
+//
+// SUtils.cutRowRank = function(srcBitmap, width, height) {
+//   var bitmaps1 = this.cutRow(srcBitmap, width, srcBitmap.height);
+//   var bitmaps2 = [];
+//   for (var i = 0; i < bitmaps1.length; i++) {
+//     bitmaps2 = bitmaps2.concat(this.cutRank(bitmaps1[i], width, height));
+//   }
+//   return bitmaps2;
+// };
+//
+// SUtils.cutRankRow = function(srcBitmap, width, height) {
+//   var bitmaps1 = this.cutRank(srcBitmap, srcBitmap.width, height);
+//   var bitmaps2 = [];
+//   for (var i = 0; i < bitmaps1.length; i++) {
+//     bitmaps2 = bitmaps2.concat(this.cutRow(bitmaps1[i], width, height));
+//   }
+//   return bitmaps2;
+// };

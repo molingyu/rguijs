@@ -1,4 +1,4 @@
-const Svent = require('../lib/svent');
+const Svent = require('./lib/svent');
 
 /**
  * RPGMaker MV GUI 框架。
@@ -12,6 +12,8 @@ const RGUI = {
   Input: require('./input'),
   EventManager: require('./eventManager'),
   Box: require('./box'),
+  Display: require('./display'),
+  Utils: require('./utils'),
   /**
    * RGUI 当前版本。
    *
@@ -113,7 +115,7 @@ const RGUI = {
 };
 
 /**
- * 鼠标滚轮值。
+ * RGUI 当前语言。
  *
  * @name RGUI.lang
  * @type {String}
@@ -126,9 +128,9 @@ Object.defineProperty(RGUI, 'lang', {
 );
 
 /**
- * 鼠标滚轮值。
+ * RGUI 默认语言。
  *
- * @name RGUI.Input.mouseScroll
+ * @name RGUI.defaultLang
  * @type {String}
  */
 Object.defineProperty(RGUI, 'defaultLang', {
@@ -139,10 +141,10 @@ Object.defineProperty(RGUI, 'defaultLang', {
 );
 
 /**
- * 鼠标滚轮值。
+ * 全局事件管理器。
  *
- * @name RGUI.Input.mouseScroll
- * @type {String}
+ * @name RGUI.eventManager
+ * @type {Svent.EventManager}
  */
 Object.defineProperty(RGUI, 'eventManager', {
     get() {
