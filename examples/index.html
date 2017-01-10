@@ -32,7 +32,9 @@
   let stage = new PIXI.Container();
   RGUI.init();
 
-  let image = new RGUI.ImageBox({
+  ipcRenderer.send('show-dev');
+
+  let bg = new RGUI.ImageBox({
     x: 0,
     y: 0,
     width: 1280,
@@ -42,6 +44,21 @@
     image: Bitmap.load('./res/bg.png')
   });
 
+  let image = new RGUI.ImageBox({
+    x: 100,
+    y: 100,
+    width: 400,
+    height: 400,
+    type: 0,
+    focus: true,
+    image: Bitmap.load('./res/test.png')
+  });
+
+  image.eventManager.on('A', {}, ()=>{ image.x -= 10 });
+  image.eventManager.on('D', {}, ()=>{ image.x += 10 });
+  image.eventManager.on('W', {}, ()=>{ image.y -= 10 });
+  image.eventManager.on('S', {}, ()=>{ image.y += 10 });
+
   let button = new RGUI.Button({
     x: 30,
     y: 168,
@@ -50,11 +67,11 @@
     text: '人物'
   });
 
-  button.eventManager.on('run', {}, function () {
+  button.eventManager.on('click', {}, function () {
     image.type = image.type == 1 ? 0 : 1;
   });
 
-
+  stage.addChild(bg);
   stage.addChild(image);
   stage.addChild(button);
   animate();
@@ -65,6 +82,7 @@
       ipcRenderer.send('show-dev');
       Input.clear()
     }
+    bg.update();
     button.update();
     image.update();
     renderer.render(stage);

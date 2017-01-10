@@ -1,3 +1,5 @@
+const Svent = require('../lib/svent');
+
 /**
  * RPGMaker MV GUI 框架。
  *
@@ -50,8 +52,12 @@ const RGUI = {
    */
   init: function () {
     this._ID = 0;
+    this._langDir = './lang';
+    this._defaultLang = 'zh_cn';
+    this._lang = 'zh_cn';
     this.loadControls();
     Input.init();
+    this._eventManager = new Svent.EventManager();
     this.seyHello()
   },
 
@@ -105,5 +111,44 @@ const RGUI = {
     this.ProgressBar = require('./controls/progressBar');
   }
 };
+
+/**
+ * 鼠标滚轮值。
+ *
+ * @name RGUI.lang
+ * @type {String}
+ */
+Object.defineProperty(RGUI, 'lang', {
+    get() {
+      return this._lang
+    }
+  }
+);
+
+/**
+ * 鼠标滚轮值。
+ *
+ * @name RGUI.Input.mouseScroll
+ * @type {String}
+ */
+Object.defineProperty(RGUI, 'defaultLang', {
+    get() {
+      return this._defaultLang
+    }
+  }
+);
+
+/**
+ * 鼠标滚轮值。
+ *
+ * @name RGUI.Input.mouseScroll
+ * @type {String}
+ */
+Object.defineProperty(RGUI, 'eventManager', {
+    get() {
+      return this._eventManager
+    }
+  }
+);
 
 module.exports = RGUI;

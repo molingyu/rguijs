@@ -34,7 +34,7 @@ class ImageBox extends Base {
 
   constructor(obj) {
     super(obj);
-    this._images = obj.image || new Bitmap(0, 0, 0, 0);
+    this._image = LoadManager.loadImage(obj.image, this.i18nImage);
     this._state = obj.state || 0;
     this._xWheel = 0;
     this._yWheel = 0;
