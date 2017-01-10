@@ -13,7 +13,6 @@ const RGUI = {
   EventManager: require('./eventManager'),
   Box: require('./box'),
   Display: require('./display'),
-  Utils: require('./utils'),
   /**
    * RGUI 当前版本。
    *
