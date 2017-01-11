@@ -48,12 +48,20 @@ const RGUI = {
    */
   Controls: 0,
   /**
+   * 工作目录。
+   *
+   * @name dirname
+   * @memberof RGUI
+   * @type {String}
+   */
+  dirname: require('electron').remote.getGlobal('dir'),
+  /**
    * 初始化 RGUI 模块。
    * @memberof RGUI
    */
   init: function () {
     this._ID = 0;
-    this._langDir = './lang';
+    this._langDir = [this.dirname + '/lang'];
     this._defaultLang = 'zh_cn';
     this._lang = 'zh_cn';
     this.loadControls();
@@ -114,6 +122,32 @@ const RGUI = {
 };
 
 /**
+ * 全局事件管理器。
+ *
+ * @name RGUI.eventManager
+ * @type {Svent.EventManager}
+ */
+Object.defineProperty(RGUI, 'eventManager', {
+    get() {
+      return this._eventManager
+    }
+  }
+);
+
+/**
+ * RGUI 当前语言。
+ *
+ * @name RGUI.lang
+ * @type {String}
+ */
+Object.defineProperty(RGUI, 'langDir', {
+    get() {
+      return this._langDir
+    }
+  }
+);
+
+/**
  * RGUI 当前语言。
  *
  * @name RGUI.lang
@@ -122,6 +156,12 @@ const RGUI = {
 Object.defineProperty(RGUI, 'lang', {
     get() {
       return this._lang
+    },
+    set(value) {
+      value = String(value);
+      let old = this._lang;
+      this._lang = value;
+      this.eventManager.trigger('changeLang', {old: old, new: value})
     }
   }
 );
@@ -135,21 +175,48 @@ Object.defineProperty(RGUI, 'lang', {
 Object.defineProperty(RGUI, 'defaultLang', {
     get() {
       return this._defaultLang
+    },
+    set(value) {
+      value = String(value);
+      let old = this._defaultLang;
+      this._defaultLang = value;
+      this.eventManager.trigger('changeDefaultLang', {old: old, new: value})
     }
   }
 );
 
 /**
- * 全局事件管理器。
+ * i18n 函数。
  *
- * @name RGUI.eventManager
- * @type {Svent.EventManager}
+ * @param {String} str - key。
+ * @param {String} flag=RGUI.lang - 语言标志。
+ * @returns {String}
+ * @private
  */
-Object.defineProperty(RGUI, 'eventManager', {
-    get() {
-      return this._eventManager
+window._ = function (str, flag = RGUI.lang) {
+  let value = null;
+  RGUI.langDir.forEach(function (langDir) {
+    let i18n;
+    try {
+      i18n = require(`${langDir}/${flag}/ui`);
+    } catch (e) {
+      RGUI.eventManager.trigger('langFileError', { lang: flag, langDir: langDir, path:`${langDir}/${flag}/ui` })
     }
+    if(i18n && i18n[str] != void 0) {
+      value = i18n[str]
+    }
+  });
+  if(value == null) {
+    RGUI.langDir.forEach((langDir) => {
+      try {
+        value = require(`${langDir}/${RGUI.defaultLang}/ui`)[str]
+      } catch (e) {
+        let info = {lang: flag, langDir: langDir, path: `${langDir}/${RGUI.defaultLang}/ui`};
+        RGUI.eventManager.trigger('defaultLangFileError', info)
+      }
+    });
   }
-);
+  return value
+};
 
 module.exports = RGUI;

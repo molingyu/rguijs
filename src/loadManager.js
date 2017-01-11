@@ -8,13 +8,20 @@ const LoadManager = {
    *
    * @type String
    */
-  pathDir: require('electron').remote.getGlobal('dir'),
+  pathDir: '',
   /**
    * 图片缓存。
    * 
    * @type Map
    */
   cache: new Map(),
+
+  /**
+   *
+   */
+  path: function () {
+    return this.pathDir == '' ?  `${RGUI.dirname}/` : `${RGUI.dirname}/${RGUI.dirname}/`
+  },
   /**
    * 获取欲加载图片的完整路径。会考虑 i18n 和文件是否存在的情况。
    * 
@@ -25,17 +32,17 @@ const LoadManager = {
   getImagePath: function (fileName, i18n) {
     let path;
     if(i18n) {
-      if (fs.existsSync(`${this.pathDir}${fileName}_${RGUI.lang}.png`)) {
-        path = `${this.pathDir}${fileName}_${RGUI.lang}.png`
+      if (fs.existsSync(`${this.path()}${fileName}_${RGUI.lang}.png`)) {
+        path = `${this.path()}${fileName}_${RGUI.lang}.png`
       } else {
-        if (fs.existsSync(`${this.pathDir}${fileName}_${RGUI.defaultLang}.png`)) {
-          path = `${this.pathDir}${fileName}_${RGUI.defaultLang}.png`
+        if (fs.existsSync(`${this.path()}${fileName}_${RGUI.defaultLang}.png`)) {
+          path = `${this.path()}${fileName}_${RGUI.defaultLang}.png`
         } else {
           path = ''
         }
       }
     } else {
-      path = fs.existsSync(`${this.pathDir}${fileName}.png`) ? `${this.pathDir}${fileName}.png` : ''
+      path = fs.existsSync(`${this.path()}${fileName}.png`) ? `${this.path()}${fileName}.png` : ''
     }
     return path
   },

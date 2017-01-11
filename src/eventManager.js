@@ -3,14 +3,16 @@ const Input = require('./input');
 
 /**
  * 事件管理器类，继承自 [Svent.EventManager](https://github.com/molingyu/sventjs)。
+ * 主要增加了了对鼠标、键盘事件的自动监听。
  *
  * @extends Svent.EventManager
  * @memberof RGUI
  */
 class EventManager extends Svent.EventManager {
   /**
+   * 创建一个事件管理器。
    *
-   * @param {Base} obj
+   * @param {Base} obj - 事件管理器所对应的对象。
    */
   constructor(obj) {
     super();
@@ -20,6 +22,9 @@ class EventManager extends Svent.EventManager {
     this.keyboardEvent = []
   }
 
+  /**
+   * 更新函数，每帧调用一次。
+   */
   update() {
     super.update();
     if(this.obj.status && this.obj.visible) {
@@ -60,10 +65,22 @@ class EventManager extends Svent.EventManager {
   }
 
 
+  /**
+   * 判断是否为鼠标示事件。
+   *
+   * @param {String} name - 事件名。
+   * @returns {Boolean}
+   */
   static isMouseEvent(name) {
     return ['MouseLeft', 'MouseCenter', 'MouseRight', 'mouseOut', 'mouseIn', 'mouseScroll'].indexOf(name) >= 0
   }
 
+  /**
+   * 判断是否为键盘示事件。
+   *
+   * @param {String} name - 事件名。
+   * @returns {Boolean}
+   */
   static isKeyboardEvent(name) {
     return Input.keyName[name] >= 0
   }
@@ -95,10 +112,11 @@ class EventManager extends Svent.EventManager {
   }
 
   /**
+   * 添加一个普通事件回调。
    *
-   * @param {String} name
-   * @param {Object} conf
-   * @param {Function} callback
+   * @param {String} name - 事件名。
+   * @param {Object} conf - 配置。
+   * @param {Function} callback - 回调函数。
    */
   on(name, conf, callback) {
     conf.type = this._keyName(name);
@@ -106,10 +124,11 @@ class EventManager extends Svent.EventManager {
   }
 
   /**
+   * 添加一个异步事件回调。
    *
-   * @param {String} name
-   * @param {Object} conf
-   * @param {Function} callback
+   * @param {String} name - 事件名。
+   * @param {Object} conf - 配置。
+   * @param {Function} callback - 回调函数。
    */
   onAsync(name, conf, callback) {
     conf.type = this._keyName(name);

@@ -9,16 +9,40 @@ const Color = require('./color');
  */
 class Bitmap {
 
+  /**
+   *
+   * @returns {Element<canvas>}
+   */
   get canvas(){ return this._canvas }
 
+  /**
+   *
+   * @returns {CanvasRenderingContext2D|WebGLRenderingContext}
+   */
   get ctx() { return this._ctx }
 
+  /**
+   *
+   * @returns {Image}
+   */
   get image() { return this._image }
 
+  /**
+   *
+   * @returns {String}
+   */
   get url() { return this._image ? this._image.src : '' }
 
+  /**
+   *
+   * @returns {Number}
+   */
   get width(){ return this._canvas.width }
 
+  /**
+   *
+   * @returns {Number}
+   */
   get height(){ return this._canvas.height }
 
   /**

@@ -58,9 +58,13 @@
             
                 <li data-name="RGUI.defaultLang"><a href="RGUI.html#.defaultLang">defaultLang</a></li>
             
+                <li data-name="RGUI.dirname"><a href="RGUI.html#.dirname">dirname</a></li>
+            
                 <li data-name="RGUI.eventManager"><a href="RGUI.html#.eventManager">eventManager</a></li>
             
                 <li data-name="RGUI.KEYBOARD"><a href="RGUI.html#.KEYBOARD">KEYBOARD</a></li>
+            
+                <li data-name="RGUI.lang"><a href="RGUI.html#.lang">lang</a></li>
             
                 <li data-name="RGUI.lang"><a href="RGUI.html#.lang">lang</a></li>
             
@@ -374,6 +378,20 @@
             </span>
             <ul class="members itemMembers">
             
+            <span class="subtitle">Members</span>
+            
+                <li data-name="RGUI.Display.Bitmap#canvas"><a href="RGUI.Display.Bitmap.html#canvas">canvas</a></li>
+            
+                <li data-name="RGUI.Display.Bitmap#ctx"><a href="RGUI.Display.Bitmap.html#ctx">ctx</a></li>
+            
+                <li data-name="RGUI.Display.Bitmap#height"><a href="RGUI.Display.Bitmap.html#height">height</a></li>
+            
+                <li data-name="RGUI.Display.Bitmap#image"><a href="RGUI.Display.Bitmap.html#image">image</a></li>
+            
+                <li data-name="RGUI.Display.Bitmap#url"><a href="RGUI.Display.Bitmap.html#url">url</a></li>
+            
+                <li data-name="RGUI.Display.Bitmap#width"><a href="RGUI.Display.Bitmap.html#width">width</a></li>
+            
             </ul>
             <ul class="typedefs itemMembers">
             
@@ -575,9 +593,15 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="RGUI.EventManager.isKeyboardEvent"><a href="RGUI.EventManager.html#.isKeyboardEvent">isKeyboardEvent</a></li>
+            
+                <li data-name="RGUI.EventManager.isMouseEvent"><a href="RGUI.EventManager.html#.isMouseEvent">isMouseEvent</a></li>
+            
                 <li data-name="RGUI.EventManager#on"><a href="RGUI.EventManager.html#on">on</a></li>
             
                 <li data-name="RGUI.EventManager#onAsync"><a href="RGUI.EventManager.html#onAsync">onAsync</a></li>
+            
+                <li data-name="RGUI.EventManager#update"><a href="RGUI.EventManager.html#update">update</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -836,12 +860,20 @@ const RGUI = {
    */
   Controls: 0,
   /**
+   * 工作目录。
+   *
+   * @name dirname
+   * @memberof RGUI
+   * @type {String}
+   */
+  dirname: require('electron').remote.getGlobal('dir'),
+  /**
    * 初始化 RGUI 模块。
    * @memberof RGUI
    */
   init: function () {
     this._ID = 0;
-    this._langDir = './lang';
+    this._langDir = [this.dirname + '/lang'];
     this._defaultLang = 'zh_cn';
     this._lang = 'zh_cn';
     this.loadControls();
@@ -902,6 +934,32 @@ const RGUI = {
 };
 
 /**
+ * 全局事件管理器。
+ *
+ * @name RGUI.eventManager
+ * @type {Svent.EventManager}
+ */
+Object.defineProperty(RGUI, 'eventManager', {
+    get() {
+      return this._eventManager
+    }
+  }
+);
+
+/**
+ * RGUI 当前语言。
+ *
+ * @name RGUI.lang
+ * @type {String}
+ */
+Object.defineProperty(RGUI, 'langDir', {
+    get() {
+      return this._langDir
+    }
+  }
+);
+
+/**
  * RGUI 当前语言。
  *
  * @name RGUI.lang
@@ -910,6 +968,12 @@ const RGUI = {
 Object.defineProperty(RGUI, 'lang', {
     get() {
       return this._lang
+    },
+    set(value) {
+      value = String(value);
+      let old = this._lang;
+      this._lang = value;
+      this.eventManager.trigger('changeLang', {old: old, new: value})
     }
   }
 );
@@ -923,22 +987,49 @@ Object.defineProperty(RGUI, 'lang', {
 Object.defineProperty(RGUI, 'defaultLang', {
     get() {
       return this._defaultLang
+    },
+    set(value) {
+      value = String(value);
+      let old = this._defaultLang;
+      this._defaultLang = value;
+      this.eventManager.trigger('changeDefaultLang', {old: old, new: value})
     }
   }
 );
 
 /**
- * 全局事件管理器。
+ * i18n 函数。
  *
- * @name RGUI.eventManager
- * @type {Svent.EventManager}
+ * @param {String} str - key。
+ * @param {String} flag=RGUI.lang - 语言标志。
+ * @returns {String}
+ * @private
  */
-Object.defineProperty(RGUI, 'eventManager', {
-    get() {
-      return this._eventManager
+window._ = function (str, flag = RGUI.lang) {
+  let value = null;
+  RGUI.langDir.forEach(function (langDir) {
+    let i18n;
+    try {
+      i18n = require(`${langDir}/${flag}/ui`);
+    } catch (e) {
+      RGUI.eventManager.trigger('langFileError', { lang: flag, langDir: langDir, path:`${langDir}/${flag}/ui` })
     }
+    if(i18n &amp;&amp; i18n[str] != void 0) {
+      value = i18n[str]
+    }
+  });
+  if(value == null) {
+    RGUI.langDir.forEach((langDir) => {
+      try {
+        value = require(`${langDir}/${RGUI.defaultLang}/ui`)[str]
+      } catch (e) {
+        let info = {lang: flag, langDir: langDir, path: `${langDir}/${RGUI.defaultLang}/ui`};
+        RGUI.eventManager.trigger('defaultLangFileError', info)
+      }
+    });
   }
-);
+  return value
+};
 
 module.exports = RGUI;</code></pre>
         </article>
@@ -952,7 +1043,7 @@ module.exports = RGUI;</code></pre>
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Jan 11 2017 23:40:02 GMT+0800 (CST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Jan 12 2017 01:02:51 GMT+0800 (CST)
         </footer>
     </div>
 </div>
