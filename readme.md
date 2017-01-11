@@ -1,5 +1,5 @@
 # RGUI
-[![npm version](https://badge.fury.io/js/svent.svg)](https://badge.fury.io/js/rgui)
+[![npm version](https://badge.fury.io/js/rgui.svg)](https://badge.fury.io/js/rgui)
 [![Join the chat](https://badges.gitter.im/rguijs/RMMV.svg)](https://gitter.im/rguijs/RMMV)
 
 RGUI is RPG Maker MV GUI framework.

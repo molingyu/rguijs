@@ -4,8 +4,9 @@ const PIXI = require('./lib/pixi');
 const EventManager = require('./eventManager');
 
 /**
- * 控件基类。
+ * 控件基类。继承自 [PIXI.Container](http://pixijs.download/release/docs/PIXI.Container.html)。
  *
+ * @extends PIXI.Container
  * @memberof RGUI
  */
 class Base extends PIXI.Container {
