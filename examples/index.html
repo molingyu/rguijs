@@ -8,18 +8,14 @@
 <body style="background-color: black; margin: 0;">
 
 <script>
-  let ipcRenderer = require('electron').ipcRenderer;
-  ipcRenderer.send('show-dev');
+  const ipcRenderer = require('electron').ipcRenderer;
   const LoadManager = require('../src/loadManager');
-  LoadManager.pathDir += '/res/';
+  LoadManager.pathDir = 'res';
   require('../src/lib/pixi');
   const RGUI = require('../src/rgui');
-  const Bitmap = require('./js/bitmap');
-  const Sprite = require('./js/sprite');
-
   const Input = RGUI.Input;
 
-  let renderer = PIXI.autoDetectRenderer(1280, 720, {backgroundColor : 0x000000, resolution: 1});
+  const renderer = PIXI.autoDetectRenderer(1280, 720, {backgroundColor : 0x000000, resolution: 1});
   document.body.appendChild(renderer.view);
   RGUI.init();
 
@@ -56,6 +52,10 @@
     image: 'test'
   });
 
+  image.eventManager.on('Right', {}, ()=>{ image.xScroll(5) });
+  image.eventManager.on('Down', {}, ()=>{ image.yScroll(5) });
+  image.eventManager.on('Left', {}, ()=>{ image.xScroll(-5) });
+  image.eventManager.on('Up', {}, ()=>{ image.yScroll(-5) });
   image.eventManager.on('A', {}, ()=>{ image.x -= 10 });
   image.eventManager.on('D', {}, ()=>{ image.x += 10 });
   image.eventManager.on('W', {}, ()=>{ image.y -= 10 });
@@ -69,21 +69,8 @@
     if(image.y > 720 - image.height) image.y = 720 - image.height
   });
 
-  let button = new RGUI.Button({
-    x: 30,
-    y: 168,
-    width: 158,
-    height: 60,
-    text: '人物'
-  });
-
-  button.eventManager.on('click', {}, function () {
-    image.type = image.type == 1 ? 0 : 1;
-  });
-
   stage.addChild(bg);
   stage.addChild(image);
-  stage.addChild(button);
   animate();
 
   function animate() {
@@ -93,7 +80,6 @@
       Input.clear()
     }
     bg.update();
-    button.update();
     image.update();
     renderer.render(stage);
     Input.update();

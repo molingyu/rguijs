@@ -17,6 +17,13 @@ class Sprite extends PIXI.Sprite {
     this.texture = PIXI.Texture.from(value.canvas)
   }
 
+  get opacity() {
+    return this.alpha * 255;
+  }
+  set opacity(value) {
+    this.alpha = RGUI.boundary(value, 0, 255) / 255;
+  }
+
   /**
    * 创建一个新的精灵对象。
    *

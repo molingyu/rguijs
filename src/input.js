@@ -20,10 +20,10 @@ const Input = {
     'PageUp': 0x21, //PAGE UP键
     'PageDown': 0x22, //PAGE DOWN键
     'Home': 0x24,
-    'ArrowLeft': 0x25, //LEFT ARROW键
-    'ArrowUp': 0x26,
-    'ArrowRight': 0x27,
-    'ArrowDown': 0x28,
+    'Left': 0x25, //LEFT ARROW键
+    'Up': 0x26,
+    'Right': 0x27,
+    'Down': 0x28,
     'Insert': 0x2D,
     'Delete': 0x2E,
     'NumLock': 0x90, //NUMLOCK键

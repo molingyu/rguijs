@@ -217,12 +217,12 @@ class Bitmap {
     this.resize(this._image.width, this._image.height);
     this._ctx.drawImage(this._image, 0, 0);
     this._isLoading = false;
-    this._loadCallback.onLoad();
+    if(this._loadCallback.onLoad) this._loadCallback.onLoad();
   }
 
   _onError () {
     this._hasError = true;
-    this._loadCallback.onError();
+    if(this._loadCallback.onError) this._loadCallback.onError();
     Bitmap.eventManager.trigger('load_error', {url: this.url})
   }
 

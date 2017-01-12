@@ -20,7 +20,7 @@ const LoadManager = {
    *
    */
   path: function () {
-    return this.pathDir == '' ?  `${RGUI.dirname}/` : `${RGUI.dirname}/${RGUI.dirname}/`
+    return this.pathDir == '' ?  `${RGUI.dirname}/` : `${RGUI.dirname}/${this.pathDir}/`
   },
   /**
    * 获取欲加载图片的完整路径。会考虑 i18n 和文件是否存在的情况。

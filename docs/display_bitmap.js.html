@@ -190,11 +190,11 @@
             
             <span class="subtitle">Members</span>
             
-                <li data-name="RGUI.Base.box"><a href="RGUI.Base.html#.box">box</a></li>
-            
                 <li data-name="RGUI.Base.eventManager"><a href="RGUI.Base.html#.eventManager">eventManager</a></li>
             
                 <li data-name="RGUI.Base.uID"><a href="RGUI.Base.html#.uID">uID</a></li>
+            
+                <li data-name="RGUI.Base#box"><a href="RGUI.Base.html#box">box</a></li>
             
                 <li data-name="RGUI.Base#focus"><a href="RGUI.Base.html#focus">focus</a></li>
             
@@ -316,6 +316,8 @@
             <ul class="members itemMembers">
             
             <span class="subtitle">Members</span>
+            
+                <li data-name="RGUI.Button#box"><a href="RGUI.Button.html#box">box</a></li>
             
                 <li data-name="RGUI.Button#focus"><a href="RGUI.Button.html#focus">focus</a></li>
             
@@ -618,6 +620,8 @@
             
             <span class="subtitle">Members</span>
             
+                <li data-name="RGUI.ImageBox#box"><a href="RGUI.ImageBox.html#box">box</a></li>
+            
                 <li data-name="RGUI.ImageBox#focus"><a href="RGUI.ImageBox.html#focus">focus</a></li>
             
                 <li data-name="RGUI.ImageBox#height"><a href="RGUI.ImageBox.html#height">height</a></li>
@@ -628,13 +632,19 @@
             
                 <li data-name="RGUI.ImageBox#status"><a href="RGUI.ImageBox.html#status">status</a></li>
             
+                <li data-name="RGUI.ImageBox#type"><a href="RGUI.ImageBox.html#type">type</a></li>
+            
                 <li data-name="RGUI.ImageBox#visible"><a href="RGUI.ImageBox.html#visible">visible</a></li>
             
                 <li data-name="RGUI.ImageBox#width"><a href="RGUI.ImageBox.html#width">width</a></li>
             
                 <li data-name="RGUI.ImageBox#x"><a href="RGUI.ImageBox.html#x">x</a></li>
             
+                <li data-name="RGUI.ImageBox#xWheel"><a href="RGUI.ImageBox.html#xWheel">xWheel</a></li>
+            
                 <li data-name="RGUI.ImageBox#y"><a href="RGUI.ImageBox.html#y">y</a></li>
+            
+                <li data-name="RGUI.ImageBox#yWheel"><a href="RGUI.ImageBox.html#yWheel">yWheel</a></li>
             
             </ul>
             <ul class="typedefs itemMembers">
@@ -668,6 +678,10 @@
             
                 <li data-name="RGUI.ImageBox#update"><a href="RGUI.ImageBox.html#update">update</a></li>
             
+                <li data-name="RGUI.ImageBox#xScroll"><a href="RGUI.ImageBox.html#xScroll">xScroll</a></li>
+            
+                <li data-name="RGUI.ImageBox#yScroll"><a href="RGUI.ImageBox.html#yScroll">yScroll</a></li>
+            
             </ul>
             <ul class="events itemMembers">
             
@@ -682,6 +696,8 @@
             <ul class="members itemMembers">
             
             <span class="subtitle">Members</span>
+            
+                <li data-name="RGUI.ProgressBar#box"><a href="RGUI.ProgressBar.html#box">box</a></li>
             
                 <li data-name="RGUI.ProgressBar#focus"><a href="RGUI.ProgressBar.html#focus">focus</a></li>
             
@@ -745,6 +761,8 @@
             <ul class="members itemMembers">
             
             <span class="subtitle">Members</span>
+            
+                <li data-name="RGUI.SpriteButton#box"><a href="RGUI.SpriteButton.html#box">box</a></li>
             
                 <li data-name="RGUI.SpriteButton#focus"><a href="RGUI.SpriteButton.html#focus">focus</a></li>
             
@@ -869,7 +887,11 @@ class Bitmap {
     this._ctx = this._canvas.getContext('2d');
     this._canvas.width = Math.max(width || 0, 1);
     this._canvas.height = Math.max(height || 0, 1);
+    this._baseTexture = new PIXI.BaseTexture(this._canvas);
+    this._baseTexture.mipmap = false;
+    this._baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
     this._image = null;
+    this._sprite = null;
     this._isLoading = false;
     this._hasError = false;
     this._loadCallback = {};
@@ -877,15 +899,15 @@ class Bitmap {
       style: 'normal',
       variant: 'normal',
       weight: 'normal',
-      name: 'Arial',
+      name: 'GameFont',
       size: 28,
       textAlign: 'start',
       color: Color.white,
       outlineColor: Color.black,
       toString: function () {
-        return (this.style == '' ? '' : this.style + ' ') +
-          (this.variant == '' ? '' : this.variant + ' ') +
-          (this.weight == '' ? '' : this.variant + ' ') +
+        return (this.style == 'normal' ? '' : this.style + ' ') +
+          (this.variant == 'normal' ? '' : this.variant + ' ') +
+          (this.weight == 'normal' ? '' : this.variant + ' ') +
           (this.size + 'px ') +
           (this.name == '' ? '' : this.name + ' ')
       }
@@ -1025,13 +1047,17 @@ class Bitmap {
     this.resize(this._image.width, this._image.height);
     this._ctx.drawImage(this._image, 0, 0);
     this._isLoading = false;
-    this._loadCallback.onLoad();
+    if(this._loadCallback.onLoad) this._loadCallback.onLoad();
   }
 
   _onError () {
     this._hasError = true;
-    this._loadCallback.onError();
+    if(this._loadCallback.onError) this._loadCallback.onError();
     Bitmap.eventManager.trigger('load_error', {url: this.url})
+  }
+
+  updateSprite() {
+    if(this._sprite) this._sprite.texture.baseTexture.update()
   }
 
   /**
@@ -1125,6 +1151,8 @@ class Bitmap {
     height = Math.max(height || 0, 1);
     this._canvas.width = width;
     this._canvas.height = height;
+    this._baseTexture.width = width;
+    this._baseTexture.height = height
   }
 
   /**
@@ -1148,6 +1176,7 @@ class Bitmap {
       this._ctx.globalCompositeOperation = 'source-over';
       this._ctx.drawImage(source.canvas, sx, sy, sw, sh, dx, dy, dw, dh);
     }
+    this.updateSprite()
   }
 
   /**
@@ -1175,6 +1204,7 @@ class Bitmap {
     data[1] = color.green;
     data[2] = color.blue;
     data[3] = color.alpha;
+    this.updateSprite()
   }
 
   /**
@@ -1187,6 +1217,7 @@ class Bitmap {
    */
   clearRect(x, y, width, height) {
     this._ctx.clearRect(x, y, width, height);
+    this.updateSprite()
   }
 
   /**
@@ -1208,11 +1239,12 @@ class Bitmap {
    */
   fillRect(x, y, width, height, fillColor, strokeColor = fillColor) {
     let context = this._ctx;
-    context.save();
-    context.fillRect(x, y, width, height);
     context.fillStyle = fillColor.toString();
     context.strokeStyle = strokeColor.toString();
+    context.save();
+    context.fillRect(x, y, width, height);
     context.restore();
+    this.updateSprite()
   }
 
   /**
@@ -1238,6 +1270,8 @@ class Bitmap {
    */
   fillRoundedRect(x, y, width, height, radius, fillColor, strokeColor = fillColor) {
     let context = this._ctx;
+    context.fillStyle = fillColor;
+    context.strokeStyle = strokeColor;
     context.save();
     context.beginPath();
     if (width> 0) context.moveTo(x + radius, y);
@@ -1251,11 +1285,10 @@ class Bitmap {
     else{
       context.arcTo(x, y, x-radius, y, radius);
     }
-    context.fillStyle = fillColor;
-    context.strokeStyle = strokeColor;
     context.stroke();
     context.fill();
     context.restore();
+    this.updateSprite()
   }
 
   /**
@@ -1280,13 +1313,14 @@ class Bitmap {
    */
   drawCircle (x, y, radius, fillColor, strokeColor = fillColor) {
     let context = this._ctx;
-    context.save();
     context.fillStyle = fillColor;
     context.strokeStyle = strokeColor;
+    context.save();
     context.beginPath();
     context.arc(x, y, radius, 0, Math.PI * 2, false);
     context.fill();
     context.restore();
+    this.updateSprite()
   }
 
   /**
@@ -1300,10 +1334,15 @@ class Bitmap {
    */
   drawText (text, x, y, maxWidth, align = this._font.textAlign) {
     if(text != void 0) {
-      this._ctx.font = this._font.toString();
-      this._ctx.textAlign = align;
-      this._ctx.textBaseline = 'alphabetic';
-      this._ctx.fillText(x, y, maxWidth)
+      let context = this._ctx;
+      context.save();
+      context.font = this._font.toString();
+      context.textAlign = align;
+      context.textBaseline = 'alphabetic';
+      context.fillStyle = this._font.color;
+      context.fillText(text, x, y, maxWidth);
+      context.restore();
+      this.updateSprite()
     }
   }
 
@@ -1846,6 +1885,8 @@ class Bitmap {
       stackBlurCanvasRGBA(context, 0, 0, this.width, this.height, radius);
     else
       stackBlurCanvasRGB(context, 0, 0, this.width, this.height, radius);
+
+    this.updateSprite()
   }
 
 }
@@ -1864,7 +1905,7 @@ module.exports = Bitmap;</code></pre>
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Jan 12 2017 01:02:51 GMT+0800 (CST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Jan 12 2017 13:03:02 GMT+0800 (CST)
         </footer>
     </div>
 </div>

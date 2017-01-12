@@ -80,7 +80,7 @@ class Base extends PIXI.Container {
 
   /**
    * 包围盒。
-   * @static
+   *
    * @returns {RGUI.Box.Rect|RGUI.Box.Round}
    */
   get box() { return this._box }
@@ -104,13 +104,12 @@ class Base extends PIXI.Container {
    *
    * @returns {Boolean}
    */
-  get visible() { return this._visible }
   set visible(value) {
     value = Boolean(value);
-    if(this._visible == value || !this._em) return false;
-    let old = this._visible;
-    this._visible = value;
-    this._em.trigger('changeVisible', {old: old, new: this._visible})
+    if(this.visible == value || !this._em) return false;
+    let old = this.visible;
+    super.visible = value;
+    this._em.trigger('changeVisible', {old: old, new: this.visible})
   }
 
   /**
@@ -132,13 +131,13 @@ class Base extends PIXI.Container {
    *
    * @returns {Number}
    */
-  get opacity() { return this._opacity }
+  get opacity() { return this.alpha * 255 }
   set opacity(value) {
     value = Number(value);
-    if(this._opacity == value) return false;
-    let old = this._opacity;
-    this._opacity = value;
-    this._em.trigger('changeOpacity', {old: old, new: this._opacity})
+    if(this.opacity == value) return false;
+    let old = this.opacity;
+    this.alpha = RGUI.boundary(value, 0, 255) / 255;
+    this._em.trigger('changeOpacity', {old: old, new: this.opacity})
   }
 
   /**
@@ -173,9 +172,9 @@ class Base extends PIXI.Container {
     this._height = obj.height || 0;
     this._box = obj.box ||new Box.Rect(this.x, this.y, this._width, this._height);
     this._focus = obj.focus || false;
-    this._visible = obj.visible || true;
+    super.visible = obj.visible || true;
     this._status = obj.status || true;
-    this._opacity = obj.opacity || 255;
+    this.alpha = RGUI.boundary(obj.opacity || 255, 0, 255) / 255;
   }
 
   /**
@@ -208,8 +207,9 @@ class Base extends PIXI.Container {
   }
 
   /**
-   * 获得焦点
-   * @returns {boolean}
+   * 获得焦点，失败返回 false。
+   * 
+   * @returns {Boolean}
    */
   getFocus() {
     if(this.focus) return true;
@@ -219,8 +219,9 @@ class Base extends PIXI.Container {
   }
 
   /**
-   * 失去焦点
-   * @returns {boolean}
+   * 失去焦点，失败返回 false。
+   * 
+   * @returns {Boolean}
    */
   lostFocus() {
     if(!this.focus) return true;
@@ -230,8 +231,9 @@ class Base extends PIXI.Container {
   }
 
   /**
-   * 显示控件。
-   * @returns {boolean}
+   * 显示控件，失败返回 false。
+   * 
+   * @returns {Boolean}
    */
   show() {
     if(this.visible) return true;
@@ -241,8 +243,9 @@ class Base extends PIXI.Container {
   }
 
   /**
-   * 隐藏控件。
-   * @returns {boolean}
+   * 隐藏控件，失败返回 false。
+   * 
+   * @returns {Boolean}
    */
   hide() {
     if(!this.visible) return true;
@@ -252,8 +255,9 @@ class Base extends PIXI.Container {
   }
 
   /**
-   * 禁用控件。
-   * @returns {boolean}
+   * 禁用控件，失败返回 false。
+   * 
+   * @returns {Boolean}
    */
   enable() {
     if(this.status) return true;
@@ -263,7 +267,7 @@ class Base extends PIXI.Container {
 
   /**
    * 解除控件禁用。
-   * @returns {boolean}
+   * @returns {Boolean}
    */
   disable() {
     if(!this.status) return true;
@@ -272,10 +276,11 @@ class Base extends PIXI.Container {
   }
 
   /**
-   * 移动控件指定值。
-   * @param {Number} dx
-   * @param {Number} dy
-   * @returns {boolean}
+   * 移动控件指定值，失败返回 false。
+   *
+   * @param {Number} dx - X 的增加值。
+   * @param {Number} dy - Y 的增加值。
+   * @returns {Boolean}
    */
   move(dx, dy) {
     if(dx == 0 && dy == 0) return false;
@@ -285,10 +290,11 @@ class Base extends PIXI.Container {
   }
 
   /**
-   * 将控件移动到指定位置。
-   * @param {Number} x
-   * @param {Number} y
-   * @returns {boolean}
+   * 将控件移动到指定位置，失败返回 false。
+   *
+   * @param {Number} x - 新的 X 的值。
+   * @param {Number} y - 新的 Y 的值。
+   * @returns {Boolean}
    */
   moveTo(x, y) {
     if(x == this._x && y == this._y) return false;
@@ -299,10 +305,11 @@ class Base extends PIXI.Container {
   }
 
   /**
-   * 改变控件大小。
+   * 改变控件大小，失败返回 false。
+   *
    * @param {Number} width
    * @param {Number} height
-   * @returns {boolean}
+   * @returns {Boolean}
    */
   changeSize(width, height) {
     if(this._width == width && this._height == height) return false;

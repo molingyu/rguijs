@@ -190,11 +190,11 @@
             
             <span class="subtitle">Members</span>
             
-                <li data-name="RGUI.Base.box"><a href="RGUI.Base.html#.box">box</a></li>
-            
                 <li data-name="RGUI.Base.eventManager"><a href="RGUI.Base.html#.eventManager">eventManager</a></li>
             
                 <li data-name="RGUI.Base.uID"><a href="RGUI.Base.html#.uID">uID</a></li>
+            
+                <li data-name="RGUI.Base#box"><a href="RGUI.Base.html#box">box</a></li>
             
                 <li data-name="RGUI.Base#focus"><a href="RGUI.Base.html#focus">focus</a></li>
             
@@ -316,6 +316,8 @@
             <ul class="members itemMembers">
             
             <span class="subtitle">Members</span>
+            
+                <li data-name="RGUI.Button#box"><a href="RGUI.Button.html#box">box</a></li>
             
                 <li data-name="RGUI.Button#focus"><a href="RGUI.Button.html#focus">focus</a></li>
             
@@ -618,6 +620,8 @@
             
             <span class="subtitle">Members</span>
             
+                <li data-name="RGUI.ImageBox#box"><a href="RGUI.ImageBox.html#box">box</a></li>
+            
                 <li data-name="RGUI.ImageBox#focus"><a href="RGUI.ImageBox.html#focus">focus</a></li>
             
                 <li data-name="RGUI.ImageBox#height"><a href="RGUI.ImageBox.html#height">height</a></li>
@@ -628,13 +632,19 @@
             
                 <li data-name="RGUI.ImageBox#status"><a href="RGUI.ImageBox.html#status">status</a></li>
             
+                <li data-name="RGUI.ImageBox#type"><a href="RGUI.ImageBox.html#type">type</a></li>
+            
                 <li data-name="RGUI.ImageBox#visible"><a href="RGUI.ImageBox.html#visible">visible</a></li>
             
                 <li data-name="RGUI.ImageBox#width"><a href="RGUI.ImageBox.html#width">width</a></li>
             
                 <li data-name="RGUI.ImageBox#x"><a href="RGUI.ImageBox.html#x">x</a></li>
             
+                <li data-name="RGUI.ImageBox#xWheel"><a href="RGUI.ImageBox.html#xWheel">xWheel</a></li>
+            
                 <li data-name="RGUI.ImageBox#y"><a href="RGUI.ImageBox.html#y">y</a></li>
+            
+                <li data-name="RGUI.ImageBox#yWheel"><a href="RGUI.ImageBox.html#yWheel">yWheel</a></li>
             
             </ul>
             <ul class="typedefs itemMembers">
@@ -668,6 +678,10 @@
             
                 <li data-name="RGUI.ImageBox#update"><a href="RGUI.ImageBox.html#update">update</a></li>
             
+                <li data-name="RGUI.ImageBox#xScroll"><a href="RGUI.ImageBox.html#xScroll">xScroll</a></li>
+            
+                <li data-name="RGUI.ImageBox#yScroll"><a href="RGUI.ImageBox.html#yScroll">yScroll</a></li>
+            
             </ul>
             <ul class="events itemMembers">
             
@@ -682,6 +696,8 @@
             <ul class="members itemMembers">
             
             <span class="subtitle">Members</span>
+            
+                <li data-name="RGUI.ProgressBar#box"><a href="RGUI.ProgressBar.html#box">box</a></li>
             
                 <li data-name="RGUI.ProgressBar#focus"><a href="RGUI.ProgressBar.html#focus">focus</a></li>
             
@@ -745,6 +761,8 @@
             <ul class="members itemMembers">
             
             <span class="subtitle">Members</span>
+            
+                <li data-name="RGUI.SpriteButton#box"><a href="RGUI.SpriteButton.html#box">box</a></li>
             
                 <li data-name="RGUI.SpriteButton#focus"><a href="RGUI.SpriteButton.html#focus">focus</a></li>
             
@@ -915,6 +933,51 @@
         <h3 class="subsection-title">Members</h3>
         
         <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="box">box</h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>包围盒。</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
             
 <dt>
     <div class="nameContainer">
@@ -1288,12 +1351,12 @@
             
                 <span class="inherited"><a href="RGUI.Base.html#changeSize">inherited</a></span>
             
-            changeSize<span class="signature">(width, height)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
+            changeSize<span class="signature">(width, height)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Boolean}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="base.js.html">base.js</a>, <a href="base.js.html#line307">line 307</a>
+            <a href="base.js.html">base.js</a>, <a href="base.js.html#line314">line 314</a>
         </div>
         
     </div>
@@ -1304,7 +1367,7 @@
     
     
     <div class="description">
-        <p>改变控件大小。</p>
+        <p>改变控件大小，失败返回 false。</p>
     </div>
     
 
@@ -1435,7 +1498,7 @@
             
             <td class="type">
             
-                        boolean
+                        Boolean
                         
                     
             </td>
@@ -1463,7 +1526,7 @@
     
         
         <div class="tag-source">
-            <a href="base.js.html">base.js</a>, <a href="base.js.html#line206">line 206</a>
+            <a href="base.js.html">base.js</a>, <a href="base.js.html#line205">line 205</a>
         </div>
         
     </div>
@@ -1536,7 +1599,7 @@
     
         
         <div class="tag-source">
-            <a href="base.js.html">base.js</a>, <a href="base.js.html#line191">line 191</a>
+            <a href="base.js.html">base.js</a>, <a href="base.js.html#line190">line 190</a>
         </div>
         
     </div>
@@ -1604,12 +1667,12 @@
             
                 <span class="inherited"><a href="RGUI.Base.html#disable">inherited</a></span>
             
-            disable<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
+            disable<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Boolean}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="base.js.html">base.js</a>, <a href="base.js.html#line268">line 268</a>
+            <a href="base.js.html">base.js</a>, <a href="base.js.html#line272">line 272</a>
         </div>
         
     </div>
@@ -1683,7 +1746,7 @@
             
             <td class="type">
             
-                        boolean
+                        Boolean
                         
                     
             </td>
@@ -1706,12 +1769,12 @@
             
                 <span class="inherited"><a href="RGUI.Base.html#enable">inherited</a></span>
             
-            enable<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
+            enable<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Boolean}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="base.js.html">base.js</a>, <a href="base.js.html#line258">line 258</a>
+            <a href="base.js.html">base.js</a>, <a href="base.js.html#line262">line 262</a>
         </div>
         
     </div>
@@ -1722,7 +1785,7 @@
     
     
     <div class="description">
-        <p>禁用控件。</p>
+        <p>禁用控件，失败返回 false。</p>
     </div>
     
 
@@ -1785,7 +1848,7 @@
             
             <td class="type">
             
-                        boolean
+                        Boolean
                         
                     
             </td>
@@ -1808,7 +1871,7 @@
             
                 <span class="inherited"><a href="RGUI.Base.html#getFocus">inherited</a></span>
             
-            getFocus<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
+            getFocus<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Boolean}</span>
         </h4>
     
         
@@ -1824,7 +1887,7 @@
     
     
     <div class="description">
-        <p>获得焦点</p>
+        <p>获得焦点，失败返回 false。</p>
     </div>
     
 
@@ -1887,7 +1950,7 @@
             
             <td class="type">
             
-                        boolean
+                        Boolean
                         
                     
             </td>
@@ -1910,12 +1973,12 @@
             
                 <span class="inherited"><a href="RGUI.Base.html#hide">inherited</a></span>
             
-            hide<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
+            hide<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Boolean}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="base.js.html">base.js</a>, <a href="base.js.html#line247">line 247</a>
+            <a href="base.js.html">base.js</a>, <a href="base.js.html#line250">line 250</a>
         </div>
         
     </div>
@@ -1926,7 +1989,7 @@
     
     
     <div class="description">
-        <p>隐藏控件。</p>
+        <p>隐藏控件，失败返回 false。</p>
     </div>
     
 
@@ -1989,7 +2052,7 @@
             
             <td class="type">
             
-                        boolean
+                        Boolean
                         
                     
             </td>
@@ -2012,12 +2075,12 @@
             
                 <span class="inherited"><a href="RGUI.Base.html#lostFocus">inherited</a></span>
             
-            lostFocus<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
+            lostFocus<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Boolean}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="base.js.html">base.js</a>, <a href="base.js.html#line225">line 225</a>
+            <a href="base.js.html">base.js</a>, <a href="base.js.html#line226">line 226</a>
         </div>
         
     </div>
@@ -2028,7 +2091,7 @@
     
     
     <div class="description">
-        <p>失去焦点</p>
+        <p>失去焦点，失败返回 false。</p>
     </div>
     
 
@@ -2091,7 +2154,7 @@
             
             <td class="type">
             
-                        boolean
+                        Boolean
                         
                     
             </td>
@@ -2114,12 +2177,12 @@
             
                 <span class="inherited"><a href="RGUI.Base.html#move">inherited</a></span>
             
-            move<span class="signature">(dx, dy)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
+            move<span class="signature">(dx, dy)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Boolean}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="base.js.html">base.js</a>, <a href="base.js.html#line280">line 280</a>
+            <a href="base.js.html">base.js</a>, <a href="base.js.html#line285">line 285</a>
         </div>
         
     </div>
@@ -2130,7 +2193,7 @@
     
     
     <div class="description">
-        <p>移动控件指定值。</p>
+        <p>移动控件指定值，失败返回 false。</p>
     </div>
     
 
@@ -2177,7 +2240,7 @@
             
             <td class="description last">
                 
-                </td>
+                <p>X 的增加值。</p></td>
         </tr>
 	
 	
@@ -2200,7 +2263,7 @@
             
             <td class="description last">
                 
-                </td>
+                <p>Y 的增加值。</p></td>
         </tr>
 	
 	
@@ -2261,7 +2324,7 @@
             
             <td class="type">
             
-                        boolean
+                        Boolean
                         
                     
             </td>
@@ -2284,12 +2347,12 @@
             
                 <span class="inherited"><a href="RGUI.Base.html#moveTo">inherited</a></span>
             
-            moveTo<span class="signature">(x, y)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
+            moveTo<span class="signature">(x, y)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Boolean}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="base.js.html">base.js</a>, <a href="base.js.html#line293">line 293</a>
+            <a href="base.js.html">base.js</a>, <a href="base.js.html#line299">line 299</a>
         </div>
         
     </div>
@@ -2300,7 +2363,7 @@
     
     
     <div class="description">
-        <p>将控件移动到指定位置。</p>
+        <p>将控件移动到指定位置，失败返回 false。</p>
     </div>
     
 
@@ -2347,7 +2410,7 @@
             
             <td class="description last">
                 
-                </td>
+                <p>新的 X 的值。</p></td>
         </tr>
 	
 	
@@ -2370,7 +2433,7 @@
             
             <td class="description last">
                 
-                </td>
+                <p>新的 Y 的值。</p></td>
         </tr>
 	
 	
@@ -2431,7 +2494,7 @@
             
             <td class="type">
             
-                        boolean
+                        Boolean
                         
                     
             </td>
@@ -2454,12 +2517,12 @@
             
                 <span class="inherited"><a href="RGUI.Base.html#show">inherited</a></span>
             
-            show<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
+            show<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Boolean}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="base.js.html">base.js</a>, <a href="base.js.html#line236">line 236</a>
+            <a href="base.js.html">base.js</a>, <a href="base.js.html#line238">line 238</a>
         </div>
         
     </div>
@@ -2470,7 +2533,7 @@
     
     
     <div class="description">
-        <p>显示控件。</p>
+        <p>显示控件，失败返回 false。</p>
     </div>
     
 
@@ -2533,7 +2596,7 @@
             
             <td class="type">
             
-                        boolean
+                        Boolean
                         
                     
             </td>
@@ -2561,7 +2624,7 @@
     
         
         <div class="tag-source">
-            <a href="base.js.html">base.js</a>, <a href="base.js.html#line199">line 199</a>
+            <a href="base.js.html">base.js</a>, <a href="base.js.html#line198">line 198</a>
         </div>
         
     </div>
@@ -2638,7 +2701,7 @@
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Jan 12 2017 01:02:51 GMT+0800 (CST)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Jan 12 2017 13:03:02 GMT+0800 (CST)
         </footer>
     </div>
 </div>
