@@ -44,25 +44,25 @@ class ImageBox extends Base {
   }
 
   setImage() {
-    if(this._sprite.bitmap != this._images) this._sprite.bitmap = this._images;
-    let width = this._sprite.bitmap.width;
-    let height = this._sprite.bitmap.height;
-    if (this._state == 0) {
-      this._sprite.setTransform(this.x, this.y, 1, 1);
-      width = this.width  < this._sprite.bitmap.width ? this.width : this._sprite.bitmap.width;
-      height = this.height < this._sprite.bitmap.height ? this.height : this._sprite.bitmap.height;
-    } else if (this._state == 1) {
-      let zoomX = this.width / this._sprite.bitmap.width;
-      let zoomY = this.height / this._sprite.bitmap.height;
-      this._sprite.setTransform(this.x, this.y, zoomX, zoomY);
-    }
-    this._sprite.setFrame(this._xWheel, this._yWheel, width, height);
+    // if(this._sprite.bitmap != this._images) this._sprite.bitmap = this._images;
+    // let width = this._sprite.bitmap.width;
+    // let height = this._sprite.bitmap.height;
+    // if (this._state == 0) {
+    //   this._sprite.setTransform(this.x, this.y, 1, 1);
+    //   width = this.width  < this._sprite.bitmap.width ? this.width : this._sprite.bitmap.width;
+    //   height = this.height < this._sprite.bitmap.height ? this.height : this._sprite.bitmap.height;
+    // } else if (this._state == 1) {
+    //   let zoomX = this.width / this._sprite.bitmap.width;
+    //   let zoomY = this.height / this._sprite.bitmap.height;
+    //   this._sprite.setTransform(this.x, this.y, zoomX, zoomY);
+    // }
+    // this._sprite.setFrame(this._xWheel, this._yWheel, width, height);
   }
 
   create() {
     let self = this;
     this._images = LoadManager.loadImage(this._image, false, true, (()=>{
-      self._sprite = Sprite.fromBitmap(self._images);
+      self._sprite = new Sprite(self._images);
       self._sprite.x = self.x;
       self._sprite.y = self.y;
       self._sprite.width = self.width;

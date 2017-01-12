@@ -57,7 +57,11 @@ class Bitmap {
     this._ctx = this._canvas.getContext('2d');
     this._canvas.width = Math.max(width || 0, 1);
     this._canvas.height = Math.max(height || 0, 1);
+    this._baseTexture = new PIXI.BaseTexture(this._canvas);
+    this._baseTexture.mipmap = false;
+    this._baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
     this._image = null;
+    this._sprite = null;
     this._isLoading = false;
     this._hasError = false;
     this._loadCallback = {};
@@ -65,15 +69,15 @@ class Bitmap {
       style: 'normal',
       variant: 'normal',
       weight: 'normal',
-      name: 'Arial',
+      name: 'GameFont',
       size: 28,
       textAlign: 'start',
       color: Color.white,
       outlineColor: Color.black,
       toString: function () {
-        return (this.style == '' ? '' : this.style + ' ') +
-          (this.variant == '' ? '' : this.variant + ' ') +
-          (this.weight == '' ? '' : this.variant + ' ') +
+        return (this.style == 'normal' ? '' : this.style + ' ') +
+          (this.variant == 'normal' ? '' : this.variant + ' ') +
+          (this.weight == 'normal' ? '' : this.variant + ' ') +
           (this.size + 'px ') +
           (this.name == '' ? '' : this.name + ' ')
       }
@@ -222,6 +226,10 @@ class Bitmap {
     Bitmap.eventManager.trigger('load_error', {url: this.url})
   }
 
+  updateSprite() {
+    if(this._sprite) this._sprite.texture.baseTexture.update()
+  }
+
   /**
    * 返回按九宫格放大后的新位图。
    *
@@ -313,6 +321,8 @@ class Bitmap {
     height = Math.max(height || 0, 1);
     this._canvas.width = width;
     this._canvas.height = height;
+    this._baseTexture.width = width;
+    this._baseTexture.height = height
   }
 
   /**
@@ -336,6 +346,7 @@ class Bitmap {
       this._ctx.globalCompositeOperation = 'source-over';
       this._ctx.drawImage(source.canvas, sx, sy, sw, sh, dx, dy, dw, dh);
     }
+    this.updateSprite()
   }
 
   /**
@@ -363,6 +374,7 @@ class Bitmap {
     data[1] = color.green;
     data[2] = color.blue;
     data[3] = color.alpha;
+    this.updateSprite()
   }
 
   /**
@@ -375,6 +387,7 @@ class Bitmap {
    */
   clearRect(x, y, width, height) {
     this._ctx.clearRect(x, y, width, height);
+    this.updateSprite()
   }
 
   /**
@@ -396,11 +409,12 @@ class Bitmap {
    */
   fillRect(x, y, width, height, fillColor, strokeColor = fillColor) {
     let context = this._ctx;
-    context.save();
-    context.fillRect(x, y, width, height);
     context.fillStyle = fillColor.toString();
     context.strokeStyle = strokeColor.toString();
+    context.save();
+    context.fillRect(x, y, width, height);
     context.restore();
+    this.updateSprite()
   }
 
   /**
@@ -426,6 +440,8 @@ class Bitmap {
    */
   fillRoundedRect(x, y, width, height, radius, fillColor, strokeColor = fillColor) {
     let context = this._ctx;
+    context.fillStyle = fillColor;
+    context.strokeStyle = strokeColor;
     context.save();
     context.beginPath();
     if (width> 0) context.moveTo(x + radius, y);
@@ -439,11 +455,10 @@ class Bitmap {
     else{
       context.arcTo(x, y, x-radius, y, radius);
     }
-    context.fillStyle = fillColor;
-    context.strokeStyle = strokeColor;
     context.stroke();
     context.fill();
     context.restore();
+    this.updateSprite()
   }
 
   /**
@@ -468,13 +483,14 @@ class Bitmap {
    */
   drawCircle (x, y, radius, fillColor, strokeColor = fillColor) {
     let context = this._ctx;
-    context.save();
     context.fillStyle = fillColor;
     context.strokeStyle = strokeColor;
+    context.save();
     context.beginPath();
     context.arc(x, y, radius, 0, Math.PI * 2, false);
     context.fill();
     context.restore();
+    this.updateSprite()
   }
 
   /**
@@ -488,10 +504,15 @@ class Bitmap {
    */
   drawText (text, x, y, maxWidth, align = this._font.textAlign) {
     if(text != void 0) {
-      this._ctx.font = this._font.toString();
-      this._ctx.textAlign = align;
-      this._ctx.textBaseline = 'alphabetic';
-      this._ctx.fillText(x, y, maxWidth)
+      let context = this._ctx;
+      context.save();
+      context.font = this._font.toString();
+      context.textAlign = align;
+      context.textBaseline = 'alphabetic';
+      context.fillStyle = this._font.color;
+      context.fillText(text, x, y, maxWidth);
+      context.restore();
+      this.updateSprite()
     }
   }
 
@@ -1034,6 +1055,8 @@ class Bitmap {
       stackBlurCanvasRGBA(context, 0, 0, this.width, this.height, radius);
     else
       stackBlurCanvasRGB(context, 0, 0, this.width, this.height, radius);
+
+    this.updateSprite()
   }
 
 }

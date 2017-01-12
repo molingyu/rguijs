@@ -26,6 +26,7 @@ class Sprite extends PIXI.Sprite {
   constructor(bitmap = new Bitmap(32, 32)) {
     super(PIXI.Texture.from(bitmap.canvas));
     this._bitmap = bitmap;
+    this._bitmap._sprite = this;
   }
 
   /**
@@ -36,6 +37,7 @@ class Sprite extends PIXI.Sprite {
   static fromBitmap (bitmap) {
     let sprite = Sprite.from(bitmap.canvas);
     sprite._bitmap = bitmap;
+    sprite._bitmap._sprite = sprite;
     return sprite
   }
 
