@@ -2,7 +2,7 @@
 [![npm version](https://badge.fury.io/js/rgui.svg)](https://badge.fury.io/js/rgui)
 [![Join the chat](https://badges.gitter.im/rguijs/RMMV.svg)](https://gitter.im/rguijs/RMMV)
 
-RGUI is RPG Maker MV GUI framework.
+RGUI is easy to use, powerful, easy to expand and async GUI framework.
 
 ## Installation
 
@@ -14,8 +14,12 @@ or
 npm install rgui -g
 ```
 
+also, you can copy `./src` folder to your project directory.
+
 ## Usage
-View test/tests.
+View examples
+
+![rgui](./res/rgui_class.png)
 
 ## Development
 
