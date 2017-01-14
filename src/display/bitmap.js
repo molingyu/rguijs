@@ -57,9 +57,6 @@ class Bitmap {
     this._ctx = this._canvas.getContext('2d');
     this._canvas.width = Math.max(width || 0, 1);
     this._canvas.height = Math.max(height || 0, 1);
-    this._baseTexture = new PIXI.BaseTexture(this._canvas);
-    this._baseTexture.mipmap = false;
-    this._baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
     this._image = null;
     this._sprite = null;
     this._isLoading = false;
@@ -321,8 +318,6 @@ class Bitmap {
     height = Math.max(height || 0, 1);
     this._canvas.width = width;
     this._canvas.height = height;
-    this._baseTexture.width = width;
-    this._baseTexture.height = height
   }
 
   /**

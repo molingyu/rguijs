@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Source: loadManager.js</title>
+    <title>Source: controls/container.js</title>
     
     
     
@@ -904,111 +904,89 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="loadManager.js.html">Source: loadManager.js</h1>
+        <h1 class="page-title" data-filename="controls_container.js.html">Source: controls/container.js</h1>
         
 
 
     
     <section>
         <article>
-            <pre id="source-code" class="prettyprint source linenums"><code>const fs = require('fs');
-const RGUI = require('./rgui');
-const Bitmap = require('./display/bitmap');
+            <pre id="source-code" class="prettyprint source linenums"><code>const Base = require('../base');
+const RGUI = require('../rgui');
+const Input = RGUI.Input;
 
-const LoadManager = {
-  /**
-   * 文件加载的目录。
-   *
-   * @type String
-   */
-  pathDir: '',
-  /**
-   * 图片缓存。
-   * 
-   * @type Map
-   */
-  cache: new Map(),
+RGUI.Controls = RGUI.Controls + 1;
+
+/**
+ * 基础容器控件。
+ *
+ * @memberof RGUI
+ * @extends RGUI.Base
+ */
+class Container extends Base {
+
+  constructor(obj) {
+    super(obj);
+    this.controls = new Set();
+    this.top = null;
+    this.create()
+  }
 
   /**
-   *
+   * 往容器里添加控件。
+   * @param {...Control} controls - 欲添加的控件。
    */
-  path: function () {
-    return this.pathDir == '' ?  `${RGUI.dirname}/` : `${RGUI.dirname}/${this.pathDir}/`
-  },
+  push(...controls) {
+      controls.forEach((control)=>{
+        //TODO Maybe we have better method.
+        if(!control.penetration) alias(control.eventManager, 'mouseUpdate', 'mouseUpdateHook', ()=>{});
+        this.controls.add(control)
+      })
+  }
+
   /**
-   * 获取欲加载图片的完整路径。会考虑 i18n 和文件是否存在的情况。
-   * 
-   * @param {String} fileName - 欲加载的文件名。
-   * @param {Boolean} i18n - 是否开启本地化。
-   * @returns {String} - 完整路径。
+   * 从容器里删除指定控件。
+   *
+   * @param {Control} control - 欲删除的控件。
    */
-  getImagePath: function (fileName, i18n) {
-    let path;
-    if(i18n) {
-      if (fs.existsSync(`${this.path()}${fileName}_${RGUI.lang}.png`)) {
-        path = `${this.path()}${fileName}_${RGUI.lang}.png`
-      } else {
-        if (fs.existsSync(`${this.path()}${fileName}_${RGUI.defaultLang}.png`)) {
-          path = `${this.path()}${fileName}_${RGUI.defaultLang}.png`
-        } else {
-          path = ''
+  remove(control) {
+    unAlias(control.eventManager, 'mouseUpdate');
+    this.controls.delete(control)
+  }
+
+  /**
+   * 删除整个容器里的控件。
+   */
+  clear() {
+    this.controls.clear()
+  }
+
+  defEventCallback() {
+    this.eventManager.on('mouseIn', {}, (self, info)=>{
+      let top = null;
+      self.controls.forEach((control)=>{ if(control.box.hit(info.x, info.y)) top = control });
+      if(top) {
+        if(!this.mouseFocus) {
+          top.eventManager.trigger('mouseIn',{x: x, y: y});
+          top.eventManager.mouseFocus = true;
+        }
+        if(Input.mouseScroll != 0) {
+          top.eventManager.trigger('mouseScroll', {scrollValue: Input.mouseScroll})
         }
       }
-    } else {
-      path = fs.existsSync(`${this.path()}${fileName}.png`) ? `${this.path()}${fileName}.png` : ''
-    }
-    return path
-  },
-
-  /**
-   * 加载指定图片资源。
-   *
-   * @param {String} fileName - 欲加载的文件名。
-   * @param {Boolean} i18n - 是否开启本地化 。
-   * @param {Boolean} isCache - 是否开启缓存。
-   * @param {Function} onLoad - Bitmap 加载成功时的回调函数。
-   * @param {Function} onError - Bitmap 加载错误时的回调函数。
-   * @returns {RGUI.Display.Bitmap}
-   */
-  loadImage: function (fileName, i18n = false, isCache = true, onLoad = ()=>{}, onError = ()=>{}) {
-    let path = this.getImagePath(fileName, i18n);
-    if(path == '') {
-      RGUI.eventManager.trigger('imageLoadError', {fileName: fileName,path: path, i18n: i18n});
-      return new Bitmap(32, 32)
-    } else if (isCache){
-      if(!this.cacheHas(path)) this.cache.set(path, Bitmap.load(path, onLoad, onError));
-      return this.cache.get(path)
-    }
-    return Bitmap.load(path, onLoad, onError)
-  },
-
-  /**
-   * 判断该文件是否存在于缓存中。
-   *
-   * @param {String} path
-   * @returns {Boolean}
-   */
-  cacheHas(path) {
-    return this.cache.has(path)
-  },
-  /**
-   * 清除图片资源缓存。可以指定语言选项来清除带有某个语言标记的资源。
-   *
-   * @param {String} lang - 语言标记。默认为空。
-   */
-  clear: function (lang = null) {
-    if(lang == null) {
-      this.cache.clear()
-    } else {
-      for (let key of this.cache.keys()) {
-        key.match(/[^_\s]*_([^_\s][^\s]*)\.png/);
-        if($1 == lang) this.cache.delete(key)
+      if(self.top &amp;&amp; self.top != top) self.top.eventManager.trigger('mouseOut', {x: info.x, y: info.y});
+      self.top = top
+    });
+    this.eventManager.on('mouseOut', {}, (self)=>{
+      if(self.top) {
+        self.top.eventManager.trigger('mouseOut', {x: info.x, y: info.y});
+        self.top = null
       }
-    }
+    })
   }
-};
+}
 
-module.exports = LoadManager;</code></pre>
+module.exports = Container;</code></pre>
         </article>
     </section>
 

@@ -141,6 +141,20 @@ class Base extends PIXI.Container {
   }
 
   /**
+   * 是否开启鼠标事件穿透。
+   *
+   * @returns {Boolean}
+   */
+  get penetration() { return this._penetration }
+  set penetration(value) {
+    value = Boolean(value);
+    if(this._penetration == value) return false;
+    let old = this._penetration;
+    this._penetration = value;
+    this._em.trigger('changeOpacity', {old: old, new: this._penetration})
+  }
+
+  /**
    * 事件管理器。
    *
    * @static
@@ -151,15 +165,16 @@ class Base extends PIXI.Container {
   /**
    *
    * @param {Object} obj
-   * @param {Number} obj.x - 控件的 X 坐标。
-   * @param {Number} obj.y - 控件的 X 坐标。
-   * @param {Number} obj.width - 控件的宽度值。
-   * @param {Number} obj.height - 控件的高度值。
-   * @param {RGUI.Box.Rect|RGUI.Box.Round} obj.box - 控件的包围盒。
-   * @param {Boolean} obj.focus - 控件的焦点。
-   * @param {Boolean} obj.visible - 控件的可见性。
-   * @param {Boolean} obj.status - 控件的状态。
-   * @param {Number} obj.opacity - 控件的透明度。
+   * @param {Number} obj.x=0 - 控件的 X 坐标。
+   * @param {Number} obj.y=0 - 控件的 X 坐标。
+   * @param {Number} obj.width=32 - 控件的宽度值。
+   * @param {Number} obj.height=32 - 控件的高度值。
+   * @param {RGUI.Box.Rect|RGUI.Box.Round} [obj.box=new Box.Rect(0, 0, 32, 32)] - 控件的包围盒。
+   * @param {Boolean} obj.focus=false - 控件的焦点。
+   * @param {Boolean} obj.visible=true - 控件的可见性。
+   * @param {Boolean} obj.status=true - 控件的状态。
+   * @param {Number} obj.opacity=255 - 控件的透明度。
+   * @param {Boolean} obj.penetration=false - 控件是否开启鼠标穿透。
    */
   constructor(obj = {}) {
     super();
@@ -168,13 +183,14 @@ class Base extends PIXI.Container {
     this._uID = RGUI.getID();
     this._x = obj.x || 0;
     this._y = obj.y || 0;
-    this._width = obj.width || 0;
-    this._height = obj.height || 0;
+    this._width = obj.width || 32;
+    this._height = obj.height || 32;
     this._box = obj.box ||new Box.Rect(this.x, this.y, this._width, this._height);
     this._focus = obj.focus || false;
     super.visible = obj.visible || true;
     this._status = obj.status || true;
     this.alpha = RGUI.boundary(obj.opacity || 255, 0, 255) / 255;
+    this._penetration = obj.penetration || false;
   }
 
   /**

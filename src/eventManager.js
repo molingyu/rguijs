@@ -28,7 +28,8 @@ class EventManager extends Svent.EventManager {
   update() {
     super.update();
     if(this.obj.status && this.obj.visible) {
-      this.mouseUpdate();
+      if(RGUI.MOUSE) this.mouseUpdate();
+      if(!RGUI.KEYBOARD) return;
       this.keyboardEvent.forEach((key)=>{
         this.keyboardUpdate(key, this.events[key.nameStr])
       })
@@ -39,15 +40,17 @@ class EventManager extends Svent.EventManager {
     let x = Input.x;
     let y = Input.y;
     let box = this.obj.box;
-    if(!this.mouseFocus && box.hit(x, y)) {
-      this.trigger('mouseIn',{x: x, y: y});
-      this.mouseFocus = true
-    } else if(this.mouseFocus && !box.hit(x, y)) {
+    if(box.hit(x, y)) {
+      if(!this.mouseFocus) {
+        this.trigger('mouseIn',{x: x, y: y});
+        this.mouseFocus = true
+      }
+      if(Input.mouseScroll != 0) {
+        this.trigger('mouseScroll', {scrollValue: Input.mouseScroll})
+      }
+    } else if(this.mouseFocus) {
       this.trigger('mouseOut', {x: x, y: y});
       this.mouseFocus = false
-    }
-    if(Input._mouseScroll != 0) {
-      this.trigger('mouseScroll', {scrollValue: Input.mouseScroll})
     }
   }
 
