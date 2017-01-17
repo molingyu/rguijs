@@ -55,7 +55,7 @@ class EventManager extends Svent.EventManager {
   }
 
   keyboardUpdate(key, event) {
-    if (event.type == 1 && !this.mouseFocus) return false;
+    if (event.info.type == 1 && !this.mouseFocus) return false;
     if(key.keyType == 'down') {
       if(Input.keyDown(key.keyName)) this.trigger(event.name)
     } else if(key.keyType == 'press') {
@@ -95,7 +95,7 @@ class EventManager extends Svent.EventManager {
     3 - 鼠标事件
    */
   _keyName(name) {
-    if(name == 'click') name = 'mouseLeft';
+    if(name == 'click') name = 'MouseLeft';
     let key = {nameStr: name};
     if(name.match(/^(down|press|up):\w*/)) {
       key.keyType = name.split(':')[0];
@@ -105,10 +105,10 @@ class EventManager extends Svent.EventManager {
       key.keyName = name;
     }
     let type = 0;
-    if(EventManager.isKeyboardEvent(name)) {
-      type = EventManager.isMouseEvent(name) ? 1 : 2;
+    if(EventManager.isKeyboardEvent(key.keyName)) {
+      type = EventManager.isMouseEvent(key.keyName) ? 1 : 2;
       this.keyboardEvent.push(key)
-    } else if(EventManager.isMouseEvent(name)) {
+    } else if(EventManager.isMouseEvent(key.keyName)) {
       type = 3;
     }
     return type
@@ -122,7 +122,7 @@ class EventManager extends Svent.EventManager {
    * @param {Function} callback - 回调函数。
    */
   on(name, conf, callback) {
-    conf.type = this._keyName(name);
+    conf.info = {type: this._keyName(name)};
     super.on(name, conf, callback)
   }
 
@@ -134,8 +134,7 @@ class EventManager extends Svent.EventManager {
    * @param {Function} callback - 回调函数。
    */
   onAsync(name, conf, callback) {
-    conf.type = this._keyName(name);
-    conf.type = type;
+    conf.info = {type: this._keyName(name)};
     super.onAsync(name, conf, callback)
   }
 

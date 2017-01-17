@@ -1,5 +1,7 @@
-const Base = require('../base');
 const RGUI = require('../rgui');
+const Base = require('../base');
+const Sprite = require('../display/sprite');
+const LoadManager = require('../loadManager');
 
 RGUI.Controls = RGUI.Controls + 1;
 
@@ -10,28 +12,32 @@ RGUI.Controls = RGUI.Controls + 1;
  */
 class ProgressBar extends Base {
 
-  get image() { return this._image }
-  set image(value) {
-    if(this._image == value) return false;
-    this._image = value;
-    this.eventManager.trigger('changeImage')
+  get images() { return this._images }
+  set images(value) {
+    if(this._imagesStr == value && typeOf(value) != 'String') return false;
+    let self = this;
+    this._images = LoadManager.loadImage(this._imagesStr, this._i18nLoad, true, ()=>{
+      self._images = Bitmap.cut(self._images, this._width, this._height, 0);
+      self.setImage();
+      self.eventManager.trigger('changeImages')
+    })
   }
-
-  get style() { return this._style }
-  set style(value) {
-    if(this._style == value) return false;
-    let old = this._style;
-    this._style = value;
-    this.eventManager.trigger('changeStyle', {old: old, new: this._style})
-  }
-
   get value() { return this._value }
   set value(value) {
     value = RGUI.boundary(value, 0, 100);
     if(this._value == value) return false;
     let old = this._value;
     this._value = value;
-    this.eventManager.trigger('changeValue', {old : old, new: this._value})
+    this.eventManager.trigger('changeValue', {old: old, new: this._value})
+  }
+
+  get maxValue() { return this._maxValue }
+  set maxValue(value) {
+    value = Number(value);
+    if(this._maxValue == value) return false;
+    let old = this._maxValue;
+    this._maxValue = value;
+    this.eventManager.trigger('changeMaxValue', {old: old, new: this._maxValue})
   }
 
   get type() { return this._type }
@@ -45,66 +51,43 @@ class ProgressBar extends Base {
 
   constructor(obj) {
     super(obj);
-    this._image = obj.image;
-    this._style = obj.style || {radius: 5, fillColor: '#ff4925', strokeColor: '#1F70FF'};
-    if(this._image == void 0) {
-      this._image = new Bitmap(this.width, this.height);
-      this._image.fillRoundedAll(this._style.radius, this._style.fillColor, this._style.stopColor);
-    }
-    this._value = RGUI.boundary(obj.value, 0, 100) || 100;
+    this._imagesStr = obj.images;
+    this._maxValue = obj.maxValue || 100;
+    this._value = RGUI.boundary(obj.value || this._maxValue, 0, this._maxValue);
     this._type = obj.type || 0;
     this.create()
   }
 
   setImage() {
-    if(this._sprite.bitmap != this._image) this._sprite.bitmap = this._image;
-    if (this._type == 0) {
-      this._sprite.setFrame(0, 0, this._value / 100 * this.width, this.height)
+    this._sprite.bitmap.blt(this._images[0], 0, 0, this._width, this._height, 0, 0);
+    if(this._type == 0) {
+      this._sprite.bitmap.blt(this._images[1], 0, 0, this._width * (this._value / this._maxValue), this._height, 0, 0)
     } else {
-      this._sprite.setFrame(0, 0, this.width, this._value / 100 * this.height)
+      this._sprite.bitmap.blt(this._images[1], 0, 0, this._width, this._height * (this._value / this._maxValue), 0, 0)
     }
   }
 
   create() {
-    this._sprite = new Sprite();
-    this._sprite.x = this.x;
-    this._sprite.y = this.y;
-    this._sprite.width = this.width;
-    this._sprite.height = this.height;
-    this.addChild(this._sprite);
     let self = this;
-    this._image.addLoadListener(function(){ self.setImage() });
-    super.create()
+    this._images = LoadManager.loadImage(this._imagesStr, this._i18nLoad, true, ()=>{
+      self._images = Bitmap.cut(self._images, self.width, self.height, 0);
+      self._sprite = new Sprite(new Bitmap(self.width, self.height));
+      self._sprite.x = self._x;
+      self._sprite.y = self._y;
+      self.setImage();
+      self.addChild(this._sprite);
+      super.create()
+    })
   }
 
   defEventCallback() {
     let self = this;
-    this.eventManager.on('changeX', {}, function () {
-      self._sprite.x = self.x;
-    });
-    this.eventManager.on('changeY', {}, function () {
-      self._sprite.y = self.y;
-    });
-    //TODO
-    this.eventManager.on('changeWidth', {}, function () {
-      self.setImage()
-    });
-    //TODO
-    this.eventManager.on('changeHeight', {}, function () {
-      self.setImage()
-    });
-    this.eventManager.on('changeImage', {}, function () {
-      self.setImage()
-    });
-    this.eventManager.on('changeStyle', {}, function () {
-      self._image.fillAll(self._style.color)
-    });
-    this.eventManager.on('changeValue', {}, function () {
-      self.setImage();
-    });
-    this.eventManager.on('changeType', {}, function () {
-      self.setImage();
-    })
+    this.eventManager.on('changeX', {}, ()=>{ self._sprite.x = self.x });
+    this.eventManager.on('changeY', {}, ()=>{ self._sprite.y = self.y });
+    this.eventManager.on('changeImages', {}, ()=>{ self.setImage() });
+    this.eventManager.on('changeMaxValue', {}, ()=>{ self.setImage() });
+    this.eventManager.on('changeValue', {}, ()=>{ self.setImage() });
+    this.eventManager.on('changeType', {}, ()=>{ self.setImage() })
   }
 }
 

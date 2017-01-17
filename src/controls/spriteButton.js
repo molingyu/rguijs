@@ -1,7 +1,9 @@
-const Base = require('../base');
 const RGUI = require('../rgui');
+const ButtonBase = require('./buttonBase');
+const Bitmap = require('../display/bitmap');
+const Sprite = require('../display/sprite');
+const LoadManager = require('../loadManager');
 
-//TODO fix bugs
 RGUI.Controls = RGUI.Controls + 1;
 
 /**
@@ -9,112 +11,85 @@ RGUI.Controls = RGUI.Controls + 1;
  * @memberof RGUI
  * @extends RGUI.Base
  */
-class SpriteButton extends Base {
+class SpriteButton extends ButtonBase {
 
-  set width(value) {}
+  set width() {}
 
-  set height(value) {}
+  set height() {}
 
-  get defaultImage() { return this._images[0] }
-  set defaultImage(value) {
-    if(this._images[0] == value && value.class != Bitmap) return false;
-    this._images[0] = value;
-    this.eventManager.trigger('changeDefaultImage')
+  /**
+   * 返回图片按钮的位图数组。
+   *
+   * @returns {Array<RGUI.Display.Bitmap>}
+   */
+  get images() { return this._images }
+  set images(value) {
+    if(this._imagesStr == value && typeOf(value) != 'String') return false;
+    let self = this;
+    this._images = LoadManager.loadImage(this._imagesStr, this._i18nLoad, true, ()=>{
+      self._images = Bitmap.cut(self._images, this.width, this.height, 0);
+      self._image = self._images[self._state];
+      self._sprite.bitmap = self._image;
+      self.eventManager.trigger('changeImages')
+    })
   }
 
-  get focusImage() { return this._images[1] }
-  set focusImage(value) {
-    if(this._images[1] == value && value.class != Bitmap) return false;
-    this._images[1] = value;
-    this.eventManager.trigger('changeFocusImage')
-  }
-
-  get downImage() { return this._images[2] }
-  set downImage(value) {
-    if(this._images[2] == value && value.class != Bitmap) return false;
-    this._images[2] = value;
-    this.eventManager.trigger('changeDownImage')
-  }
-
-  get enfeebleImage() { return this._images[3] }
-  set enfeebleImage(value) {
-    if(this._images[3] == value && value.class != Bitmap) return false;
-    this._images[3] = value;
-    this.eventManager.trigger('changeEnfeebleImage')
-  }
-
-  get state() { return this._state }
-  set state(value) {
-    value = Number(value);
-    if(this._state == value) return false;
-    let old = this._state;
-    this._state = value;
-    this.eventManager.trigger('changeType', {old: old, new: this._state})
-  }
-
+  /**
+   * @param {Number} obj.width - 控件的宽度值。
+   * @param {Number} obj.height - 控件的高度值。
+   * @param {String} obj.images - 控件所用的图片组。
+   */
   constructor(obj) {
     super(obj);
-    this._images = obj.images || [new Bitmap(0, 0, 0, 0), new Bitmap(0, 0, 0, 0), new Bitmap(0, 0, 0, 0), new Bitmap(0, 0, 0, 0)];
-    this._state = obj.state || 0;
-    this._image = this._images[this._state];
+    this._i18nLoad = true;
+    this._imagesStr = obj.images || '';
     this.create()
   }
 
-  setImage() {
-    this._image = this._images[this._state];
-    this._sprite.bitmap = this._image;
-    this.width = this._image.width;
-    this.height = this._image.height;
+  create() {
+    let self = this;
+    this._images = LoadManager.loadImage(this._imagesStr, this._i18nLoad, true, ()=>{
+      self._images = Bitmap.cut(self._images, this.width, this.height, 0);
+      self._image = self._images[self._state];
+      self._sprite = new Sprite(self._image);
+      self._sprite.x = self._x;
+      self._sprite.y = self._y;
+      self._sprite.width = self._width;
+      self._sprite.height = self._height;
+      self.addChild(self._sprite);
+      super.create()
+    });
   }
 
-  create() {
-    this._sprite = new Sprite();
-    this._sprite.x = this.x;
-    this._sprite.y = this.y;
-    this._sprite.width = this.width;
-    this._sprite.height = this.height;
-    this.addChild(this._sprite);
-    let self = this;
-    this._image.addLoadListener(function(){ self.setImage() });
-    super.create()
+  default() {
+    this._image = this._images[0];
+    this._sprite.bitmap = this._image;
+    super.default()
+  }
+
+  focus() {
+    this._image = this._images[1];
+    this._sprite.bitmap = this._image;
+    super.focus()
+  }
+
+  down() {
+    this._image = this._images[2];
+    this._sprite.bitmap = this._image;
+    super.down()
+  }
+
+  enfeeble() {
+    this._image = this._images[3];
+    this._sprite.bitmap = this._image;
+    super.enfeeble()
   }
 
   defEventCallback() {
+    super.defEventCallback();
     let self = this;
-    this.eventManager.on('changeX', {}, function () {
-      self._sprite.x = self.x;
-    });
-    this.eventManager.on('changeY', {}, function () {
-      self._sprite.y = self.y;
-    });
-    this.eventManager.on('changeFocus', {}, function (info) {
-      self.state = info.new ? 1 : 0;
-      self.setImage()
-    });
-    this.eventManager.on('changeOpacity', {}, function (info) {
-      self._sprite.opacity = info.new
-    });
-    this.eventManager.on('mouseIn', {}, function () {
-      self.state = 1;
-      self.setImage()
-    });
-    this.eventManager.on('mouseOut', {}, function () {
-      self.state = 0;
-      self.setImage()
-    });
-    this.eventManager.on('enable', {}, function () {
-      self.state = 3;
-      self.setImage()
-    });
-    this.eventManager.on('disable', {}, function () {
-      self.state = 0;
-      self.setImage()
-    });
-    this.eventManager.on('click', {}, function () {
-      self.state = 2;
-      self.setImage();
-      self.eventManager.trigger('run')
-    });
+    this.eventManager.on('changeX', {}, ()=>{ self._sprite.x = self.x });
+    this.eventManager.on('changeY', {}, ()=>{ self._sprite.y = self.y });
   }
 
 }

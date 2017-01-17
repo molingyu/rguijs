@@ -1,14 +1,14 @@
-const Base = require('../base');
+const ButtonBase = require('./buttonBase');
 const RGUI = require('../rgui');
-
+//todo error
 RGUI.Controls = RGUI.Controls + 1;
 
 /**
  * 按钮控件。
  * @memberof RGUI
- * @extends RGUI.Base
+ * @extends RGUI.ButtonBase
  */
-class Button extends Base {
+class Button extends ButtonBase {
 
   constructor(obj) {
     super(obj);

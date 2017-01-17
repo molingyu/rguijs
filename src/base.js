@@ -88,7 +88,7 @@ class Base extends PIXI.Container {
   /**
    * 焦点。
    *
-   * @returns {Number}
+   * @returns {Boolean}
    */
   get focus() { return this._focus }
   set focus(value) {
@@ -154,6 +154,13 @@ class Base extends PIXI.Container {
     this._em.trigger('changeOpacity', {old: old, new: this._penetration})
   }
 
+  get i18nLoad() { return this._i18nLoad }
+  set i18nLoad(value) {
+    if(this._i18nLoad == value) return false;
+    this.create()
+  }
+
+
   /**
    * 事件管理器。
    *
@@ -191,6 +198,7 @@ class Base extends PIXI.Container {
     this._status = obj.status || true;
     this.alpha = RGUI.boundary(obj.opacity || 255, 0, 255) / 255;
     this._penetration = obj.penetration || false;
+    this._i18nLoad = false
   }
 
   /**

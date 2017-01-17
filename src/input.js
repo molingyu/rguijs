@@ -104,11 +104,7 @@ const Input = {
   init: function () {
     this._mouseScroll = 0;
     this.keyStauts = {};
-    this._mouseKey = [
-      'MouseLeft',
-      'MouseMiddle',
-      'MouseRight'
-    ];
+    this._mouseKey = [0x01, 0x04, 0x02];
     this._x = 0;
     this._y = 0;
     this._setupEventHandlers();
@@ -124,10 +120,10 @@ const Input = {
       self._mouseScroll = event.wheelDelta > 0 ? 1 : -1;
     });
     document.addEventListener('mousedown', (event)=>{
-      self.keyStauts[event.keyCode] = 1
+      self.keyStauts[this._mouseKey[event.button]] = 1
     });
     document.addEventListener('mouseup', (event)=>{
-      self.keyStauts[event.keyCode] = 0
+      self.keyStauts[this._mouseKey[event.button]] = 0
     });
     document.addEventListener('keydown', (event)=>{
       self.keyStauts[event.keyCode] = 1;

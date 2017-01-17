@@ -11,6 +11,7 @@
   const ipcRenderer = require('electron').ipcRenderer;
   const LoadManager = require('../src/loadManager');
   LoadManager.pathDir = 'res';
+  ipcRenderer.send('show-dev');
   require('../src/lib/pixi');
   const RGUI = require('../src/rgui');
   const Input = RGUI.Input;
@@ -69,8 +70,17 @@
     if(image.y > 720 - image.height) image.y = 720 - image.height
   });
 
+  let button = new RGUI.SpriteButton({
+    x: 20,
+    y: 40,
+    width: 26,
+    height: 40,
+    images: 'btn'
+  });
+
   stage.addChild(bg);
   stage.addChild(image);
+  stage.addChild(button);
   animate();
 
   function animate() {
@@ -81,6 +91,7 @@
     }
     bg.update();
     image.update();
+    button.update();
     renderer.render(stage);
     Input.update();
   }

@@ -12,13 +12,13 @@
  * @license MIT <https://mit-license.org/>
  */
 
-var fs = require('fs'), path = require('path');
+let fs = require('fs'), path = require('path');
 
 // Seed random numbers [gh-82]
 Math.random();
 
 // Look for binary for this platform
-var modPath = path.join(__dirname, 'bin', process.platform+ '-'+ process.arch+ '-'+ process.versions.modules, 'fibers');
+let modPath = path.join(__dirname, 'bin', process.platform+ '-'+ process.arch+ '-'+ process.versions.modules, 'fibers');
 try {
   fs.statSync(modPath+ '.node');
 } catch (ex) {
@@ -181,7 +181,7 @@ class EventManager {
     return this.events[name] != void 0
   }
 
-  _on(name, conf, callback, immediately) {
+  _on(name, conf, callback, immediately = false) {
     if(name == 'isEventManagerStop'){
       Error("error:The event(isEventManagerStop) can only have one callback.")
     }

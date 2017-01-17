@@ -20,6 +20,14 @@ class Container extends Base {
   }
 
   /**
+   * 更新函数。原则上每帧调用一次。
+   */
+  update() {
+    super.update();
+    this.controls.forEach((control)=>{ control.update() })
+  }
+
+  /**
    * 往容器里添加控件。
    * @param {...Control} controls - 欲添加的控件。
    */

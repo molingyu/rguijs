@@ -1,6 +1,5 @@
-const Base = require('../base');
-const PIXI = require('../lib/pixi');
 const RGUI = require('../rgui');
+const Base = require('../base');
 const Sprite = require('../display/sprite');
 const LoadManager = require('../loadManager');
 
@@ -20,7 +19,7 @@ class ImageBox extends Base {
    */
   get image() { return this._image }
   set image(value) {
-    if(this._image == value && typeOf(value) != 'String') return false;
+    if(this._imageStr == value && typeOf(value) != 'String') return false;
     let self = this;
     this._image = LoadManager.loadImage(value, false, true, (()=>{
       self._sprite.bitmap = self._image;
@@ -95,7 +94,8 @@ class ImageBox extends Base {
     this._type = obj.type || 0;
     this._xWheel = obj.xWheel || 0;
     this._yWheel = obj.yWheel || 0;
-    this.create(obj.image || '')
+    this._imageStr = obj.image || '';
+    this.create()
   }
 
   setImage() {
@@ -123,18 +123,18 @@ class ImageBox extends Base {
     this._sprite.setFrame(this._xWheel, this._yWheel, width, height);
   }
 
-  create(imageStr) {
+  create() {
     let self = this;
-    this._image = LoadManager.loadImage(imageStr, false, true, ()=>{
+    this._image = LoadManager.loadImage(this._imageStr, this._i18nLoad, true, ()=>{
       self._sprite = new Sprite(self._image);
-      self._sprite.x = self.x;
-      self._sprite.y = self.y;
-      self._sprite.width = self.width;
-      self._sprite.height = self.height;
+      self._sprite.x = self._x;
+      self._sprite.y = self._y;
+      self._sprite.width = self._width;
+      self._sprite.height = self._height;
+      self.setImage();
       self.addChild(self._sprite);
-      self.setImage()
-    });
-    super.create()
+      super.create()
+    })
   }
 
   /**
