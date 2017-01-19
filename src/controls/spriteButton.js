@@ -13,9 +13,9 @@ RGUI.Controls = RGUI.Controls + 1;
  */
 class SpriteButton extends ButtonBase {
 
-  set width() {}
-
-  set height() {}
+  // set width() {}
+  //
+  // set height() {}
 
   /**
    * 返回图片按钮的位图数组。
