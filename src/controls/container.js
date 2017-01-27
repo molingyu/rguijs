@@ -16,6 +16,7 @@ class Container extends Base {
     super(obj);
     this.controls = new Set();
     this.top = null;
+    this.pos = {x: Input.x, y: Input.y};
     this.create()
   }
 
@@ -32,11 +33,13 @@ class Container extends Base {
    * @param {...Control} controls - 欲添加的控件。
    */
   push(...controls) {
-      controls.forEach((control)=>{
-        //TODO Maybe we have better method.
-        if(!control.penetration) alias(control.eventManager, 'mouseUpdate', 'mouseUpdateHook', ()=>{});
-        this.controls.add(control)
-      })
+    let self = this;
+    controls.forEach((control)=>{
+      //TODO Maybe we have better method.
+      if(!control.penetration) alias(control.eventManager, 'mouseUpdate', 'mouseUpdateHook', ()=>{});
+      self.controls.add(control);
+      self.addChild(control)
+    })
   }
 
   /**
@@ -56,23 +59,30 @@ class Container extends Base {
     this.controls.clear()
   }
 
-  defEventCallback() {
-    this.eventManager.on('mouseIn', {}, (self, info)=>{
-      let top = null;
-      self.controls.forEach((control)=>{ if(control.box.hit(info.x, info.y)) top = control });
+  update() {
+    this.controls.forEach((o)=>{ o.update() });
+    if(this.pos.x != Input.x && this.pos.x != Input.y && this.box.hit(Input.x, Input.y)) {
+      let top;
+      this.controls.forEach((control)=>{ if(control.box.hit(Input.x, Input.y)) top = control });
       if(top) {
-        if(!this.mouseFocus) {
-          top.eventManager.trigger('mouseIn',{x: x, y: y});
+        if(!top.eventManager.mouseFocus) {
+          top.eventManager.trigger('mouseIn', {x: Input.x, y: Input.y});
           top.eventManager.mouseFocus = true;
         }
         if(Input.mouseScroll != 0) {
           top.eventManager.trigger('mouseScroll', {scrollValue: Input.mouseScroll})
         }
       }
-      if(self.top && self.top != top) self.top.eventManager.trigger('mouseOut', {x: info.x, y: info.y});
-      self.top = top
-    });
-    this.eventManager.on('mouseOut', {}, (self)=>{
+      if(this.top && this.top != top) this.top.eventManager.trigger('mouseOut', {x: Input.x, y: Input.y});
+      this.top = top;
+      this.pos.x = Input.x;
+      this.pos.y = Input.y
+    }
+  }
+
+  defEventCallback() {
+    let self = this;
+    this.eventManager.on('mouseOut', {}, (self, info)=>{
       if(self.top) {
         self.top.eventManager.trigger('mouseOut', {x: info.x, y: info.y});
         self.top = null

@@ -132,10 +132,14 @@ const RGUI = {
   },
 
   loadControls: function () {
+    this.Container = require('./controls/container');
     this.ImageBox = require('./controls/imageBox');
-    // this.Button = require('./controls/Button');
     this.SpriteButton = require('./controls/spriteButton');
-    // this.ProgressBar = require('./controls/progressBar');
+    this.Label = require('./controls/label');
+    // this.Button = require('./controls/button');
+    // this.InputBox = require('./controls/inputBox');
+    this.SpriteButton = require('./controls/spriteButton');
+    this.ProgressBar = require('./controls/progressBar');
   }
 };
 

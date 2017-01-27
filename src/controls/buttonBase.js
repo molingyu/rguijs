@@ -36,36 +36,35 @@ class ButtonBase extends Base {
    */
   constructor(obj) {
     super(obj);
-    this._state = obj.state || 0;
-    this.create()
+    this._state = obj.state || 0
   }
 
   /**
    * @interface
    */
   default() {
-    this.eventManger.trigger('onDefault')
+    this.eventManager.trigger('onDefault')
   }
 
   /**
    * @interface
    */
   focus() {
-    this.eventManger.trigger('onFocus')
+    this.eventManager.trigger('onFocus')
   }
 
   /**
    * @interface
    */
   down() {
-    this.eventManger.trigger('onDown')
+    this.eventManager.trigger('onDown')
   }
 
   /**
    * @interface
    */
   enfeeble() {
-    this.eventManger.trigger('onEnfeeble')
+    this.eventManager.trigger('onEnfeeble')
   }
 
   defEventCallback() {

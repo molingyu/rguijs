@@ -75,12 +75,33 @@
     y: 40,
     width: 26,
     height: 40,
-    images: 'btn'
+    images: 'btn',
+    i18nLoad: false
   });
 
-  stage.addChild(bg);
-  stage.addChild(image);
-  stage.addChild(button);
+  let label = new RGUI.Label({
+    x:123,
+    y:234,
+    text:'你好啊 2333！'
+  });
+
+  let bar = new RGUI.ProgressBar({
+    x:200,
+    y:30,
+    width: 200,
+    height: 40
+  });
+
+  let cont = new RGUI.Container({x:0, y:0, width:1280, height: 720});
+  cont.push(bg, image, button, label, bar);
+
+  cont.controls.forEach((o)=>{
+    console.log(o, o.uID);
+    o.eventManager.on('down:MouseLeft', {}, (_, info)=>{console.log(_.obj.uID, info)})
+  });
+
+  stage.addChild(cont);
+
   animate();
 
   function animate() {
@@ -89,9 +110,7 @@
       ipcRenderer.send('show-dev');
       Input.clear()
     }
-    bg.update();
-    image.update();
-    button.update();
+    cont.update();
     renderer.render(stage);
     Input.update();
   }

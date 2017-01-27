@@ -182,6 +182,7 @@ class Base extends PIXI.Container {
    * @param {Boolean} obj.status=true - 控件的状态。
    * @param {Number} obj.opacity=255 - 控件的透明度。
    * @param {Boolean} obj.penetration=false - 控件是否开启鼠标穿透。
+   * @param {Boolean} obj.i18nLoad=false - 控件是否开启 i18n 加载支持。
    */
   constructor(obj = {}) {
     super();
@@ -198,7 +199,7 @@ class Base extends PIXI.Container {
     this._status = obj.status || true;
     this.alpha = RGUI.boundary(obj.opacity || 255, 0, 255) / 255;
     this._penetration = obj.penetration || false;
-    this._i18nLoad = false
+    this._i18nLoad = obj.i18nLoad || false
   }
 
   /**

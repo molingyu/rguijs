@@ -19,7 +19,7 @@ class ImageBox extends Base {
    */
   get image() { return this._image }
   set image(value) {
-    if(this._imageStr == value && typeOf(value) != 'String') return false;
+    if(this._imageStr == value && typeof(value) != 'string') return false;
     let self = this;
     this._image = LoadManager.loadImage(value, false, true, (()=>{
       self._sprite.bitmap = self._image;

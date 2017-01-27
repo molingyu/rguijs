@@ -132,6 +132,7 @@ class EventManager {
    * @param {Object} info - The event info.
    */
   trigger(name, info = {}) {
+    let self = this;
     let event = this.events[name];
     if(event) {
       event.map(callback => {
@@ -147,7 +148,7 @@ class EventManager {
               alive: true,
               callback: callback,
               next: function () {
-                callback(this, this.info);
+                callback(self, this.info);
                 this.alive = false
               }
             };

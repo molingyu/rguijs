@@ -13,9 +13,8 @@ RGUI.Controls = RGUI.Controls + 1;
  */
 class SpriteButton extends ButtonBase {
 
-  // set width() {}
-  //
-  // set height() {}
+  set width(value) {}
+  set height(value) {}
 
   /**
    * 返回图片按钮的位图数组。
@@ -24,7 +23,7 @@ class SpriteButton extends ButtonBase {
    */
   get images() { return this._images }
   set images(value) {
-    if(this._imagesStr == value && typeOf(value) != 'String') return false;
+    if(this._imagesStr == value && typeof(value) != 'string') return false;
     let self = this;
     this._images = LoadManager.loadImage(this._imagesStr, this._i18nLoad, true, ()=>{
       self._images = Bitmap.cut(self._images, this.width, this.height, 0);
@@ -38,10 +37,11 @@ class SpriteButton extends ButtonBase {
    * @param {Number} obj.width - 控件的宽度值。
    * @param {Number} obj.height - 控件的高度值。
    * @param {String} obj.images - 控件所用的图片组。
+   * @param {Boolean} obj.i18nLoad=true - 控件是否开启 i18n 加载支持。
    */
   constructor(obj) {
     super(obj);
-    this._i18nLoad = true;
+    this._i18nLoad = obj.i18nLoad == void 0 ? true : obj.i18nLoad;
     this._imagesStr = obj.images || '';
     this.create()
   }
@@ -49,7 +49,7 @@ class SpriteButton extends ButtonBase {
   create() {
     let self = this;
     this._images = LoadManager.loadImage(this._imagesStr, this._i18nLoad, true, ()=>{
-      self._images = Bitmap.cut(self._images, this.width, this.height, 0);
+      self._images = Bitmap.cut(self._images, self._width, self._height, 0);
       self._image = self._images[self._state];
       self._sprite = new Sprite(self._image);
       self._sprite.x = self._x;
@@ -62,6 +62,7 @@ class SpriteButton extends ButtonBase {
   }
 
   default() {
+    console.log(233)
     this._image = this._images[0];
     this._sprite.bitmap = this._image;
     super.default()

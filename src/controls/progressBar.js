@@ -14,7 +14,7 @@ class ProgressBar extends Base {
 
   get images() { return this._images }
   set images(value) {
-    if(this._imagesStr == value && typeOf(value) != 'String') return false;
+    if(this._imagesStr == value && typeof(value) != 'string') return false;
     let self = this;
     this._images = LoadManager.loadImage(this._imagesStr, this._i18nLoad, true, ()=>{
       self._images = Bitmap.cut(self._images, this._width, this._height, 0);
