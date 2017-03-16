@@ -53,6 +53,14 @@
     image: 'test'
   });
 
+  image.eventManager.on('mouseScroll', {}, (helper, info)=>{ 
+    if(info.scrollValue == 1){
+      image.yScroll(45)
+    } else {
+      image.yScroll(-45)
+    }
+    Input.update()
+   });
   image.eventManager.on('Right', {}, ()=>{ image.xScroll(5) });
   image.eventManager.on('Down', {}, ()=>{ image.yScroll(5) });
   image.eventManager.on('Left', {}, ()=>{ image.xScroll(-5) });
@@ -96,7 +104,6 @@
   cont.push(bg, image, button, label, bar);
 
   cont.controls.forEach((o)=>{
-    console.log(o, o.uID);
     o.eventManager.on('down:MouseLeft', {}, (_, info)=>{console.log(_.obj.uID, info)})
   });
 
@@ -110,9 +117,11 @@
       ipcRenderer.send('show-dev');
       Input.clear()
     }
-    cont.update();
+    // cont.update();
+    image.update()
+    
     renderer.render(stage);
-    Input.update();
+    // Input.update();
   }
 
 </script>

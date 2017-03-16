@@ -17,7 +17,9 @@ const LoadManager = {
   cache: new Map(),
 
   /**
+   * 返回资源加载路径。
    *
+   * @returns {string}
    */
   path: function () {
     return this.pathDir == '' ?  `${RGUI.dirname}/` : `${RGUI.dirname}/${this.pathDir}/`
