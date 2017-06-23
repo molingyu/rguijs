@@ -1,0 +1,26 @@
+{
+  "name": "rgui",
+  "version": "0.2.0",
+  "description": "Reactive Graphical User Interface framework",
+  "main": "lib/rgui.js",
+  "keywords": [
+    "GUI",
+    "Reactive",
+    "PIXI.js"
+  ],
+  "scripts": {
+    "start": "electron examples/index.js",
+    "test": "nodejs test/main.js",
+    "docs": "jsdoc -c scripts/jsdoc.conf.json -R readme.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/molingyu/rguijs.git"
+  },
+  "author": "shitake",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/molingyu/rguijs/issues"
+  },
+  "homepage": "https://github.com/molingyu/rguijs#readme"
+}
