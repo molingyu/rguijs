@@ -9,8 +9,11 @@
     "PIXI.js"
   ],
   "scripts": {
+    "clean": "rm lib -rf",
+    "build": "npm run clean && babel src -d lib",
+    "test:coverage": "babel-node ./node_modules/.bin/babel-istanbul cover ./node_modules/.bin/_mocha && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls && rm -rf ./coverage",
+    "test": "npm run build & node_modules/.bin/mocha",
     "start": "electron examples/index.js",
-    "test": "nodejs test/main.js",
     "docs": "jsdoc -c scripts/jsdoc.conf.json -R readme.md"
   },
   "repository": {
@@ -22,5 +25,17 @@
   "bugs": {
     "url": "https://github.com/molingyu/rguijs/issues"
   },
-  "homepage": "https://github.com/molingyu/rguijs#readme"
+  "homepage": "https://github.com/molingyu/rguijs#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-istanbul": "^0.12.2",
+    "babel-preset-es2015": "^6.24.1",
+    "chai": "^4.0.2",
+    "coveralls": "^2.13.1",
+    "electron": "^1.6.11",
+    "eslint": "^4.0.0",
+    "jaguarjs-jsdoc": "^1.0.2",
+    "jsdoc": "^3.4.3",
+    "mocha": "^3.4.2"
+  }
 }

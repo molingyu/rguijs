@@ -1,0 +1,14 @@
+# node.js & npm
+/node_modules
+npm-debug.log
+
+#ci
+/coverage
+
+# editor
+.vscode
+.idea
+
+# tmp
+/tmp
+/dist/
