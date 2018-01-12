@@ -1,14 +1,15 @@
 # node.js & npm
 /node_modules
-npm-debug.log
+npm-debug.log*
+/examples/*/node_modules/
 
 #ci
 /coverage
 
 # editor
 .vscode
-.idea
+.idea/
 
 # tmp
 /tmp
-/dist/
+/lib

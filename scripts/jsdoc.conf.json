@@ -19,8 +19,8 @@
       "outputSourceFiles": true
     },
     "applicationName": "RGUI",
-    "footer": "Made with ♥ by Goodboy Digital (goodboydigital.com)",
-    "copyright": "RGUI Copyright © 2013-2016 Mat Groves.",
+    "footer": "Made with ♥ by shitake",
+    "copyright": "RGUI Copyright © 2017-2018 Mat shitake.",
     "disqus": "",
     "googleAnalytics": "",
     "openGraph": {
@@ -47,6 +47,6 @@
     "private": false,
     "lenient": true,
     "destination": "./docs",
-    "template": "./node_modules/jaguarjs-jsdoc"
+    "template": "./node_modules/@pixi/jsdoc-template"
   }
 }
